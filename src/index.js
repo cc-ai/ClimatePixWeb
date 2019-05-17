@@ -7,7 +7,7 @@ import { BrowserRouter as Router} from "react-router-dom";
 import { CookiesProvider } from 'react-cookie'
 import indexRoutes from "./indexRoutes";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from "./layouts/header";
+import Header from "./components/header";
 
 ReactDOM.render(
   <CookiesProvider>
