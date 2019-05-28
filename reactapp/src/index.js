@@ -7,11 +7,12 @@ import { BrowserRouter as Router} from "react-router-dom";
 import { CookiesProvider } from 'react-cookie'
 import indexRoutes from "./indexRoutes";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.js';
 import Header from "./components/header";
 
 ReactDOM.render(
   <CookiesProvider>
-      <Header></Header>
+      <Header/>
     <Router>
       <Switch>
         {indexRoutes.map((prop, key) => {
