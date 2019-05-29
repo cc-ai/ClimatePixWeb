@@ -1,0 +1,43 @@
+.input-text{
+    background: #5A3F37 !important;
+    border-color:#5A3F37 !important;
+    color:white;
+    width:100px;
+}
+.add-top-padding
+{
+    margin-top:5px;
+}
+
+.add-img-padding
+{
+    margin-top:7px;
+}
+.form-col
+{
+    border-style: dashed;
+    border:1px #fff;
+}
+
+.btn-circle.btn-xl {
+    width: 300px;
+    height: 300px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+    color: white;
+    border-color: white;
+}
+
+.btn-circle {
+    width: 300px;
+    height: 300px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+    color: white;
+    border-color: white;
+}
