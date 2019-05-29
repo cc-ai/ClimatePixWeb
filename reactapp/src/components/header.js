@@ -29,10 +29,10 @@ class Header extends React.Component {
                                 className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Who are we ? </a>
+                            <a className="nav-link" href="#about-us">Who are we ? </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">What is this project ?</a>
+                            <a className="nav-link" href="#about-project">What is this project ?</a>
                         </li>
                     </ul>
                 </div>

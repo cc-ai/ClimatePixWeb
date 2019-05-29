@@ -7,7 +7,7 @@ import {withCookies} from "react-cookie";
 class AboutUS extends React.Component {
     render() {
         return (
-            <div className="row about-us">
+            <div className="row about-us" id="about-us">
                 <h2> Who are we ? </h2>
                 <p className="bigP">
                     The CCAI project is an interdisciplinary project aimed at creating images of accurate,

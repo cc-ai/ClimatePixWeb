@@ -5,6 +5,7 @@ import {post} from 'axios';
 import UploadImages from "../components/UploadImages";
 import TagImages from "../components/tagImages";
 import AboutUS from "../components/aboutUs";
+import AboutProject from "../components/aboutProject";
 
 
 
@@ -47,13 +48,19 @@ class MainPage extends React.Component {
                         </div>
                         <div className="col-md-3">
                         </div>
-
                     </div> : <div></div>}
                 {this.state.images_uploaded == false ?
                     <div className="row drag-drop-row">
                     </div> : <div></div>}
                 {this.state.images_uploaded == false ?
                     <div className="row about-row">
+                        <div className="col-md-3">
+                        </div>
+                        <div className="col-md-6">
+                            <AboutProject/>
+                        </div>
+                        <div className="col-md-3">
+                        </div>
                     </div> : <div></div>}
             </div>
 
