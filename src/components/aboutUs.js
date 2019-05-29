@@ -1,8 +1,10 @@
 import React from "react";
 import {withCookies} from "react-cookie";
-
+/**
+ * Content for About Us Section on the landing/home page.
+ * TODO: Edit about us section content with the appropriate content
+ */
 class AboutUS extends React.Component {
-
     render() {
         return (
             <div className="row about-us">
@@ -21,5 +23,5 @@ class AboutUS extends React.Component {
 
     }
 }
-
+AboutUS.displayName = 'About US Section - Landing Page (mainPage.js)';
 export default withCookies(AboutUS);

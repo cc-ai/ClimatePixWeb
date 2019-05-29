@@ -6,26 +6,11 @@ import UploadImages from "../components/UploadImages";
 import TagImages from "../components/tagImages";
 import AboutUS from "../components/aboutUs";
 
-//Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM
-const dropzoneRef = createRef();
-//Define a function openDialog, that can open the file picker when you click the button to select files 
-//from a folder to upload
-const openDialog = () => {
-    // Note that the ref is set async,
-    // so it might be null at some point
-    if (dropzoneRef.current) {
-        dropzoneRef.current.open()
-    }
-};
 
-//Beginning of the React component MainPage
+
+/** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
+the images are uploaded , the page will load the tag images component **/
 class MainPage extends React.Component {
-    //This is a section to initialize any variables/state of the react app
-    //props attributes that can be set to initialize a class. FOr example if I was calling a react component called <card> inside
-    //some other react component, and i wanted the card to be 100px long, then in <card width="100px"/> , width is a prop. width
-    //will be present in this.props in the card react component
-    //state variable is essentially a global variable that is initialized in the constructor and can be used to make the 
-    //react page dynamic
     constructor(props) {
         super(props);
         this.state = {

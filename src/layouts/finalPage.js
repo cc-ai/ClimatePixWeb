@@ -2,7 +2,11 @@ import React from 'react';
 import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
 
+/** Renders the final page with a thank you message.
+ * TODO: Use this page to show all the images uploaded or anything else
+ * **/
 class FinalPage extends React.Component {
+
     render() {
 
         return (
