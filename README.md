@@ -9,4 +9,4 @@ All the
 3. Navigate to reactapp
 4. Install all the required node libraries using ```npm install --save```
 5. Run the reactapp ```npm start```
-
+6. To run the doc's server run ```npx styleguidist server``` from the project directory or ```npx styleguidist build``` to build the html version. We are using react-styleguidedist library. 
