@@ -6,6 +6,8 @@ import "../styles/tag_images.css";
 import axios, {post} from 'axios';
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
+import {storage,firestore_collection} from "../firebaseconfig";
+
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
 /** Define a function openDialog, that can open the file picker when you click the button to select files from a folder to upload **/
@@ -86,54 +88,25 @@ class TagImages extends React.Component {
         }
     }
 
-    uploadDropfile(file, file_description, file_location) {
-        const url = 'http://127.0.0.1:5000/upload_file';
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('file_description', file_description);
-        formData.append('file_location', file_location);
-
-        /** Get latidude & longitude from address. If you get request denied, reach out i will help debug **/
-        /** TODO: Took out the lat lang response here so the project build doesnt fail but make sure to update the api call to send the latitude and longitude instead
-         * **/
-        Geocode.fromAddress(file_location).then(
-            response => {
-                const {lat, lng} = response.results[0].geometry.location;
-                formData.append('file_location', lat.toString() + "," + lng.toString());
-            },
-            error => {
-                console.error(error);
-            }
-        );
-        /** Set some headers, Access control to allow origin allows you to upload files from loclahost:3000 (where react runs) to
-         http://127.0.0.1:5000 where flask is running. **/
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data',
-                "Access-Control-Allow-Origin": "*"
-            }
-        }
-
-        /** Print the data being sent to the api**/
-        /** TODO: Remove this in production
-         * **/
-        console.log("Data being posted")
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
-        /** axios is a request library used for react to perform HTTP POST/GET requests easily.
-         url - is the post url
-         formData - is the data you wanted to post
-         config is http headers of a http request.
-         in .then method , the response object is the response from your flask url **/
-        return axios.post(url, formData, config).then(response => {
-            this.setState({
-                error_code: response["response_code"],
-                message: response["message"]
+    uploadDropfile=(file, file_description, file_location) =>{
+    let uploadURL = null
+    let uploadToFirebase = storage.ref(`images/${file.name}`).put(file)
+    uploadToFirebase.on('state_changed',(snapshot)=>{
+        // Show progress of the image upload
+    },(error)=>{
+        console.log(error)
+    },()=>{
+        //Call this method on complete
+        storage.ref('images').child(file.name).getDownloadURL().then(url => {
+            uploadURL = url
+            firestore_collection.add({
+                url:uploadURL,
+                description:file_description,
+                location:file_location
             })
         })
-    }
+    })
+}
 
     getAttachedFiles = (files) => {
         let all_files = this.state.files.concat(files)
