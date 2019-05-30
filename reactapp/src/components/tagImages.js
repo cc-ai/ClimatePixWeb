@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
-import axios, {post} from 'axios';
+import axios from 'axios';
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
 import {storage,firestore_collection} from "../firebaseconfig";
@@ -25,7 +25,7 @@ Geocode.enableDebug();
 /** TODO:REPLACE with your key for google project - My test key is locked to my IP Address
  *
  *  **/
-const geocode_api_key = "AIzaSyAna5N6fVGHuVmczSgeNfQdBaG-alpGVmQ"
+const geocode_api_key = process.env.REACT_APP_GOOGLE_API_KEY;
 Geocode.setApiKey(geocode_api_key);
 
 /** Renders a Component that loads the images uploaded in the previous page/home page and displays a previous and
@@ -54,13 +54,13 @@ class TagImages extends React.Component {
      * This method iterates through all the files and generates a list of img URLs to display
      * **/
     loadImages = (files) => {
-        let images_src = []
+        let images_src = [];
         for (let file of files) {
             images_src.push(URL.createObjectURL(file))
         }
         this.setState({
             files: files
-        })
+        });
         this.setState({
             images_src: images_src
         })
@@ -78,15 +78,17 @@ class TagImages extends React.Component {
          **/
         e.preventDefault();
         //Upload Files One by One
-        let file_count = 0
+        let file_count = 0;
         for (let file of this.state.files) {
-            let file_description = this.state["tags_" + file_count]
-            let file_location = this.state["location_" + file_count]
-            this.uploadDropfile(file, file_description, file_location).then((response) => {
+            let file_description = this.state["tags_" + file_count];
+            let file_location = this.state["location_" + file_count];
+            let file_category = this.state["category_" + file_count];
+            this.uploadDropfile(file, file_description, file_location, file_category).then((response) => {
                 console.log(response)
-            })
+            });
+            file_count += 1;
         }
-    }
+    };
 
     uploadDropfile=(file, file_description, file_location) =>{
     let uploadURL = null
@@ -109,63 +111,87 @@ class TagImages extends React.Component {
 }
 
     getAttachedFiles = (files) => {
-        let all_files = this.state.files.concat(files)
+        let all_files = this.state.files.concat(files);
         this.setState({
             files: all_files
         }, () => {
             this.loadImages(all_files)
-        })
+        });
         this.setState({add_images_flag: false})
 
-    }
+    };
 
     addMoreImages = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         this.setState({add_images_flag: !this.state.add_images_flag})
-    }
+    };
 
     render() {
         /** TODO: Implement a progress bar to show how many images are uploaded
          * Each image section behvaes like a form of it's own. Currently we upload
          * one image with each request. **/
-        let forms_html = []
-        let image_count = 0
+        let forms_html = [];
+        let image_count = 0;
         for (let form of this.state.images_src) {
-            forms_html.push(<div className="col-md-3 form-col">
-                <form className="form add-img-padding">
-                    <div className={"row add-img-padding"}>
-                        <img height={"300"} width={"300"} src={form}/>
+            const descriptionId = `tags_${image_count}`;
+            const locationId = `category_${image_count}`;
+            const categoryId = `location_${image_count}`;
+            forms_html.push(<div className="col-md-3 form-col" key={image_count}>
+                <form className="image-form">
+                    <div className="form-group">
+                        <div className="image-wrapper" style={{backgroundImage: `url(${form})`}}/>
                     </div>
-                    <div className={"row add-top-padding"}>
-                        <div className="input-group ">
+                    <div className="form-group">
+                        <label className="sr-only" htmlFor={descriptionId}>Description</label>
+                        <div className="input-group">
                             <div className="input-group-prepend">
-                                <span style={{'color': 'white'}}
-                                      className="input-group-text input-text">Description</span>
+                                <span className="input-group-text input-text">Description</span>
                             </div>
-                            <input className="basic-slide" id="tags" name={"tags_" + image_count.toString()} type="text"
+                            <input name={descriptionId} id={descriptionId} type="text" className="form-control"
                                    placeholder="Describe the image" onChange={this.onInputChange}/>
                         </div>
                     </div>
-                    <div className={"row add-top-padding"}>
+                    <div className="form-group">
+                        <label className="sr-only" htmlFor={categoryId}>Category</label>
                         <div className="input-group">
                             <div className="input-group-prepend">
-                                <span style={{'color': 'white'}} className="input-group-text input-text">Location</span>
+                                <span className="input-group-text input-text">Category</span>
                             </div>
-                            <input className="basic-slide" id="tags" name={"location_" + image_count.toString()}
-                                   type="text"
+                            <select name={categoryId} id={categoryId} onChange={this.onInputChange}
+                                    className="form-control custom-select">
+                                {[
+                                    'Flood',
+                                    'Wild Fire',
+                                    'Hurricane',
+                                    'Tornado',
+                                    'Earthquakes',
+                                    'Other'
+                                ].map((category, index) => (
+                                    <option key={index} value={category}>{category}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="sr-only" htmlFor={locationId}>Location</label>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text input-text">Location</span>
+                            </div>
+                            <input name={locationId} id={locationId} type="text" className="form-control"
                                    placeholder="Location of the image" onChange={this.onInputChange}/>
                         </div>
                     </div>
                 </form>
-            </div>)
-            image_count = image_count + 1
+            </div>);
+            image_count = image_count + 1;
         }
         return (
             <div className="upload-container tagzone-container">
                 <h3 className="custom-header">Tell us more about these images</h3>
                 {/** If there is a message from the api request show this underneath the header **/}
                 {this.state.message ? <div className="row">
-                </div> : <div></div>}
+                </div> : <div/>}
                 <div className="row">
                     {/** Add forms and image previews to the DOM **/}
                     {forms_html}
@@ -173,7 +199,7 @@ class TagImages extends React.Component {
                         {/** Another dropzone component to allow users to add more images while adding the metadata **/}
                         {/** Show the upload section if the add images flag is set to true. This flag is toggled
                          by the addMoreImages method **/}
-                        {this.state.add_images_flag == true ? <div className="upload-container">
+                        {this.state.add_images_flag === true ? <div className="upload-container">
                                 <Dropzone className="dropzone-container" ref={dropzoneRef} accept="image/png, image/jpg"
                                           onDrop={this.getAttachedFiles} noClick noKeyboard>
                                     {({getRootProps, getInputProps, acceptedFiles}) => {
@@ -181,8 +207,8 @@ class TagImages extends React.Component {
                                             <div className="container">
                                                 <div {...getRootProps({className: 'dropzone'})}>
                                                     <input {...getInputProps()} />
-                                                    <a href="#" className="href-link"
-                                                       onClick={openDialog}><span>Click to select files</span></a>
+                                                    <span className="href-link"
+                                                          onClick={openDialog}><span>Click to select files</span></span>
                                                 </div>
                                             </div>);
                                     }}
@@ -196,18 +222,20 @@ class TagImages extends React.Component {
                     </div>
                 </div>
                 {/** On click on finish uploading start submitting images to the server **/}
-                <a href="#" className="fancy-button bg-gradient1"
-                   onClick={this.handleSubmit}><span>Finish Uploading</span></a>
+                <div className="fancy-button bg-gradient1" onClick={this.handleSubmit}>
+                    <span>Finish Uploading</span>
+                </div>
             </div>
         );
     }
 }
-TagImages.displayName = "Tag Images with Description And GeoTags"
+
+TagImages.displayName = "Tag Images with Description And GeoTags";
 TagImages.propTypes = {
     /** List of image File objects. */
     files: PropTypes.array
 };
 TagImages.defaultProps = {
-    files:[]
-}
+    files: []
+};
 export default withCookies(TagImages);

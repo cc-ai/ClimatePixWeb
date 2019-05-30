@@ -1,22 +1,21 @@
-.input-text{
+.input-text {
     background: #5A3F37 !important;
-    border-color:#5A3F37 !important;
-    color:white;
-    width:100px;
-}
-.add-top-padding
-{
-    margin-top:5px;
+    border-color: #5A3F37 !important;
+    color: white;
+    width: 100px;
 }
 
-.add-img-padding
-{
-    margin-top:7px;
+.add-top-padding {
+    margin-top: 5px;
 }
-.form-col
-{
+
+.add-img-padding {
+    margin-top: 7px;
+}
+
+.form-col {
     border-style: dashed;
-    border:1px #fff;
+    border: 1px #fff;
 }
 
 .btn-circle.btn-xl {
@@ -40,4 +39,24 @@
     line-height: 1.42857;
     color: white;
     border-color: white;
+}
+
+.image-form {
+    width: 300px;
+    margin: auto;
+}
+
+.image-wrapper {
+    background-color: yellow;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.image-wrapper:after {
+    display: block;
+    content: '';
+    padding-top: 100%;
 }
