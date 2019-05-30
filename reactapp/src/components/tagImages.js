@@ -3,10 +3,9 @@ import Dropzone from 'react-dropzone';
 import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
-import axios from 'axios';
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
-import {storage,firestore_collection} from "../firebaseconfig";
+import {firestore_collection, storage} from "../firebaseconfig";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -91,25 +90,26 @@ class TagImages extends React.Component {
         }
     };
 
-    uploadDropfile=(file, file_description, file_location) =>{
-    let uploadURL = null
-    let uploadToFirebase = storage.ref(`images/${file.name}`).put(file)
-    uploadToFirebase.on('state_changed',(snapshot)=>{
-        // Show progress of the image upload
-    },(error)=>{
-        console.log(error)
-    },()=>{
-        //Call this method on complete
-        storage.ref('images').child(file.name).getDownloadURL().then(url => {
-            uploadURL = url
-            firestore_collection.add({
-                url:uploadURL,
-                description:file_description,
-                location:file_location
+    uploadDropfile = (file, file_description, file_location, file_category) => {
+        let uploadURL = null;
+        let uploadToFirebase = storage.ref(`images/${file.name}`).put(file);
+        uploadToFirebase.on('state_changed', (snapshot) => {
+            // Show progress of the image upload
+        }, (error) => {
+            console.log(error)
+        }, () => {
+            //Call this method on complete
+            storage.ref('images').child(file.name).getDownloadURL().then(url => {
+                uploadURL = url;
+                firestore_collection.add({
+                    url: uploadURL,
+                    description: file_description,
+                    location: file_location,
+                    category: file_category
+                })
             })
         })
-    })
-}
+    };
 
     getAttachedFiles = (files) => {
         let all_files = this.state.files.concat(files);
@@ -189,45 +189,45 @@ class TagImages extends React.Component {
         }
         return (
             <div className="row drag-drop-row">
-            <div className="upload-container tagzone-container">
-                <h3 className="custom-header">Tell us more about these images</h3>
-                {/** If there is a message from the api request show this underneath the header **/}
-                {this.state.message ? <div className="row">
-                </div> : <div/>}
-                <div className="row">
-                    {/** Add forms and image previews to the DOM **/}
-                    {forms_html}
-                    <div className="col-md-3 form-col">
-                        {/** Another dropzone component to allow users to add more images while adding the metadata **/}
-                        {/** Show the upload section if the add images flag is set to true. This flag is toggled
-                         by the addMoreImages method **/}
-                        {this.state.add_images_flag === true ? <div className="upload-container">
-                                <Dropzone className="dropzone-container" ref={dropzoneRef} accept="image/png, image/jpg"
-                                          onDrop={this.getAttachedFiles} noClick noKeyboard>
-                                    {({getRootProps, getInputProps, acceptedFiles}) => {
-                                        return (
-                                            <div className="container">
-                                                <div {...getRootProps({className: 'dropzone'})}>
-                                                    <input {...getInputProps()} />
-                                                    <span className="href-link"
-                                                          onClick={openDialog}><span>Click to select files</span></span>
-                                                </div>
-                                            </div>);
-                                    }}
-                                </Dropzone>
-                            </div> :
-                            <button type="button" className="btn btn-default btn-circle btn-xl"
-                                    onClick={this.addMoreImages}>
-                                Add More Images
-                            </button>}
+                <div className="upload-container tagzone-container">
+                    <h3 className="custom-header">Tell us more about these images</h3>
+                    {/** If there is a message from the api request show this underneath the header **/}
+                    {this.state.message ? <div className="row">
+                    </div> : <div/>}
+                    <div className="row">
+                        {/** Add forms and image previews to the DOM **/}
+                        {forms_html}
+                        <div className="col-md-3 form-col">
+                            {/** Another dropzone component to allow users to add more images while adding the metadata **/}
+                            {/** Show the upload section if the add images flag is set to true. This flag is toggled
+                             by the addMoreImages method **/}
+                            {this.state.add_images_flag === true ? <div className="upload-container">
+                                    <Dropzone className="dropzone-container" ref={dropzoneRef} accept="image/png, image/jpg"
+                                              onDrop={this.getAttachedFiles} noClick noKeyboard>
+                                        {({getRootProps, getInputProps, acceptedFiles}) => {
+                                            return (
+                                                <div className="container">
+                                                    <div {...getRootProps({className: 'dropzone'})}>
+                                                        <input {...getInputProps()} />
+                                                        <span className="href-link"
+                                                              onClick={openDialog}><span>Click to select files</span></span>
+                                                    </div>
+                                                </div>);
+                                        }}
+                                    </Dropzone>
+                                </div> :
+                                <button type="button" className="btn btn-default btn-circle btn-xl"
+                                        onClick={this.addMoreImages}>
+                                    Add More Images
+                                </button>}
 
+                        </div>
+                    </div>
+                    {/** On click on finish uploading start submitting images to the server **/}
+                    <div className="fancy-button bg-gradient1" onClick={this.handleSubmit}>
+                        <span>Finish Uploading</span>
                     </div>
                 </div>
-                {/** On click on finish uploading start submitting images to the server **/}
-                <div className="fancy-button bg-gradient1" onClick={this.handleSubmit}>
-                    <span>Finish Uploading</span>
-                </div>
-            </div>
             </div>
         );
     }
