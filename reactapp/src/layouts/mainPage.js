@@ -1,16 +1,14 @@
-import React, {createRef} from 'react';
+import React from 'react';
 import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
-import {post} from 'axios';
 import UploadImages from "../components/UploadImages";
 import TagImages from "../components/tagImages";
 import AboutUS from "../components/aboutUs";
 import AboutProject from "../components/aboutProject";
 
 
-
 /** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
-the images are uploaded , the page will load the tag images component **/
+ the images are uploaded , the page will load the tag images component **/
 class MainPage extends React.Component {
     constructor(props) {
         super(props);
@@ -28,7 +26,7 @@ class MainPage extends React.Component {
             this.setState({images_uploaded: true})
         })
 
-    }
+    };
 
 
     render() {
@@ -36,10 +34,10 @@ class MainPage extends React.Component {
         return (
             <div>
                 <div className="row drag-drop-row">
-                    {this.state.images_uploaded == false ? <UploadImages fileLoader={this.getAttachedFiles}/> :
+                    {this.state.images_uploaded === false ? <UploadImages fileLoader={this.getAttachedFiles}/> :
                         <TagImages files={this.state.files}/>}
                 </div>
-                {this.state.images_uploaded == false ?
+                {this.state.images_uploaded === false ?
                     <div className="row about-row">
                         <div className="col-md-3">
                         </div>
@@ -48,11 +46,11 @@ class MainPage extends React.Component {
                         </div>
                         <div className="col-md-3">
                         </div>
-                    </div> : <div></div>}
-                {this.state.images_uploaded == false ?
+                    </div> : <div/>}
+                {this.state.images_uploaded === false ?
                     <div className="row drag-drop-row">
-                    </div> : <div></div>}
-                {this.state.images_uploaded == false ?
+                    </div> : <div/>}
+                {this.state.images_uploaded === false ?
                     <div className="row about-row">
                         <div className="col-md-3">
                         </div>
@@ -61,7 +59,7 @@ class MainPage extends React.Component {
                         </div>
                         <div className="col-md-3">
                         </div>
-                    </div> : <div></div>}
+                    </div> : <div/>}
             </div>
 
 

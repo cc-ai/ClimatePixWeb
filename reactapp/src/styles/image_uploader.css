@@ -35,15 +35,16 @@ html, body {
     background-color: whitesmoke;
     color: black;
 }
-.upload-container
-{
+
+.upload-container {
     display: block;
     width: 80%;
-    margin-top:4%;
+    margin-top: 4%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
+
 .dropzone {
 
 
@@ -55,144 +56,156 @@ html, body {
     font: 21pt bold arial;
 }
 
-.smallP{
-    font-size:20px;
+.smallP {
+    font-size: 20px;
 }
 
 .bg-gradient1 span,
 .bg-gradient1:before {
-background: #5A3F37;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #2C7744, #5A3F37);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2C7744, #5A3F37); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #5A3F37; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C7744, #5A3F37); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2C7744, #5A3F37); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
-
 
 
 /* fancy Button */
 .fancy-button {
-  display: inline-block;
-  margin: 20px;
-  font-size: 22px;
-  line-height: 24px;
-  color: #ffffff;
-  position: relative;
+    display: inline-block;
+    margin: 20px;
+    font-size: 22px;
+    line-height: 24px;
+    color: #ffffff;
+    position: relative;
+    cursor: pointer;
 }
+
 .fancy-button.bg-gradient1 {
-  text-shadow: 0px 0px 1px #BF4C28;
+    text-shadow: 0px 0px 1px #BF4C28;
 }
 
 .fancy-button:before {
-  content: '';
-  display: inline-block;
-  height: 40px;
-  position: absolute;
-  bottom: -1px;
-  left: 10px;
-  right: 10px;
-  z-index: -1;
-  -webkit-filter: blur(14px) brightness(0.9);
-          filter: blur(14px) brightness(0.9);
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  transition: all 0.3s ease-out;
+    content: '';
+    display: inline-block;
+    height: 40px;
+    position: absolute;
+    bottom: -1px;
+    left: 10px;
+    right: 10px;
+    z-index: -1;
+    -webkit-filter: blur(14px) brightness(0.9);
+    filter: blur(14px) brightness(0.9);
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease-out;
 }
 
 .fancy-button span {
-  display: inline-block;
-  padding: 16px 20px;
-  position: relative;
-  z-index: 2;
+    display: inline-block;
+    padding: 16px 20px;
+    position: relative;
+    z-index: 2;
     border-radius: 10px;
-  will-change: transform, filter;
-  -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
-  transition: all 0.3s ease-out;
-}
-.fancy-button:focus {
-  color: #ffffff;
-}
-.fancy-button:hover {
-  color: #ffffff;
-}
-.fancy-button:hover span {
-  -webkit-filter: brightness(0.9) contrast(1.2);
-          filter: brightness(0.9) contrast(1.2);
-  -webkit-transform: scale(0.96);
-          transform: scale(0.96);
-}
-.fancy-button:hover:before {
-  bottom: 3px;
-  -webkit-filter: blur(6px) brightness(0.8);
-          filter: blur(6px) brightness(0.8);
-}
-.fancy-button:active span {
-  -webkit-filter: brightness(0.75) contrast(1.7);
-          filter: brightness(0.75) contrast(1.7);
-}
-.fancy-button.pop-onhover span {
-  border-radius: 4px;
-}
-.fancy-button.pop-onhover:before {
-  opacity: 0;
-  bottom: 10px;
-}
-.fancy-button.pop-onhover:hover:before {
-  bottom: -7px;
-  opacity: 1;
-  -webkit-filter: blur(16px);
-          filter: blur(16px);
-}
-.fancy-button.pop-onhover:hover span {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-.fancy-button.pop-onhover:hover:active span {
-  -webkit-filter: brightness(1) contrast(1);
-          filter: brightness(1) contrast(1);
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  transition: all 0.2s ease-out;
-}
-.fancy-button.pop-onhover:hover:active:before {
-  bottom: 0;
-  -webkit-filter: blur(5px) brightness(0.85);
-          filter: blur(5px) brightness(0.85);
-  transition: all 0.2s ease-out;
+    will-change: transform, filter;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease-out;
 }
 
-.custom-header
-{
-    font-size:36px;
+.fancy-button:focus {
+    color: #ffffff;
+}
+
+.fancy-button:hover {
+    color: #ffffff;
+}
+
+.fancy-button:hover span {
+    -webkit-filter: brightness(0.9) contrast(1.2);
+    filter: brightness(0.9) contrast(1.2);
+    -webkit-transform: scale(0.96);
+    transform: scale(0.96);
+}
+
+.fancy-button:hover:before {
+    bottom: 3px;
+    -webkit-filter: blur(6px) brightness(0.8);
+    filter: blur(6px) brightness(0.8);
+}
+
+.fancy-button:active span {
+    -webkit-filter: brightness(0.75) contrast(1.7);
+    filter: brightness(0.75) contrast(1.7);
+}
+
+.fancy-button.pop-onhover span {
+    border-radius: 4px;
+}
+
+.fancy-button.pop-onhover:before {
+    opacity: 0;
+    bottom: 10px;
+}
+
+.fancy-button.pop-onhover:hover:before {
+    bottom: -7px;
+    opacity: 1;
+    -webkit-filter: blur(16px);
+    filter: blur(16px);
+}
+
+.fancy-button.pop-onhover:hover span {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.fancy-button.pop-onhover:hover:active span {
+    -webkit-filter: brightness(1) contrast(1);
+    filter: brightness(1) contrast(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    transition: all 0.2s ease-out;
+}
+
+.fancy-button.pop-onhover:hover:active:before {
+    bottom: 0;
+    -webkit-filter: blur(5px) brightness(0.85);
+    filter: blur(5px) brightness(0.85);
+    transition: all 0.2s ease-out;
+}
+
+.custom-header {
+    font-size: 36px;
     padding-bottom: 20px;
 }
-.href-link{
-    color:white;
+
+.href-link {
+    color: white;
     text-decoration: underline;
     text-underline-style: dotted-heavy;
-}
-.href-link:hover{
-    color:white;
-    text-decoration: underline;
-    text-underline-style: dotted-heavy;
-
+    cursor: pointer;
 }
 
-.about-us{
-    padding:20px;
+.href-link:hover {
+    color: white;
+    text-decoration: none;
 }
-.about-us h2
-{
+
+.about-us {
+    padding: 20px;
+}
+
+.about-us h2 {
     text-align: center;
-        display: block;
+    display: block;
     margin-right: auto;
     margin-left: auto;
-    color:#5A3F37;
+    color: #5A3F37;
 
 }
 
-.bigP{
-    padding-top:20px;
-    font-size:20px;
+.bigP {
+    padding-top: 20px;
+    font-size: 20px;
 }
 

@@ -12,6 +12,7 @@ class Header extends React.Component {
         super(props);
         this.state = {};
     }
+
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark teal mb-4 pageNavHeader">
@@ -41,5 +42,6 @@ class Header extends React.Component {
 
     }
 }
-Header.displayName = "Navigation bar at the top"
+
+Header.displayName = "Navigation bar at the top";
 export default withCookies(Header);

@@ -1,7 +1,6 @@
 import React, {Component, createRef} from 'react';
 import Dropzone from 'react-dropzone';
 import "../styles/image_uploader.css";
-import {post} from 'axios';
 
 /* Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM */
 const dropzoneRef = createRef();
@@ -23,21 +22,22 @@ export default class UploadImages extends Component {
             files: []
         }
     }
+
     /** Method called when a new file is dropped or selected using the upload section
-    files is an array of File objects  = https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file */
+     files is an array of File objects  = https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file */
     onDrop = (files) => {
         this.setState({
             files: this.state.files.concat(files),
         });
-    }
+    };
 
     /** Method called upload button is submitted.
-    e is the input event that is automatically passed for this ui event */
+     e is the input event that is automatically passed for this ui event */
     handleSubmit = (e) => {
-        e.preventDefault() /* Stop form submit */
+        e.preventDefault(); /* Stop form submit */
         /* Iterate through to submit all files */
         this.props.fileLoader(this.state.files)
-    }
+    };
 
     render() {
         return (
@@ -55,15 +55,15 @@ export default class UploadImages extends Component {
                                         *.png images will be
                                         accepted)</p>
 
-                                    <a href="#" className="href-link"
-                                       onClick={openDialog}><span>Click to select files</span></a>
+                                    <span className="href-link"
+                                          onClick={openDialog}><span>Click to select files</span></span>
                                 </div>
                             </div>);
                     }}
                 </Dropzone>
                 {/*<button type="submit" className="upload-button" onClick={this.handleSubmit}>Upload Image</button>*/}
-                <a href="#" className="fancy-button bg-gradient1"
-                   onClick={this.handleSubmit}><span>Upload & Continue</span></a>
+                <div className="fancy-button bg-gradient1"
+                     onClick={this.handleSubmit}><span>Upload & Continue</span></div>
             </div>
         );
     }

@@ -1,28 +1,27 @@
-.header-row
-{
+.header-row {
     width: 100%;
-    height:70px;
+    height: 70px;
 }
-.pageNavHeader
-{
-    font-size:21px;
+
+.pageNavHeader {
+    font-size: 21px;
 }
-.pageNavLink
-{
+
+.pageNavLink {
     color: white;
     padding-top: 18px;
     text-align: center;
 }
-.pageActiveNavLink
-{
+
+.pageActiveNavLink {
     padding-top: 18px;
     text-align: center;
 }
-.logoImg
-{
-    height:80px;
+
+.logoImg {
+    height: 80px;
 }
-.nav-link a
-{
-    font-size:22px !important;
+
+.nav-link a {
+    font-size: 22px !important;
 }
