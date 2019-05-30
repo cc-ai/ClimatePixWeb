@@ -34,7 +34,7 @@ class MainPage extends React.Component {
     render() {
 
         return (
-            <div className="container-fluid">
+            <div>
                 <div className="row drag-drop-row">
                     {this.state.images_uploaded == false ? <UploadImages fileLoader={this.getAttachedFiles}/> :
                         <TagImages files={this.state.files}/>}
