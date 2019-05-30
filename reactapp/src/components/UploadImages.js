@@ -1,6 +1,8 @@
 import React, {Component, createRef} from 'react';
 import Dropzone from 'react-dropzone';
 import "../styles/image_uploader.css";
+import {Link} from "react-router-dom";
+import TagImages from "../components/tagImages";
 
 /* Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM */
 const dropzoneRef = createRef();
@@ -31,14 +33,6 @@ export default class UploadImages extends Component {
         });
     };
 
-    /** Method called upload button is submitted.
-     e is the input event that is automatically passed for this ui event */
-    handleSubmit = (e) => {
-        e.preventDefault(); /* Stop form submit */
-        /* Iterate through to submit all files */
-        this.props.fileLoader(this.state.files)
-    };
-
     render() {
         return (
             <div className="upload-container">
@@ -62,8 +56,10 @@ export default class UploadImages extends Component {
                     }}
                 </Dropzone>
                 {/*<button type="submit" className="upload-button" onClick={this.handleSubmit}>Upload Image</button>*/}
-                <div className="fancy-button bg-gradient1"
-                     onClick={this.handleSubmit}><span>Upload & Continue</span></div>
+                <Link className="fancy-button bg-gradient1"
+                      to={{pathname: '/uploadwithtags', state: {files: this.state.files}}}>
+                    <span>Upload & Continue</span>
+                </Link>
             </div>
         );
     }

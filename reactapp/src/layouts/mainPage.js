@@ -2,10 +2,9 @@ import React from 'react';
 import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
 import UploadImages from "../components/UploadImages";
-import TagImages from "../components/tagImages";
 import AboutUS from "../components/aboutUs";
 import AboutProject from "../components/aboutProject";
-
+import {TopLink} from "../components/TopLInk";
 
 /** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
  the images are uploaded , the page will load the tag images component **/
@@ -18,7 +17,6 @@ class MainPage extends React.Component {
         }
     }
 
-
     getAttachedFiles = (files) => {
         this.setState({
             files: files
@@ -28,41 +26,32 @@ class MainPage extends React.Component {
 
     };
 
-
     render() {
-
         return (
             <div>
                 <div className="row drag-drop-row">
-                    {this.state.images_uploaded === false ? <UploadImages fileLoader={this.getAttachedFiles}/> :
-                        <TagImages files={this.state.files}/>}
+                    <UploadImages/>
                 </div>
-                {this.state.images_uploaded === false ?
-                    <div className="row about-row">
-                        <div className="col-md-3">
-                        </div>
-                        <div className="col-md-6">
-                            <AboutUS/>
-                        </div>
-                        <div className="col-md-3">
-                        </div>
-                    </div> : <div/>}
-                {this.state.images_uploaded === false ?
-                    <div className="row drag-drop-row">
-                    </div> : <div/>}
-                {this.state.images_uploaded === false ?
-                    <div className="row about-row">
-                        <div className="col-md-3">
-                        </div>
-                        <div className="col-md-6">
-                            <AboutProject/>
-                        </div>
-                        <div className="col-md-3">
-                        </div>
-                    </div> : <div/>}
+                <div className="row about-row">
+                    <div className="col-md-3"/>
+                    <div className="col-md-6">
+                        <AboutUS/>
+                    </div>
+                    <div className="col-md-3">
+                        <TopLink/>
+                    </div>
+                </div>
+                <div className="row drag-drop-row"/>
+                <div className="row about-row">
+                    <div className="col-md-3"/>
+                    <div className="col-md-6">
+                        <AboutProject/>
+                    </div>
+                    <div className="col-md-3">
+                        <TopLink/>
+                    </div>
+                </div>
             </div>
-
-
         );
     }
 }

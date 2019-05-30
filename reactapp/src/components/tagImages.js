@@ -46,7 +46,8 @@ class TagImages extends React.Component {
     }
 
     componentWillMount() {
-        this.loadImages(this.props.files)
+        if (this.props.location.state)
+            this.loadImages(this.props.location.state.files);
     }
 
     /** When we are routed to this page after uploading images earlier, we receive a list of HTML file objects. To display
@@ -187,6 +188,7 @@ class TagImages extends React.Component {
             image_count = image_count + 1;
         }
         return (
+            <div className="row drag-drop-row">
             <div className="upload-container tagzone-container">
                 <h3 className="custom-header">Tell us more about these images</h3>
                 {/** If there is a message from the api request show this underneath the header **/}
@@ -225,6 +227,7 @@ class TagImages extends React.Component {
                 <div className="fancy-button bg-gradient1" onClick={this.handleSubmit}>
                     <span>Finish Uploading</span>
                 </div>
+            </div>
             </div>
         );
     }

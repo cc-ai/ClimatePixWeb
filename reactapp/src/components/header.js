@@ -2,6 +2,8 @@ import React from "react";
 import {withCookies} from "react-cookie";
 import logo from "../images/earthlogo.png";
 import "../styles/header.css";
+import {HashLink} from "react-router-hash-link";
+import {Link} from "react-router-dom";
 
 /**
  * Renders a NavBar Header. To be displayed across all layouts.
@@ -15,7 +17,7 @@ class Header extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark teal mb-4 pageNavHeader">
+            <nav className="navbar navbar-expand-lg navbar-dark teal mb-4 pageNavHeader" id="home">
                 <a className="navbar-brand" href="#"><img className="logoImg" src={logo}/></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -26,14 +28,14 @@ class Header extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span
-                                className="sr-only">(current)</span></a>
+                            <Link className="nav-link" to="/">Home <span
+                                className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#about-us">Who are we ? </a>
+                            <HashLink smooth className="nav-link" to="/#about-us">Who are we ? </HashLink>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#about-project">What is this project ?</a>
+                            <HashLink smooth className="nav-link" to="/#about-project">What is this project ?</HashLink>
                         </li>
                     </ul>
                 </div>
