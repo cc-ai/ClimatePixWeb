@@ -208,4 +208,14 @@ html, body {
     padding-top: 20px;
     font-size: 20px;
 }
-
+.window-close-button button
+{
+    background-color:darkred;
+    border:0px;
+    color:white;
+    text-align: left;
+}
+.padded-row
+{
+    padding-top:5px;
+}

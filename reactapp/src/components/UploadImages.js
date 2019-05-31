@@ -2,8 +2,8 @@ import React, {Component, createRef} from 'react';
 import Dropzone from 'react-dropzone';
 import "../styles/image_uploader.css";
 import {Link} from "react-router-dom";
-import TagImages from "../components/tagImages";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
 /* Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM */
 const dropzoneRef = createRef();
 /* Define a function openDialog, that can open the file picker when you click the button to select files from a folder to upload*/
@@ -33,15 +33,23 @@ export default class UploadImages extends Component {
         });
     };
 
+    deleteFromUploadQueue = (file_idx) => {
+        let current_files = this.state.files
+        current_files.splice(file_idx,1)
+        this.setState({files:current_files})
+    }
     render() {
         let uploading_files_html = []
-        for(let file of this.state.files)
+        for(let file_idx in this.state.files)
         {
-            uploading_files_html.push(<div className="row">
+            let file = this.state.files[file_idx]
+            uploading_files_html.push(<div className="row padded-row">
                  <div className="col-md-2"></div>
                      <div className="col-md-4">{file.name}</div>
                      <div className="col-md-4">{file.path}</div>
-                     <div className="col-md-2"></div>
+                     <div className="col-md-2" className={"window-close-button"}><button onClick={this.deleteFromUploadQueue.bind(this,file_idx)}>
+                    <span> <FontAwesomeIcon icon={faWindowClose} /> Delete </span>
+                </button></div>
             </div>)
         }
         return (
@@ -65,7 +73,8 @@ export default class UploadImages extends Component {
                             </div>);
                     }}
                 </Dropzone>
-                {this.state.files.length > 0?<h3 className="custom-header">Files to be uploaded</h3>:""}
+                {/*This shows the list of files going to be uploaded*/}
+                {this.state.files.length > 0?<h3 className="custom-header">Files ready for upload. Hit continue to proceed.</h3>:""}
                 {this.state.files.length > 0?<div className="row">
                      <div className="col-md-2"></div>
                      <div className="col-md-4"><b><i>Filename</i></b></div>
