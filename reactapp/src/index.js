@@ -6,6 +6,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import {App} from "./App";
 
+/** TODO
+ TODO Add button delete for each uploaded image
+ * **/
+
 ReactDOM.render(<App/>, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

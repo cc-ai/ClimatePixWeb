@@ -253,7 +253,7 @@ class TagImages extends React.Component {
                             {/** Show the upload section if the add images flag is set to true. This flag is toggled
                              by the addMoreImages method **/}
                             <div className="container">
-                                <Dropzone ref={dropzoneRef} accept="image/png, image/jpg"
+                                <Dropzone ref={dropzoneRef} accept="image/png,image/jpeg"
                                           onDrop={this.getAttachedFiles} noClick noKeyboard>
                                     {({getRootProps, getInputProps, acceptedFiles}) => {
                                         return (
@@ -270,9 +270,11 @@ class TagImages extends React.Component {
                         </div>
                     </div>
                     {/** On click on finish uploading start submitting images to the server **/}
-                    <div className="fancy-button bg-gradient1" onClick={this.handleSubmit}>
-                        <span>Finish Uploading</span>
-                    </div>
+                    {this.state.files.length ? (
+                        <div className="btn btn-success btn-lg" onClick={this.handleSubmit}>
+                            <strong>Finish Uploading</strong>
+                        </div>
+                    ) : ''}
                 </div>
             </div>
         );
