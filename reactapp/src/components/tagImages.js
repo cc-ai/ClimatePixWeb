@@ -151,7 +151,7 @@ class TagImages extends React.Component {
     };
 
     render() {
-        /** 
+        /**
          * Each image section behvaes like a form of it's own. Currently we upload
          * one image with each request. **/
         let forms_html = [];

@@ -17,15 +17,6 @@ class MainPage extends React.Component {
         }
     }
 
-    getAttachedFiles = (files) => {
-        this.setState({
-            files: files
-        }, () => {
-            this.setState({images_uploaded: true})
-        })
-
-    };
-
     render() {
         return (
             <div>

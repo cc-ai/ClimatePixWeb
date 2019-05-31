@@ -34,6 +34,16 @@ export default class UploadImages extends Component {
     };
 
     render() {
+        let uploading_files_html = []
+        for(let file of this.state.files)
+        {
+            uploading_files_html.push(<div className="row">
+                 <div className="col-md-2"></div>
+                     <div className="col-md-4">{file.name}</div>
+                     <div className="col-md-4">{file.path}</div>
+                     <div className="col-md-2"></div>
+            </div>)
+        }
         return (
             <div className="upload-container">
                 <h3 className="custom-header">Contribute to this project by uploading and tagging pictures</h3>
@@ -55,6 +65,14 @@ export default class UploadImages extends Component {
                             </div>);
                     }}
                 </Dropzone>
+                {this.state.files.length > 0?<h3 className="custom-header">Files to be uploaded</h3>:""}
+                {this.state.files.length > 0?<div className="row">
+                     <div className="col-md-2"></div>
+                     <div className="col-md-4"><b><i>Filename</i></b></div>
+                     <div className="col-md-4"><b><i>Filepath</i></b></div>
+                     <div className="col-md-2"></div>
+                </div>:""}
+                {uploading_files_html}
                 {/*<button type="submit" className="upload-button" onClick={this.handleSubmit}>Upload Image</button>*/}
                 <Link className="fancy-button bg-gradient1"
                       to={{pathname: '/uploadwithtags', state: {files: this.state.files}}}>
