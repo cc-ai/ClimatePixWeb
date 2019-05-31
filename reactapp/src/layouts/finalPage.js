@@ -1,6 +1,6 @@
 import React from 'react';
 import {withCookies} from "react-cookie";
-import "../styles/image_uploader.css";
+import "../styles/final_page.css";
 
 /** Renders the final page with a thank you message.
  * TODO: Use this page to show all the images uploaded or anything else.
