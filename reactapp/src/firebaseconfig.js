@@ -17,7 +17,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const storage = firebase.storage();
-const firestore_collection = firebase.firestore().collection("images/")
+const firestore_collection = firebase.firestore().collection("images/");
 export {
-    storage, firestore_collection,firebase as default
+    storage, firestore_collection
 }

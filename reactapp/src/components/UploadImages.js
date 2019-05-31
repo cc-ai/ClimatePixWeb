@@ -34,23 +34,24 @@ export default class UploadImages extends Component {
     };
 
     deleteFromUploadQueue = (file_idx) => {
-        let current_files = this.state.files
-        current_files.splice(file_idx,1)
+        let current_files = this.state.files;
+        current_files.splice(file_idx,1);
         this.setState({files:current_files})
-    }
+    };
     render() {
-        let uploading_files_html = []
-        for(let file_idx in this.state.files)
+        let uploading_files_html = [];
+        let file_count = 0;
+        for(let file of this.state.files)
         {
-            let file = this.state.files[file_idx]
-            uploading_files_html.push(<div className="row padded-row">
-                 <div className="col-md-2"></div>
+            uploading_files_html.push(<div className="row padded-row" key={file_count}>
+                     <div className="col-md-2"/>
                      <div className="col-md-4">{file.name}</div>
                      <div className="col-md-4">{file.path}</div>
-                     <div className="col-md-2" className={"window-close-button"}><button onClick={this.deleteFromUploadQueue.bind(this,file_idx)}>
+                     <div className="col-md-2" className={"window-close-button"}><button onClick={this.deleteFromUploadQueue.bind(this,file_count)}>
                     <span> <FontAwesomeIcon icon={faWindowClose} /> Delete </span>
                 </button></div>
-            </div>)
+            </div>);
+            ++file_count;
         }
         return (
             <div className="upload-container">

@@ -1,5 +1,4 @@
 import React from 'react';
-import {withCookies} from "react-cookie";
 import "../styles/final_page.css";
 
 /** Renders the final page with a thank you message.
@@ -18,4 +17,4 @@ class FinalPage extends React.Component {
     }
 }
 
-export default withCookies(FinalPage);
+export default FinalPage;

@@ -1,5 +1,4 @@
 import React from "react";
-import {withCookies} from "react-cookie";
 import logo from "../images/earthlogo.png";
 import "../styles/header.css";
 import {HashLink} from "react-router-hash-link";
@@ -46,4 +45,4 @@ class Header extends React.Component {
 }
 
 Header.displayName = "Navigation bar at the top";
-export default withCookies(Header);
+export default Header;

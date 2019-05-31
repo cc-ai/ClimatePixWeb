@@ -1,5 +1,4 @@
 import React from 'react';
-import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
 import UploadImages from "../components/UploadImages";
 import AboutUS from "../components/aboutUs";
@@ -47,4 +46,4 @@ class MainPage extends React.Component {
     }
 }
 
-export default withCookies(MainPage);
+export default MainPage;

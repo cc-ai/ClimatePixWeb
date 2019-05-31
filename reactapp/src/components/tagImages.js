@@ -1,11 +1,11 @@
 import React, {createRef} from 'react';
 import Dropzone from 'react-dropzone';
-import {withCookies} from "react-cookie";
 import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
 import {firestore_collection, storage} from "../firebaseconfig";
+import {nav} from "../utils/nav";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -64,14 +64,11 @@ class TagImages extends React.Component {
         });
         this.setState({
             images_src: images_src
-        })
+        });
 
         /** Initialize progress bars */
-        let progress_bars = []
-        for (let file of files) {
-            progress_bars.push(0)
-        }
-        this.setState({progress:progress_bars})
+        let progress_bars = Array(files.length).fill(0);
+        this.setState({progress:progress_bars});
     };
     /** When there is a change in the input attached to an images, see the event and attach the data entered to the state object
      * **/
@@ -87,17 +84,27 @@ class TagImages extends React.Component {
         e.preventDefault();
         //Upload Files One by One
         let file_count = 0;
-        for (let file_idx in this.state.files) {
-            let file = this.state.files[file_idx]
+        for (let file of this.state.files) {
             let file_description = this.state["tags_" + file_count];
             let file_location = this.state["location_" + file_count];
             let file_category = this.state["category_" + file_count];
-            this.uploadDropfile(file, file_description, file_location, file_category,file_idx).then((response) => {
-                console.log("File Successfully Uploaded")
-            });
+            if (file_description === undefined)
+                file_description = '';
+            if (file_location === undefined)
+                file_location = '';
+            if (file_category === undefined)
+                file_category = '';
+            this.uploadDropfile(file, file_description, file_location, file_category,file_count)
+                .then((response) => {
+                    console.log("File Successfully Uploaded");
+                    nav("/thankyou");
+                })
+                .catch(error => {
+                    console.error(error);
+                    window.alert('File not successfully uploaded.');
+                });
             file_count += 1;
         }
-        window.location.href = "/thankyou"
     };
 
     uploadDropfile = async (file, file_description, file_location, file_category,file_idx) => {
@@ -106,11 +113,10 @@ class TagImages extends React.Component {
             let uploadToFirebase = storage.ref(`images/${file.name}`).put(file);
             await uploadToFirebase.on('state_changed', (snapshot) => {
                 // Show progress of the image upload
-                let progress_bars = this.state.progress
+                let progress_bars = this.state.progress.slice();
                 // Note: The granularity measured by the firebase library only applies to big files for all others
                 //The progress bar doesnt make much difference
-                let progress_bar = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                progress_bars[file_idx] = progress_bar
+                progress_bars[file_idx] = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
                 this.setState({progress:progress_bars})
 
@@ -135,6 +141,7 @@ class TagImages extends React.Component {
     };
 
     getAttachedFiles = (files) => {
+        console.log(files);
         let all_files = this.state.files.concat(files);
         this.setState({
             files: all_files
@@ -161,8 +168,8 @@ class TagImages extends React.Component {
             const locationId = `category_${image_count}`;
             const categoryId = `location_${image_count}`;
 
-            let progress_bar =  this.state.progress[image_count]
-            let progress_style = {width:progress_bar+"%",height:7,backgroundColor:'rgb(35, 51, 64)'}
+            let progress_bar =  this.state.progress[image_count];
+            let progress_style = {width:progress_bar+"%",height:7,backgroundColor:'rgb(35, 51, 64)'};
 
             forms_html.push(<div className="col-md-3 form-col" key={image_count}>
                 <form className="image-form">
@@ -233,6 +240,9 @@ class TagImages extends React.Component {
                              by the addMoreImages method **/}
                             {this.state.add_images_flag === true ? <div className="upload-container">
                                     <Dropzone className="dropzone-container" ref={dropzoneRef} accept="image/png, image/jpg"
+                                              minSize={0}
+                                              maxSize={50 * 1024 * 1024}
+                                              onDropRejected={(ev) => console.log(ev)}
                                               onDrop={this.getAttachedFiles} noClick noKeyboard>
                                         {({getRootProps, getInputProps, acceptedFiles}) => {
                                             return (
@@ -271,4 +281,4 @@ TagImages.propTypes = {
 TagImages.defaultProps = {
     files: []
 };
-export default withCookies(TagImages);
+export default TagImages;

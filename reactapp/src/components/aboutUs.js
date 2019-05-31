@@ -1,5 +1,4 @@
 import React from "react";
-import {withCookies} from "react-cookie";
 
 /**
  * Content for About Us Section on the landing/home page.
@@ -26,4 +25,4 @@ class AboutUS extends React.Component {
 }
 
 AboutUS.displayName = 'About US Section - Landing Page (mainPage.js)';
-export default withCookies(AboutUS);
+export default AboutUS;

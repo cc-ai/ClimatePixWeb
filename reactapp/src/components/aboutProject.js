@@ -1,5 +1,4 @@
 import React from "react";
-import {withCookies} from "react-cookie";
 
 /**
  * Content for About Us Section on the landing/home page.
@@ -27,4 +26,4 @@ class AboutProject extends React.Component {
     }
 }
 
-export default withCookies(AboutProject);
+export default AboutProject;
