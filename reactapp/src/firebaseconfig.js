@@ -4,20 +4,35 @@ import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/database';
 
+const firebaseCollectionName = process.env.REACT_APP_COLLECTION_NAME;
+
 const firebaseConfig = {
-        apiKey: "AIzaSyDzXQcHJK_NYLXSKtf45C6Skz_9WRBBbLY",
-        authDomain: "ccai-46e86.firebaseapp.com",
-        databaseURL: "https://ccai-46e86.firebaseio.com",
-        projectId: "ccai-46e86",
-        storageBucket: "ccai-46e86.appspot.com",
-        messagingSenderId: "391004789804",
-        appId: "1:391004789804:web:9fcc67c4bd849e4d"
+        apiKey: process.env.REACT_APP_API_KEY,
+        authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+        databaseURL: process.env.REACT_APP_DATABASE_URL,
+        projectId: process.env.REACT_APP_PROJECT_ID,
+        storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+        messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
     };
 
 firebase.initializeApp(firebaseConfig);
+var firebaseUser = null;
+// Listen for auth
+firebase.auth().onAuthStateChanged(async user => {
+    if (user) {
+        firebaseUser = user.uid;
+    } else {
+        firebase.auth().signInAnonymously();
+    }
+});
+firebase.auth().signInAnonymously().catch((error) => {
+    console.error('Authentication error');
+    console.error(error);
+});
+
 
 const storage = firebase.storage();
-const firestore_collection = firebase.firestore().collection("images/");
+const firestore_collection = firebase.firestore().collection(firebaseCollectionName);
 export {
-    storage, firestore_collection
+    storage, firestore_collection, firebaseCollectionName, firebaseUser
 }

@@ -4,8 +4,9 @@ import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
-import {firestore_collection, storage} from "../firebaseconfig";
+import {firestore_collection, storage, firebaseCollectionName, firebaseUser} from "../firebaseconfig";
 import {nav} from "../utils/nav";
+import uuid from 'uuid';
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -110,28 +111,39 @@ class TagImages extends React.Component {
     uploadDropfile = async (file, file_description, file_location, file_category,file_idx) => {
         try {
             let uploadURL = null;
-            let uploadToFirebase = storage.ref(`images/${file.name}`).put(file);
+            const uploadTitle = `${firebaseUser}/${uuid.v4()}`;
+            const uploadExtension = file.name.split('.').pop();
+            const uploadName = `${uploadTitle}.${uploadExtension}`;
+            let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
+            console.log(`Uploading to ${firebaseCollectionName}/${uploadName}`);
             await uploadToFirebase.on('state_changed', (snapshot) => {
                 // Show progress of the image upload
                 let progress_bars = this.state.progress.slice();
                 // Note: The granularity measured by the firebase library only applies to big files for all others
                 //The progress bar doesnt make much difference
                 progress_bars[file_idx] = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
                 this.setState({progress:progress_bars})
-
             }, (error) => {
+                console.error('upload error');
                 console.error(error);
             }, () => {
                 //Call this method on complete
-                storage.ref('images').child(file.name).getDownloadURL().then(url => {
+                storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
                     uploadURL = url;
                     firestore_collection.add({
                         url: uploadURL,
                         description: file_description,
                         location: file_location,
                         category: file_category
-                    })
+                    }).then((r) => {
+                        console.log('Metadata uploaded.');
+                    }).catch(e => {
+                        console.error('Error when sending metadata.');
+                        console.error(e);
+                    });
+                }).catch(error => {
+                    console.error('Error when checking uploaded image.');
+                    console.error(error);
                 })
             })
         }

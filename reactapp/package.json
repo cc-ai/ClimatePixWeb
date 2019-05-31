@@ -21,11 +21,12 @@
     "react-native-firebase": "^5.4.2",
     "react-router-dom": "^5.0.0",
     "react-router-hash-link": "^1.2.1",
-    "react-scripts": "3.0.0"
+    "react-scripts": "3.0.0",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "sh -ac '. ./.env; react-scripts build'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
