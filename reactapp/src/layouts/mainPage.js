@@ -1,9 +1,9 @@
 import React from 'react';
 import "../styles/image_uploader.css";
-import UploadImages from "../components/UploadImages";
 import AboutUS from "../components/aboutUs";
 import AboutProject from "../components/aboutProject";
 import {TopLink} from "../components/TopLInk";
+import {Link} from "react-router-dom";
 
 /** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
  the images are uploaded , the page will load the tag images component **/
@@ -20,7 +20,14 @@ class MainPage extends React.Component {
         return (
             <div>
                 <div className="row drag-drop-row">
-                    <UploadImages/>
+                    <div className="upload-container">
+                        <h3 className="custom-header">Contribute to this project by uploading and tagging pictures</h3>
+                        <p>
+                            <Link className="btn btn-success btn-lg" to='/uploadwithtags'>
+                                <strong>Upload</strong>
+                            </Link>
+                        </p>
+                    </div>
                 </div>
                 <div className="row about-row">
                     <div className="col-md-3"/>

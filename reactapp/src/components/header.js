@@ -17,7 +17,9 @@ class Header extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark teal mb-4 pageNavHeader" id="home">
-                <a className="navbar-brand" href="#"><img className="logoImg" src={logo}/></a>
+                <span className="navbar-brand" href="#">
+                    <img className="logoImg" alt="ClimateChange.AI" src={logo}/>
+                </span>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

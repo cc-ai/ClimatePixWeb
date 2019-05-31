@@ -121,7 +121,7 @@ class TagImages extends React.Component {
                 this.setState({progress:progress_bars})
 
             }, (error) => {
-                console.log(error)
+                console.error(error);
             }, () => {
                 //Call this method on complete
                 storage.ref('images').child(file.name).getDownloadURL().then(url => {
@@ -141,7 +141,6 @@ class TagImages extends React.Component {
     };
 
     getAttachedFiles = (files) => {
-        console.log(files);
         let all_files = this.state.files.concat(files);
         this.setState({
             files: all_files
@@ -227,7 +226,10 @@ class TagImages extends React.Component {
         return (
             <div className="row drag-drop-row">
                 <div className="upload-container tagzone-container">
-                    <h3 className="custom-header">Tell us more about these images</h3>
+                    <h3 className="custom-header">Upload pictures and tell us more about them</h3>
+                    <h4 className="mb-4">
+                        You can upload multiple files at once (Only *.jpeg and *.png images will be accepted)
+                    </h4>
                     {/** If there is a message from the api request show this underneath the header **/}
                     {this.state.message ? <div className="row">
                     </div> : <div/>}
@@ -238,29 +240,21 @@ class TagImages extends React.Component {
                             {/** Another dropzone component to allow users to add more images while adding the metadata **/}
                             {/** Show the upload section if the add images flag is set to true. This flag is toggled
                              by the addMoreImages method **/}
-                            {this.state.add_images_flag === true ? <div className="upload-container">
-                                    <Dropzone className="dropzone-container" ref={dropzoneRef} accept="image/png, image/jpg"
-                                              minSize={0}
-                                              maxSize={50 * 1024 * 1024}
-                                              onDropRejected={(ev) => console.log(ev)}
-                                              onDrop={this.getAttachedFiles} noClick noKeyboard>
-                                        {({getRootProps, getInputProps, acceptedFiles}) => {
-                                            return (
-                                                <div className="container">
-                                                    <div {...getRootProps({className: 'dropzone'})}>
-                                                        <input {...getInputProps()} />
-                                                        <span className="href-link"
-                                                              onClick={openDialog}><span>Click to select files</span></span>
-                                                    </div>
-                                                </div>);
-                                        }}
-                                    </Dropzone>
-                                </div> :
-                                <button type="button" className="btn btn-default btn-circle btn-xl"
-                                        onClick={this.addMoreImages}>
-                                    Add More Images
-                                </button>}
-
+                            <div className="container">
+                                <Dropzone ref={dropzoneRef} accept="image/png, image/jpg"
+                                          onDrop={this.getAttachedFiles} noClick noKeyboard>
+                                    {({getRootProps, getInputProps, acceptedFiles}) => {
+                                        return (
+                                            <div {...getRootProps({className: 'dropzone'})}>
+                                                <input {...getInputProps()} />
+                                                Drag and Drop files here, or &nbsp;
+                                                <span className="href-link"
+                                                      onClick={openDialog}><span>Click to select files</span></span>
+                                            </div>
+                                        );
+                                    }}
+                                </Dropzone>
+                            </div>
                         </div>
                     </div>
                     {/** On click on finish uploading start submitting images to the server **/}
