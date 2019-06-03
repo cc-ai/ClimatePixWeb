@@ -29,25 +29,35 @@ html, body {
     color: white;
 }
 
-.about-row {
-    min-height: 600px;
-    width: 100%;
-    background-color: whitesmoke;
+.section-about-wrapper {
+    min-height: 100vh;
     color: black;
 }
+
+
+.section-about {
+    background-color: whitesmoke;
+}
+.section-about > .row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
 
 .upload-container {
     display: block;
     width: 80%;
-    margin-top: 4%;
+    padding-top: 5rem;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
 
+.main-page .upload-container {
+    min-height: 100vh;
+}
+
 .dropzone {
-
-
     border: 3px dashed #bbb;
     -webkit-border-radius: 5px;
     border-radius: 5px;

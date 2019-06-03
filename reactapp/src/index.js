@@ -8,8 +8,6 @@ import {App} from "./App";
 
 /**
 
- todo Fusion two parts "Who we are" and "what is this project" into 1 part: "About"
-
  TODO About delete button: display it on image mouse over at top right, and use just trash icon.
 
  TODO On page "thank you", add a link "learn more" to MILA page: https://mila.quebec/en/ai-society/visualizing-climate-change/

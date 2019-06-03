@@ -32,10 +32,7 @@ class Header extends React.Component {
                                 className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item">
-                            <HashLink smooth className="nav-link" to="/#about-us">Who are we ? </HashLink>
-                        </li>
-                        <li className="nav-item">
-                            <HashLink smooth className="nav-link" to="/#about-project">What is this project ?</HashLink>
+                            <HashLink smooth className="nav-link" to="/#about">About us</HashLink>
                         </li>
                     </ul>
                 </div>

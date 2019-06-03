@@ -1,7 +1,6 @@
 import React from 'react';
 import "../styles/image_uploader.css";
-import AboutUS from "../components/aboutUs";
-import AboutProject from "../components/aboutProject";
+import {AboutUS} from "../components/aboutUs";
 import {TopLink} from "../components/TopLInk";
 import {Link} from "react-router-dom";
 import {Helmet} from "react-helmet/es/Helmet";
@@ -19,7 +18,7 @@ class MainPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="main-page">
                 <Helmet>
                     <title>Welcome to ClimateChange.AI</title>
                 </Helmet>
@@ -33,23 +32,17 @@ class MainPage extends React.Component {
                         </p>
                     </div>
                 </div>
-                <div className="row about-row">
-                    <div className="col-md-3"/>
-                    <div className="col-md-6">
-                        <AboutUS/>
-                    </div>
-                    <div className="col-md-3">
-                        <TopLink/>
-                    </div>
-                </div>
-                <div className="row drag-drop-row"/>
-                <div className="row about-row">
-                    <div className="col-md-3"/>
-                    <div className="col-md-6">
-                        <AboutProject/>
-                    </div>
-                    <div className="col-md-3">
-                        <TopLink/>
+                <div className="section-about-wrapper">
+                    <div className="section-about">
+                        <div className="row">
+                            <div className="col-md-3"/>
+                            <div className="col-md-6">
+                                <AboutUS/>
+                            </div>
+                            <div className="col-md-3">
+                                <TopLink/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
