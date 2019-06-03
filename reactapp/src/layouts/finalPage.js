@@ -1,5 +1,6 @@
 import React from 'react';
 import "../styles/final_page.css";
+import {Helmet} from "react-helmet/es/Helmet";
 
 /** Renders the final page with a thank you message.
  * TODO: Use this page to show all the images uploaded or anything else.
@@ -11,6 +12,9 @@ class FinalPage extends React.Component {
 
         return (
             <div className="upload-container">
+                <Helmet>
+                    <title>Thanks!</title>
+                </Helmet>
                 <h3>Thank you for your contribution</h3>
             </div>
         );

@@ -4,6 +4,7 @@ import AboutUS from "../components/aboutUs";
 import AboutProject from "../components/aboutProject";
 import {TopLink} from "../components/TopLInk";
 import {Link} from "react-router-dom";
+import {Helmet} from "react-helmet/es/Helmet";
 
 /** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
  the images are uploaded , the page will load the tag images component **/
@@ -19,6 +20,9 @@ class MainPage extends React.Component {
     render() {
         return (
             <div>
+                <Helmet>
+                    <title>Welcome to ClimateChange.AI</title>
+                </Helmet>
                 <div className="row drag-drop-row">
                     <div className="upload-container">
                         <h3 className="custom-header">Contribute to this project by uploading and tagging pictures</h3>

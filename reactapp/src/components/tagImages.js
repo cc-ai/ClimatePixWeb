@@ -4,11 +4,12 @@ import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
-import {firestore_collection, storage, firebaseCollectionName, firebaseUser} from "../firebaseconfig";
+import {firebaseCollectionName, firebaseUser, firestore_collection, storage} from "../firebaseconfig";
 import {nav} from "../utils/nav";
 import uuid from 'uuid';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
+import {Helmet} from "react-helmet/es/Helmet";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -39,7 +40,7 @@ class TagImages extends React.Component {
         super(props);
         this.state = {
             files: [],
-            progress:[],
+            progress: [],
             images_src: [],
             error_code: null,
             message: null,
@@ -71,7 +72,7 @@ class TagImages extends React.Component {
 
         /** Initialize progress bars */
         let progress_bars = Array(files.length).fill(0);
-        this.setState({progress:progress_bars});
+        this.setState({progress: progress_bars});
     };
     /** When there is a change in the input attached to an images, see the event and attach the data entered to the state object
      * **/
@@ -97,7 +98,7 @@ class TagImages extends React.Component {
                 file_location = '';
             if (file_category === undefined)
                 file_category = '';
-            this.uploadDropfile(file, file_description, file_location, file_category,file_count)
+            this.uploadDropfile(file, file_description, file_location, file_category, file_count)
                 .then((response) => {
                     console.log("File Successfully Uploaded");
                     nav("/thankyou");
@@ -110,7 +111,7 @@ class TagImages extends React.Component {
         }
     };
 
-    uploadDropfile = async (file, file_description, file_location, file_category,file_idx) => {
+    uploadDropfile = async (file, file_description, file_location, file_category, file_idx) => {
         try {
             let uploadURL = null;
             const uploadTitle = `${firebaseUser}/${uuid.v4()}`;
@@ -124,7 +125,7 @@ class TagImages extends React.Component {
                 // Note: The granularity measured by the firebase library only applies to big files for all others
                 //The progress bar doesnt make much difference
                 progress_bars[file_idx] = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                this.setState({progress:progress_bars});
+                this.setState({progress: progress_bars});
             }, (error) => {
                 console.error('upload error');
                 console.error(error);
@@ -148,9 +149,8 @@ class TagImages extends React.Component {
                     console.error(error);
                 })
             })
-        }
-        catch(e) {
-             console.log("We are sorry something went wrong while uploading your file. Please try again later.")
+        } catch (e) {
+            console.log("We are sorry something went wrong while uploading your file. Please try again later.")
         }
     };
 
@@ -193,15 +193,15 @@ class TagImages extends React.Component {
             const locationId = `category_${image_count}`;
             const categoryId = `location_${image_count}`;
 
-            let progress_bar =  this.state.progress[image_count];
-            let progress_style = {width:progress_bar+"%",height:7,backgroundColor:'rgb(35, 51, 64)'};
+            let progress_bar = this.state.progress[image_count];
+            let progress_style = {width: progress_bar + "%", height: 7, backgroundColor: 'rgb(35, 51, 64)'};
             const fileIndex = image_count;
 
             forms_html.push(<div className="col-md-3 form-col" key={image_count}>
                 <form className="image-form">
                     <div className="form-group">
                         <div className="image-wrapper" style={{backgroundImage: `url(${form})`}}>
-                            <div style={progress_style} />
+                            <div style={progress_style}/>
                         </div>
                     </div>
                     <div className="form-group">
@@ -224,8 +224,8 @@ class TagImages extends React.Component {
                                     className="form-control custom-select">
                                 {['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Earthquakes', 'Other']
                                     .map((category, index) => (
-                                    <option key={index} value={category}>{category}</option>
-                                ))}
+                                        <option key={index} value={category}>{category}</option>
+                                    ))}
                             </select>
                         </div>
                     </div>
@@ -255,6 +255,9 @@ class TagImages extends React.Component {
         }
         return (
             <div className="row drag-drop-row">
+                <Helmet>
+                    <title>Upload and describe your pictures</title>
+                </Helmet>
                 <div className="upload-container tagzone-container">
                     <h3 className="custom-header">Upload pictures and tell us more about them</h3>
                     <h4 className="mb-4">

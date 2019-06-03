@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Router, Route, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import {history} from "./utils/history";
 import Header from "./components/header";
 import indexRoutes from "./indexRoutes";

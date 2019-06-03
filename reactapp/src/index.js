@@ -10,8 +10,6 @@ import {App} from "./App";
 
  TODO I can see uploaded images on firebase, but I don't yet see uploaded metadata (ie. description, category and location for each image).
 
- TODO Set page title for each page.
-
  TODO Big images (e.g. >20MB) are not correctly loaded. How to do with them ? Do we accept them ?
 
  TODO Warning error inside tagImages when uploading on firebase.
