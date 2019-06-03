@@ -219,11 +219,25 @@ html, body {
     font-size: 20px;
 }
 
-.window-close-button button {
+.image-wrapper .window-close-button button {
     background-color: darkred;
     border: 0px;
     color: white;
     text-align: left;
+}
+
+.image-wrapper .window-close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    opacity: 0.5;
+}
+
+.image-wrapper:hover .window-close-button {
+    opacity: 1;
+}
+.image-wrapper:hover .window-close-button button:hover {
+    background-color: red;
 }
 
 .padded-row {

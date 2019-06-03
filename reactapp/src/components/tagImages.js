@@ -8,7 +8,7 @@ import {firebaseCollectionName, firebaseUser, firestore_collection, storage} fro
 import {nav} from "../utils/nav";
 import uuid from 'uuid';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
+import {faWindowClose, faTrash, faTrashAlt, faTrashRestore, faTrashRestoreAlt} from "@fortawesome/free-solid-svg-icons";
 import {Helmet} from "react-helmet/es/Helmet";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
@@ -198,6 +198,14 @@ class TagImages extends React.Component {
                     <div className="form-group">
                         <div className="image-wrapper" style={{backgroundImage: `url(${form})`}}>
                             <div style={progress_style}/>
+                            <div className="window-close-button">
+                                <button onClick={(event) => {
+                                    event.preventDefault();
+                                    this.removeFile(fileIndex);
+                                }}>
+                                    <span><FontAwesomeIcon icon={faTrashAlt}/></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div className="form-group">
@@ -233,16 +241,6 @@ class TagImages extends React.Component {
                             </div>
                             <input name={locationId} id={locationId} type="text" className="form-control"
                                    placeholder="Location of the image" onChange={this.onInputChange}/>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="window-close-button">
-                            <button onClick={(event) => {
-                                event.preventDefault();
-                                this.removeFile(fileIndex);
-                            }}>
-                                <span><FontAwesomeIcon icon={faWindowClose}/>Delete</span>
-                            </button>
                         </div>
                     </div>
                 </form>
