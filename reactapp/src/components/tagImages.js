@@ -122,7 +122,7 @@ class TagImages extends React.Component {
                 // Note: The granularity measured by the firebase library only applies to big files for all others
                 //The progress bar doesnt make much difference
                 progress_bars[file_idx] = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                this.setState({progress:progress_bars})
+                this.setState({progress:progress_bars});
             }, (error) => {
                 console.error('upload error');
                 console.error(error);

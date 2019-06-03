@@ -12,7 +12,8 @@ class AboutProject extends React.Component {
                 <p className="bigP text-center">
                     Our project aims to raise awareness and conceptual understanding
                     of climate change by bringing the future closer. More info &nbsp;
-                    <strong><a target="_blank" href="https://mila.quebec/en/ai-society/visualizing-climate-change/">here</a></strong>.
+                    <strong><a target="_blank" rel="noopener noreferrer"
+                               href="https://mila.quebec/en/ai-society/visualizing-climate-change/">here</a></strong>.
                 </p>
             </div>
         )
