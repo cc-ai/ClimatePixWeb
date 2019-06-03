@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import {firestore_collection, storage, firebaseCollectionName, firebaseUser} from "../firebaseconfig";
 import {nav} from "../utils/nav";
 import uuid from 'uuid';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -38,12 +40,12 @@ class TagImages extends React.Component {
         this.state = {
             files: [],
             progress:[],
-            forms_data: [],
             images_src: [],
             error_code: null,
             message: null,
             add_images_flag: false
-        }
+        };
+        this.removeFile = this.removeFile.bind(this);
     }
 
     componentWillMount() {
@@ -157,7 +159,7 @@ class TagImages extends React.Component {
         this.setState({
             files: all_files
         }, () => {
-            this.loadImages(all_files)
+            this.loadImages(all_files);
         });
         this.setState({add_images_flag: false})
 
@@ -167,6 +169,18 @@ class TagImages extends React.Component {
         e.preventDefault();
         this.setState({add_images_flag: !this.state.add_images_flag})
     };
+
+    removeFile(fileIndex) {
+        if (fileIndex >= 0 && fileIndex < this.state.files.length) {
+            const files = this.state.files.slice();
+            const progress = this.state.progress.slice();
+            const images_src = this.state.images_src.slice();
+            files.splice(fileIndex, 1);
+            progress.splice(fileIndex, 1);
+            images_src.splice(fileIndex, 1);
+            this.setState({files: files, progress: progress, images_src: images_src});
+        }
+    }
 
     render() {
         /**
@@ -181,6 +195,7 @@ class TagImages extends React.Component {
 
             let progress_bar =  this.state.progress[image_count];
             let progress_style = {width:progress_bar+"%",height:7,backgroundColor:'rgb(35, 51, 64)'};
+            const fileIndex = image_count;
 
             forms_html.push(<div className="col-md-3 form-col" key={image_count}>
                 <form className="image-form">
@@ -188,7 +203,6 @@ class TagImages extends React.Component {
                         <div className="image-wrapper" style={{backgroundImage: `url(${form})`}}>
                             <div style={progress_style} />
                         </div>
-
                     </div>
                     <div className="form-group">
                         <label className="sr-only" htmlFor={descriptionId}>Description</label>
@@ -208,14 +222,8 @@ class TagImages extends React.Component {
                             </div>
                             <select name={categoryId} id={categoryId} onChange={this.onInputChange}
                                     className="form-control custom-select">
-                                {[
-                                    'Flood',
-                                    'Wild Fire',
-                                    'Hurricane',
-                                    'Tornado',
-                                    'Earthquakes',
-                                    'Other'
-                                ].map((category, index) => (
+                                {['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Earthquakes', 'Other']
+                                    .map((category, index) => (
                                     <option key={index} value={category}>{category}</option>
                                 ))}
                             </select>
@@ -229,6 +237,16 @@ class TagImages extends React.Component {
                             </div>
                             <input name={locationId} id={locationId} type="text" className="form-control"
                                    placeholder="Location of the image" onChange={this.onInputChange}/>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="window-close-button">
+                            <button onClick={(event) => {
+                                event.preventDefault();
+                                this.removeFile(fileIndex);
+                            }}>
+                                <span><FontAwesomeIcon icon={faWindowClose}/>Delete</span>
+                            </button>
                         </div>
                     </div>
                 </form>

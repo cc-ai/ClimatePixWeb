@@ -12,8 +12,6 @@ import {App} from "./App";
 
  TODO Set page title for each page.
 
- TODO Add button delete for each uploaded image
-
  TODO Big images (e.g. >20MB) are not correctly loaded. How to do with them ? Do we accept them ?
 
  TODO Warning error inside tagImages when uploading on firebase.
