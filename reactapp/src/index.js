@@ -9,10 +9,7 @@ import {App} from "./App";
 /**
 
  TODO About delete button: display it on image mouse over at top right, and use just trash icon.
-
- TODO On page "thank you", add a link "learn more" to MILA page: https://mila.quebec/en/ai-society/visualizing-climate-change/
- TODO On page "thank you", add a button "upload more" to get back to upload page
-
+ 
  TODO Before "finish uploading" button, add a checkbox "I agree with __upload policy__" with url to display license in a fancy box. Get license text from Vahe.
 
  TODO (later) add autocompletion to "location" field

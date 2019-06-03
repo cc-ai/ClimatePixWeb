@@ -19,7 +19,7 @@ export class AboutUS extends React.Component {
                 </p>
                 <p className="bigP">
                     Our project aims to raise awareness and conceptual understanding
-                    of climate change by bringing the future closer. More info &nbsp;
+                    of climate change by bringing the future closer. More info&nbsp;
                     <strong><a target="_blank" rel="noopener noreferrer"
                                href="https://mila.quebec/en/ai-society/visualizing-climate-change/">here</a></strong>.
                 </p>

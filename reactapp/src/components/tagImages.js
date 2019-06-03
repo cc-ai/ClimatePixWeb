@@ -288,7 +288,7 @@ class TagImages extends React.Component {
                     </div>
                     {/** On click on finish uploading start submitting images to the server **/}
                     {this.state.files.length ? (
-                        <div className="btn btn-success btn-lg mt-2" onClick={this.handleSubmit}>
+                        <div className="btn btn-success btn-lg mt-2 mb-4" onClick={this.handleSubmit}>
                             <strong>Finish Uploading</strong>
                         </div>
                     ) : ''}
