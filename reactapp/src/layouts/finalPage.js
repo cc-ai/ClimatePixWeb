@@ -4,7 +4,6 @@ import {Helmet} from "react-helmet/es/Helmet";
 import {Link} from "react-router-dom";
 
 /** Renders the final page with a thank you message.
- * TODO: Make GDPR complaint.
  * **/
 class FinalPage extends React.Component {
 

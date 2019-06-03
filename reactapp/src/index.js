@@ -7,18 +7,22 @@ import 'bootstrap/dist/js/bootstrap.js';
 import {App} from "./App";
 
 /**
- TODO Before "finish uploading" button, add a checkbox "I agree with __upload policy__" with url to display license in a fancy box. Get license text from Vahe.
+ TODO Before "finish uploading" button, add a checkbox "I agree with <a>>upload policy</a>" with url to display license in a fancy box. Get license text from Vahe.
+ This should make the site GDPR complaint.
 
- TODO (later) add autocompletion to "location" field
+ TODO (later) add autocompletion to "location" field (use Google API calls)
 
  TODO (later) limit 1 image size to 10MB
 
- TODO Big images (e.g. >20MB) are not correctly loaded. How to do with them ? Do we accept them ?
+ TODO (later) Big images (e.g. >20MB) are not correctly loaded. How to do with them ? Do we accept them ?
+
+ TODO (later) Upload page: the user experience can be improved by showing a progress bar to indicate images uploaded
 
  TODO Warning error inside tagImages when uploading on firebase.
  Seems an issue where the web app changes page (from upload page to thankyou page):
  -----
- Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
+ Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak
+ in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
  in Tag Images with Description And GeoTags (created by Context.Consumer)
  in Route (at App.js:16) index.js:1375
  e index.js:1375
