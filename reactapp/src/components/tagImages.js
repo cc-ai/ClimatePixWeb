@@ -113,10 +113,8 @@ class TagImages extends React.Component {
 
     uploadDropfile = async (file, file_description, file_location, file_category, file_idx) => {
         try {
-            let uploadURL = null;
-            const uploadTitle = `${firebaseUser}/${uuid.v4()}`;
-            const uploadExtension = file.name.split('.').pop();
-            const uploadName = `${uploadTitle}.${uploadExtension}`;
+            // { firebase user } / { ID }.{ file extension }
+            const uploadName = `${firebaseUser}/${uuid.v4()}.${file.name.split('.').pop()}`;
             let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
             console.log(`Uploading to ${firebaseCollectionName}/${uploadName}`);
             await uploadToFirebase.on('state_changed', (snapshot) => {
@@ -132,14 +130,13 @@ class TagImages extends React.Component {
             }, () => {
                 //Call this method on complete
                 storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
-                    uploadURL = url;
                     firestore_collection.add({
-                        url: uploadURL,
+                        url: url,
                         description: file_description,
                         location: file_location,
                         category: file_category
-                    }).then((r) => {
-                        console.log('Metadata uploaded.');
+                    }).then((docRef) => {
+                        console.log(`Metadata uploaded ${docRef.path}`);
                     }).catch(e => {
                         console.error('Error when sending metadata.');
                         console.error(e);
