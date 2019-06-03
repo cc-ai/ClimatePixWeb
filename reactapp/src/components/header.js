@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 
 /**
  * Renders a NavBar Header. To be displayed across all layouts.
- * TODO: The links in the header nav currently dont take you to the appropriate sections on the page. Update them.
  */
 class Header extends React.Component {
     constructor(props) {

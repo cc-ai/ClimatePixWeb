@@ -25,8 +25,7 @@ const openDialog = () => {
 Geocode.enableDebug();
 
 /** Replace with your api key **/
-/** TODO:REPLACE with your key for google project - My test key is locked to my IP Address
- *
+/** TODO Google API is not currently used.
  *  **/
 const geocode_api_key = process.env.REACT_APP_GOOGLE_API_KEY;
 Geocode.setApiKey(geocode_api_key);

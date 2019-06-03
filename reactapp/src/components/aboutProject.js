@@ -2,7 +2,6 @@ import React from "react";
 
 /**
  * Content for About Us Section on the landing/home page.
- * TODO: Edit about us section content with the appropriate content
  */
 class AboutProject extends React.Component {
     render() {
