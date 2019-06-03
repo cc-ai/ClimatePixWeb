@@ -8,6 +8,19 @@ import {App} from "./App";
 
 /**
 
+ todo Fusion two parts "Who we are" and "what is this project" into 1 part: "About"
+
+ TODO About delete button: display it on image mouse over at top right, and use just trash icon.
+
+ TODO On page "thank you", add a link "learn more" to MILA page: https://mila.quebec/en/ai-society/visualizing-climate-change/
+ TODO On page "thank you", add a button "upload more" to get back to upload page
+
+ TODO Before "finish uploading" button, add a checkbox "I agree with __upload policy__" with url to display license in a fancy box. Get license text from Vahe.
+
+ TODO (later) add autocompletion to "location" field
+
+ TODO (later) limit 1 image size to 10MB
+
  TODO Big images (e.g. >20MB) are not correctly loaded. How to do with them ? Do we accept them ?
 
  TODO Warning error inside tagImages when uploading on firebase.

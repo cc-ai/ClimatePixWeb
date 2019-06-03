@@ -82,7 +82,7 @@ class TagImages extends React.Component {
         /** Method called after hitting finish uploading. Using
          * current files in this.state.files and the input name tags send image and their meta data to the
          * uploadDropfile method Note, we are currently uploading one image at a time to avoid large data uploads.
-         * TODO: The user experience can be improved by 1) showing a progress bar to indicate images uploaded
+         *  TODO: The user experience can be improved by 1) showing a progress bar to indicate images uploaded
          **/
         e.preventDefault();
         //Upload Files One by One
