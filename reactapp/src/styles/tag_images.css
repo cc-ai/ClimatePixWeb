@@ -65,11 +65,23 @@ div.finish-uploading {
     cursor: pointer;
 }
 
-.upload-form-wrapper a {
+.upload-form-wrapper span.link-license {
     color: white;
     text-decoration: underline;
+    cursor: pointer;
 }
 
-.upload-form-wrapper a:hover {
+.upload-form-wrapper span.link-license:hover {
     text-decoration: none;
+}
+
+pre.license {
+    margin: 0;
+    padding: 1rem;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow: auto;
 }

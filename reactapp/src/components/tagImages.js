@@ -8,8 +8,11 @@ import {firebaseCollectionName, firebaseUser, firestore_collection, storage} fro
 import {nav} from "../utils/nav";
 import uuid from 'uuid';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faWindowClose, faTrash, faTrashAlt, faTrashRestore, faTrashRestoreAlt} from "@fortawesome/free-solid-svg-icons";
+import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {Helmet} from "react-helmet/es/Helmet";
+import {FancyBox} from "./fancyBox";
+import axios from 'axios';
+import {AgreementContext} from "./agreementContext";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -41,9 +44,37 @@ class TagImages extends React.Component {
             images_src: [],
             error_code: null,
             message: null,
-            add_images_flag: false
+            add_images_flag: false,
+            showAgreement: false,
+            license: null
         };
+        this.onChangeShowAgreement = this.onChangeShowAgreement.bind(this);
+        this.loadLicense = this.loadLicense.bind(this);
         this.removeFile = this.removeFile.bind(this);
+    }
+
+    loadLicense() {
+        if (this.state.license)
+            return;
+        const url = `${process.env.PUBLIC_URL}/LICENSE`;
+        axios({
+            method: 'get',
+            url: url,
+            responseType: 'txt'
+        })
+            .then(reponse => {
+                // Is this possible?
+                if (!reponse)
+                    throw new Error(`No image available for address ${url}`);
+                this.setState({license: reponse.data});
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    onChangeShowAgreement(value) {
+        this.setState({showAgreement: value});
     }
 
     componentWillMount() {
@@ -179,6 +210,7 @@ class TagImages extends React.Component {
         /**
          * Each image section behvaes like a form of it's own. Currently we upload
          * one image with each request. **/
+        const agreement = this.context;
         let forms_html = [];
         let image_count = 0;
         for (let form of this.state.images_src) {
@@ -283,16 +315,50 @@ class TagImages extends React.Component {
                     </div>
                     {/** On click on finish uploading start submitting images to the server **/}
                     {this.state.files.length ? (
-                        <div className="btn btn-success btn-lg mt-2 mb-4" onClick={this.handleSubmit}>
-                            <strong>Finish Uploading</strong>
+                        <div className="upload-form-wrapper">
+                            <form>
+                                <div className="form-check">
+                                    <input type="checkbox"
+                                           className="form-check-input"
+                                           id="agree-license"
+                                           checked={agreement.get()}
+                                           onChange={(event) => agreement.set(event.target.checked)}/>
+                                    <strong>
+                                        <label className="form-check-label" htmlFor="agree-license">
+                                            I agree with the&nbsp;
+                                        </label>
+                                        <span className="link-license"
+                                              onClick={() => this.onChangeShowAgreement(true)}>
+                                            license
+                                        </span>.
+                                    </strong>
+                                </div>
+                            </form>
+                            <button className="finish-uploading btn btn-success btn-lg mt-2 mb-4"
+                                    disabled={!agreement.get()}
+                                    onClick={this.handleSubmit}>
+                                <strong>Finish Uploading</strong>
+                            </button>
                         </div>
                     ) : ''}
                 </div>
+                {this.state.showAgreement && (
+                    <FancyBox title={'LICENSE'} onClose={() => this.onChangeShowAgreement(false)}>
+                        <pre className="license">
+                            {this.state.license ? this.state.license : `Loading agreement ...`}
+                        </pre>
+                    </FancyBox>
+                )}
             </div>
         );
     }
+
+    componentDidMount() {
+        this.loadLicense();
+    }
 }
 
+TagImages.contextType = AgreementContext;
 TagImages.displayName = "Tag Images with Description And GeoTags";
 TagImages.propTypes = {
     /** List of image File objects. */

@@ -7,8 +7,6 @@ import 'bootstrap/dist/js/bootstrap.js';
 import {App} from "./App";
 
 /**
- TODO Before "finish uploading" button, add a checkbox "I agree with <a>>upload policy</a>" with url to display license in a fancy box. Get license text from Vahe.
- This should make the site GDPR complaint.
 
  TODO (later) add autocompletion to "location" field (use Google API calls)
 
