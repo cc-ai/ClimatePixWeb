@@ -10,21 +10,22 @@ class FinalPage extends React.Component {
     render() {
 
         return (
-            <div className="upload-container">
+            <div className="upload-container thank-you">
                 <Helmet>
                     <title>Thanks!</title>
                 </Helmet>
-                <h3>Thank you for your contribution</h3>
+                <h3>
+                    Thank you for your contribution!<br/>
+                    For more information about the project,&nbsp;
+                    <a target="_blank" rel="noopener noreferrer"
+                       className="learn-more"
+                       href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
+                        <strong>click here</strong>
+                    </a>.
+                </h3>
                 <div className="w-75 m-auto">
                 <p className="mt-5">
-                    <a target="_blank" rel="noopener noreferrer"
-                       className="btn btn-success btn-lg btn-block"
-                       href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
-                        <strong>Learn more</strong>
-                    </a>
-                </p>
-                <p className="mt-5">
-                    <Link className="btn btn-success btn-lg btn-block" to='/uploadwithtags'>
+                    <Link className="btn btn-success" to='/uploadwithtags'>
                         <strong>Upload more</strong>
                     </Link>
                 </p>
