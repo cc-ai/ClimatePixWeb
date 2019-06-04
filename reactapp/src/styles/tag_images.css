@@ -5,14 +5,6 @@
     width: 100px;
 }
 
-.add-top-padding {
-    margin-top: 5px;
-}
-
-.add-img-padding {
-    margin-top: 7px;
-}
-
 .form-col {
     border-style: dashed;
     border: 1px #fff;
@@ -67,4 +59,17 @@
     display: block;
     content: '';
     padding-top: 100%;
+}
+
+div.finish-uploading {
+    cursor: pointer;
+}
+
+.upload-form-wrapper a {
+    color: white;
+    text-decoration: underline;
+}
+
+.upload-form-wrapper a:hover {
+    text-decoration: none;
 }
