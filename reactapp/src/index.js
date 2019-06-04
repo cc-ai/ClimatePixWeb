@@ -10,12 +10,6 @@ import {App} from "./App";
 
  TODO (later) add autocompletion to "location" field (use Google API calls)
 
- TODO (later) limit 1 image size to 10MB
-
- TODO (later) Big images (e.g. >20MB) are not correctly loaded. How to do with them ? Do we accept them ?
-
- TODO (later) Upload page: the user experience can be improved by showing a progress bar to indicate images uploaded
-
  TODO Warning error inside tagImages when uploading on firebase.
  Seems an issue where the web app changes page (from upload page to thankyou page):
  -----

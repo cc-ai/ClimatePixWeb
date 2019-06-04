@@ -46,7 +46,6 @@
 }
 
 .image-wrapper {
-    background-color: yellow;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.5);
     background-position: center center;
@@ -59,6 +58,14 @@
     display: block;
     content: '';
     padding-top: 100%;
+}
+
+.image-wrapper .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
 }
 
 div.finish-uploading {

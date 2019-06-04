@@ -31,6 +31,91 @@ Geocode.enableDebug();
 const geocode_api_key = process.env.REACT_APP_GOOGLE_API_KEY;
 Geocode.setApiKey(geocode_api_key);
 
+class FileMonitor {
+    constructor(files, metadata) {
+        this.files = files;
+        this.metadata = metadata;
+        this.progress = Array(metadata.length).fill(0);
+        this.uploadNames = Array(metadata.length).fill(null);
+        this.metadataSent = Array(metadata.length).fill(false);
+    }
+    setProgress(index, value) {
+        this.progress[index] = value;
+        this.sendMetadataIfPossible(index);
+    }
+    setFinished(index, uploadName) {
+        this.uploadNames[index] = uploadName;
+        this.sendMetadataIfPossible(index);
+    }
+    sendMetadataIfPossible(index) {
+        if (this.progress[index] === 100 && this.uploadNames[index] !== null) {
+            console.log(`[${index}] sending metadata.`);
+            const file_description = this.metadata[index].file_description;
+            const file_location = this.metadata[index].file_location;
+            const file_category = this.metadata[index].file_category;
+            const uploadName = this.uploadNames[index];
+            storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
+                return firestore_collection.add({
+                    url: url,
+                    description: file_description,
+                    location: file_location,
+                    category: file_category
+                })
+            }).then((docRef) => {
+                console.log(`[${index}] metadata uploaded: ${docRef.path}`);
+                this.metadataSent[index] = true;
+                this.terminateIfPossible();
+            }).catch(e => {
+                console.error(`[${index}] error when sending metadata.`);
+                console.error(e);
+            })
+        }
+    }
+    terminateIfPossible() {
+        for (let value of this.metadataSent) {
+            if (!value)
+                return;
+        }
+        console.log(`All files and metadata sent.`);
+        nav("/thankyou");
+    }
+    start() {
+        for (let i = 0; i < this.metadata.length; ++i)
+            this.uploadFile(i);
+    }
+    async uploadFile(index) {
+        try {
+            console.log(`[${index}] sending file.`);
+            const file = this.files[index];
+            // { firebase user } / { ID }.{ file extension }
+            const uploadName = `${firebaseUser}/${uuid.v4()}.${file.name.split('.').pop()}`;
+            let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
+            await uploadToFirebase.on('state_changed', (snapshot) => {
+                // Show progress of the image upload
+                const progressBar = document.getElementById(`progress-${index}`);
+                if (progressBar) {
+                    const progressWrapper = progressBar.parentNode;
+                    if (progressWrapper.style.display === 'none') {
+                        progressWrapper.style.display = 'flex';
+                    }
+                    const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = `${step}%`;
+                    progressBar.setAttribute('aria-valuenow', parseInt(step));
+                    this.setProgress(index, parseInt(step));
+                }
+            }, (error) => {
+                console.error(`Error while uploading file ${index}.`);
+                console.error(error);
+            }, () => {
+                console.log(`File uploaded: ${firebaseCollectionName}/${uploadName}`);
+                this.setFinished(index, uploadName);
+            });
+        } catch (e) {
+            console.log("We are sorry something went wrong while uploading your file. Please try again later.");
+        }
+    };
+}
+
 /** Renders a Component that loads the images uploaded in the previous page/home page and displays a previous and
  * renders an input form for each image to enter description and geo tags
  * **/
@@ -40,13 +125,13 @@ class TagImages extends React.Component {
         super(props);
         this.state = {
             files: [],
-            progress: [],
             images_src: [],
             error_code: null,
             message: null,
             add_images_flag: false,
             showAgreement: false,
-            license: null
+            license: null,
+            sending: false
         };
         this.onChangeShowAgreement = this.onChangeShowAgreement.bind(this);
         this.loadLicense = this.loadLicense.bind(this);
@@ -97,10 +182,6 @@ class TagImages extends React.Component {
         this.setState({
             images_src: images_src
         });
-
-        /** Initialize progress bars */
-        let progress_bars = Array(files.length).fill(0);
-        this.setState({progress: progress_bars});
     };
     /** When there is a change in the input attached to an images, see the event and attach the data entered to the state object
      * **/
@@ -114,67 +195,56 @@ class TagImages extends React.Component {
          **/
         e.preventDefault();
         //Upload Files One by One
-        let file_count = 0;
-        for (let file of this.state.files) {
-            let file_description = this.state["tags_" + file_count];
-            let file_location = this.state["location_" + file_count];
-            let file_category = this.state["category_" + file_count];
+        this.setState({sending: true});
+        const metadata = this.state.files.map((file, fileIndex) => {
+            let file_description = this.state["tags_" + fileIndex];
+            let file_location = this.state["location_" + fileIndex];
+            let file_category = this.state["category_" + fileIndex];
             if (file_description === undefined)
                 file_description = '';
             if (file_location === undefined)
                 file_location = '';
             if (file_category === undefined)
                 file_category = '';
-            this.uploadDropfile(file, file_description, file_location, file_category, file_count)
-                .then((response) => {
-                    console.log("File Successfully Uploaded");
-                    nav("/thankyou");
-                })
-                .catch(error => {
-                    console.error(error);
-                    window.alert('File not successfully uploaded.');
-                });
-            file_count += 1;
-        }
+            return {
+                file_description: file_description,
+                file_location: file_location,
+                file_category: file_category
+            };
+        });
+        const fileMonitor = new FileMonitor(this.state.files, metadata);
+        fileMonitor.start();
     };
 
-    uploadDropfile = async (file, file_description, file_location, file_category, file_idx) => {
+    uploadDropfile = async (fileMonitor, file, file_idx) => {
+        /** @var FileMonitor fileMonitor */
         try {
+            console.log(`[${file_idx}] sending file.`);
             // { firebase user } / { ID }.{ file extension }
             const uploadName = `${firebaseUser}/${uuid.v4()}.${file.name.split('.').pop()}`;
             let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
-            console.log(`Uploading to ${firebaseCollectionName}/${uploadName}`);
             await uploadToFirebase.on('state_changed', (snapshot) => {
                 // Show progress of the image upload
-                let progress_bars = this.state.progress.slice();
-                // Note: The granularity measured by the firebase library only applies to big files for all others
-                //The progress bar doesnt make much difference
-                progress_bars[file_idx] = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                this.setState({progress: progress_bars});
+                const progressBar = document.getElementById(`progress-${file_idx}`);
+                if (progressBar) {
+                    const progressWrapper = progressBar.parentNode;
+                    if (progressWrapper.style.display === 'none') {
+                        progressWrapper.style.display = 'flex';
+                    }
+                    const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = `${step}%`;
+                    progressBar.setAttribute('aria-valuenow', parseInt(step));
+                    fileMonitor.setProgress(file_idx, parseInt(step));
+                }
             }, (error) => {
-                console.error('upload error');
+                console.error(`Error while uploading file ${file_idx}.`);
                 console.error(error);
             }, () => {
-                //Call this method on complete
-                storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
-                    firestore_collection.add({
-                        url: url,
-                        description: file_description,
-                        location: file_location,
-                        category: file_category
-                    }).then((docRef) => {
-                        console.log(`Metadata uploaded ${docRef.path}`);
-                    }).catch(e => {
-                        console.error('Error when sending metadata.');
-                        console.error(e);
-                    });
-                }).catch(error => {
-                    console.error('Error when checking uploaded image.');
-                    console.error(error);
-                })
-            })
+                console.log(`File uploaded: ${firebaseCollectionName}/${uploadName}`);
+                fileMonitor.setFinished(file_idx, uploadName);
+            });
         } catch (e) {
-            console.log("We are sorry something went wrong while uploading your file. Please try again later.")
+            console.log("We are sorry something went wrong while uploading your file. Please try again later.");
         }
     };
 
@@ -197,12 +267,10 @@ class TagImages extends React.Component {
     removeFile(fileIndex) {
         if (fileIndex >= 0 && fileIndex < this.state.files.length) {
             const files = this.state.files.slice();
-            const progress = this.state.progress.slice();
             const images_src = this.state.images_src.slice();
             files.splice(fileIndex, 1);
-            progress.splice(fileIndex, 1);
             images_src.splice(fileIndex, 1);
-            this.setState({files: files, progress: progress, images_src: images_src});
+            this.setState({files: files, images_src: images_src});
         }
     }
 
@@ -215,18 +283,22 @@ class TagImages extends React.Component {
         let image_count = 0;
         for (let form of this.state.images_src) {
             const descriptionId = `tags_${image_count}`;
-            const locationId = `category_${image_count}`;
-            const categoryId = `location_${image_count}`;
-
-            let progress_bar = this.state.progress[image_count];
-            let progress_style = {width: progress_bar + "%", height: 7, backgroundColor: 'rgb(35, 51, 64)'};
+            const categoryId = `category_${image_count}`;
+            const locationId = `location_${image_count}`;
             const fileIndex = image_count;
 
             forms_html.push(<div className="col-md-3 form-col" key={image_count}>
                 <form className="image-form">
                     <div className="form-group">
                         <div className="image-wrapper" style={{backgroundImage: `url(${form})`}}>
-                            <div style={progress_style}/>
+                            <div className="progress" style={{display: 'none'}}>
+                                <div className="progress-bar"
+                                     id={`progress-${fileIndex}`}
+                                     role="progressbar"
+                                     aria-valuenow="0"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100"/>
+                            </div>
                             <div className="window-close-button">
                                 <button onClick={(event) => {
                                     event.preventDefault();
@@ -314,7 +386,7 @@ class TagImages extends React.Component {
                         </div>
                     </div>
                     {/** On click on finish uploading start submitting images to the server **/}
-                    {this.state.files.length ? (
+                    {this.state.files.length && !this.state.sending ? (
                         <div className="upload-form-wrapper">
                             <form>
                                 <div className="form-check">
