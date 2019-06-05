@@ -33,7 +33,6 @@ export class App extends React.Component {
             <AgreementContext.Provider value={context}>
                 <Router history={history}>
                     <div className="container-fluid">
-                        <Header/>
                         <Switch>
                             {indexRoutes.map((prop, key) => {
                                 return <Route path={prop.path} key={key} component={prop.component}/>;
