@@ -23,10 +23,10 @@ export class MainPage extends React.Component {
                 <Helmet>
                     <title>Welcome to ClimateChange.AI</title>
                 </Helmet>
-                <Header/>
                 <div className="main-page">
-                    <div className="row drag-drop-row">
-                        <div className="upload-container">
+                    <div className="up-screen d-flex flex-column">
+                        <Header/>
+                        <div className="upload-container flex-grow-1">
                             <h3 className="custom-header">
                                 Contribute to this project by uploading and tagging pictures
                             </h3>

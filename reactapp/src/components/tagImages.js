@@ -325,8 +325,8 @@ export class TagImages extends React.Component {
                     <title>Upload and describe your pictures</title>
                 </Helmet>
                 <Header/>
-                <div className="row drag-drop-row">
-                    <div className="upload-container tagzone-container">
+                <div>
+                    <div className="upload-container">
                         <h3 className="custom-header">Upload pictures and tell us more about them</h3>
                         <h4 className="mb-4">
                             You can upload multiple files at once (Only *.jpeg and *.png images will be accepted)
