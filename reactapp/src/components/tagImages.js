@@ -119,7 +119,7 @@ class FileMonitor {
 /** Renders a Component that loads the images uploaded in the previous page/home page and displays a previous and
  * renders an input form for each image to enter description and geo tags
  * **/
-class TagImages extends React.Component {
+export class TagImages extends React.Component {
 
     constructor(props) {
         super(props);
@@ -133,8 +133,12 @@ class TagImages extends React.Component {
             license: null,
             sending: false
         };
-        this.onChangeShowAgreement = this.onChangeShowAgreement.bind(this);
         this.loadLicense = this.loadLicense.bind(this);
+        this.onChangeShowAgreement = this.onChangeShowAgreement.bind(this);
+        this.loadImages = this.loadImages.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.getAttachedFiles = this.getAttachedFiles.bind(this);
         this.removeFile = this.removeFile.bind(this);
     }
 
@@ -162,16 +166,11 @@ class TagImages extends React.Component {
         this.setState({showAgreement: value});
     }
 
-    componentWillMount() {
-        if (this.props.location.state)
-            this.loadImages(this.props.location.state.files);
-    }
-
     /** When we are routed to this page after uploading images earlier, we receive a list of HTML file objects. To display
      * the images for preview we need to create a URL object that can be passed to the src of img html element
      * This method iterates through all the files and generates a list of img URLs to display
      * **/
-    loadImages = (files) => {
+    loadImages(files) {
         let images_src = [];
         for (let file of files) {
             images_src.push(URL.createObjectURL(file))
@@ -183,12 +182,14 @@ class TagImages extends React.Component {
             images_src: images_src
         });
     };
+
     /** When there is a change in the input attached to an images, see the event and attach the data entered to the state object
      * **/
-    onInputChange = (event) => {
+    onInputChange(event) {
         this.setState({[event.target.name]: event.target.value});
     };
-    handleSubmit = (e) => {
+
+    handleSubmit(e) {
         /** Method called after hitting finish uploading. Using
          * current files in this.state.files and the input name tags send image and their meta data to the
          * uploadDropfile method Note, we are currently uploading one image at a time to avoid large data uploads.
@@ -216,39 +217,7 @@ class TagImages extends React.Component {
         fileMonitor.start();
     };
 
-    uploadDropfile = async (fileMonitor, file, file_idx) => {
-        /** @var FileMonitor fileMonitor */
-        try {
-            console.log(`[${file_idx}] sending file.`);
-            // { firebase user } / { ID }.{ file extension }
-            const uploadName = `${firebaseUser}/${uuid.v4()}.${file.name.split('.').pop()}`;
-            let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
-            await uploadToFirebase.on('state_changed', (snapshot) => {
-                // Show progress of the image upload
-                const progressBar = document.getElementById(`progress-${file_idx}`);
-                if (progressBar) {
-                    const progressWrapper = progressBar.parentNode;
-                    if (progressWrapper.style.display === 'none') {
-                        progressWrapper.style.display = 'flex';
-                    }
-                    const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    progressBar.style.width = `${step}%`;
-                    progressBar.setAttribute('aria-valuenow', parseInt(step));
-                    fileMonitor.setProgress(file_idx, parseInt(step));
-                }
-            }, (error) => {
-                console.error(`Error while uploading file ${file_idx}.`);
-                console.error(error);
-            }, () => {
-                console.log(`File uploaded: ${firebaseCollectionName}/${uploadName}`);
-                fileMonitor.setFinished(file_idx, uploadName);
-            });
-        } catch (e) {
-            console.log("We are sorry something went wrong while uploading your file. Please try again later.");
-        }
-    };
-
-    getAttachedFiles = (files) => {
+    getAttachedFiles(files) {
         let all_files = this.state.files.concat(files);
         this.setState({
             files: all_files
@@ -257,11 +226,6 @@ class TagImages extends React.Component {
         });
         this.setState({add_images_flag: false})
 
-    };
-
-    addMoreImages = (e) => {
-        e.preventDefault();
-        this.setState({add_images_flag: !this.state.add_images_flag})
     };
 
     removeFile(fileIndex) {
@@ -425,6 +389,11 @@ class TagImages extends React.Component {
         );
     }
 
+    componentWillMount() {
+        if (this.props.location.state)
+            this.loadImages(this.props.location.state.files);
+    }
+
     componentDidMount() {
         this.loadLicense();
     }
@@ -439,4 +408,3 @@ TagImages.propTypes = {
 TagImages.defaultProps = {
     files: []
 };
-export default TagImages;

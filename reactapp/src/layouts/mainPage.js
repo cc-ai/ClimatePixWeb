@@ -7,7 +7,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 
 /** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
  the images are uploaded , the page will load the tag images component **/
-class MainPage extends React.Component {
+export class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,5 +49,3 @@ class MainPage extends React.Component {
         );
     }
 }
-
-export default MainPage;

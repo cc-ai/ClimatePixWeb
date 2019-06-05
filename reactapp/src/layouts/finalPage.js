@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 /** Renders the final page with a thank you message.
  * **/
-class FinalPage extends React.Component {
+export class FinalPage extends React.Component {
 
     render() {
 
@@ -34,5 +34,3 @@ class FinalPage extends React.Component {
         );
     }
 }
-
-export default FinalPage;

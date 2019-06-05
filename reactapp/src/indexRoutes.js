@@ -1,6 +1,6 @@
-import ImageUploader from "./layouts/mainPage";
-import TagImages from "./components/tagImages";
-import FinalPage from "./layouts/finalPage";
+import {MainPage} from "./layouts/mainPage";
+import {TagImages} from "./components/tagImages";
+import {FinalPage} from "./layouts/finalPage";
 
 var indexRoutes = [
     {
@@ -17,9 +17,9 @@ var indexRoutes = [
     },
     {
         path: "/",
-        name: "ImageUploader",
+        name: "MainPage",
         icon: "nc-icon nc-bank",
-        component: ImageUploader
+        component: MainPage
     }];
 
 export default indexRoutes;
