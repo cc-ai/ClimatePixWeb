@@ -15,6 +15,7 @@
 .section-about {
     background-color: whitesmoke;
 }
+
 .section-about > .row {
     margin-left: 0px !important;
     margin-right: 0px !important;
@@ -94,6 +95,7 @@
 .image-wrapper:hover .window-close-button {
     opacity: 1;
 }
+
 .image-wrapper:hover .window-close-button button:hover {
     background-color: red;
 }

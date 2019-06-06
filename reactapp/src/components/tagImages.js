@@ -13,7 +13,6 @@ import {Helmet} from "react-helmet/es/Helmet";
 import {FancyBox} from "./fancyBox";
 import axios from 'axios';
 import {AgreementContext} from "./agreementContext";
-import Header from "./header";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -324,7 +323,6 @@ export class TagImages extends React.Component {
                 <Helmet>
                     <title>Upload and describe your pictures</title>
                 </Helmet>
-                <Header/>
                 <div>
                     <div className="upload-container">
                         <h3 className="custom-header">Upload pictures and tell us more about them</h3>
@@ -379,7 +377,7 @@ export class TagImages extends React.Component {
                                         </strong>
                                     </div>
                                 </form>
-                                <button className="finish-uploading btn btn-success btn-lg mt-2 mb-4"
+                                <button className="finish-uploading btn btn-success btn-lg mt-2"
                                         disabled={!agreement.get()}
                                         onClick={this.handleSubmit}>
                                     <strong>Finish Uploading</strong>
@@ -397,11 +395,6 @@ export class TagImages extends React.Component {
                 </div>
             </div>
         );
-    }
-
-    componentWillMount() {
-        if (this.props.location.state)
-            this.loadImages(this.props.location.state.files);
     }
 
     componentDidMount() {
