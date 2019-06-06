@@ -92,3 +92,7 @@ pre.license {
     right:0;
     overflow: auto;
 }
+
+.main-page .up-screen {
+    min-height: 100vh;
+}
