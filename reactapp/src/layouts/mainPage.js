@@ -6,6 +6,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 import Header from "../components/header";
 import {UploadButton} from "../components/uploadButton";
 import {TagImages} from "../components/tagImages";
+import {FinalPage} from "./finalPage";
 
 var ResizeSensor = require('css-element-queries/src/ResizeSensor');
 
@@ -15,48 +16,14 @@ export class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            files: [],
-            open_tag_images: false,
-            images_uploaded: false
+            currentPage: 'upload'
         };
-        this.openTagImages = this.openTagImages.bind(this);
-    }
-
-    openTagImages() {
-        this.setState({open_tag_images: true})
-    }
-
-    render() {
-        return (
-            <main id="home">
-                <Helmet>
-                    <title>Welcome to ClimateChange.AI</title>
-                </Helmet>
-                <Header/>
-                <div className="main-page">
-                    <div className="up-screen pb-5 d-flex flex-column">
-                        {this.state.open_tag_images ? <TagImages/> : <UploadButton loadTagsForm={this.openTagImages}/>}
-                    </div>
-                    <div className="section-about-wrapper" id="about">
-                        <div className="section-about">
-                            <div className="row">
-                                <div className="col-lg-3"/>
-                                <div className="col-lg-6">
-                                    <AboutUS/>
-                                </div>
-                                <div className="col-lg-3">
-                                    <TopLink/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        );
+        this.showUpload = this.showUpload.bind(this);
+        this.showTagImages = this.showTagImages.bind(this);
+        this.showThanks = this.showThanks.bind(this);
     }
 
     static updateMainPageComponents() {
-        console.log('MainPage.updateMainPageComponents');
         const main = document.getElementsByTagName('main')[0];
         if (!main)
             return;
@@ -81,12 +48,59 @@ export class MainPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log('MainPage.componentDidMount');
         document.body.onresize = MainPage.updateMainPageComponents;
         var element = document.getElementsByTagName('nav')[0];
         new ResizeSensor(element, function () {
             MainPage.updateMainPageComponents();
         });
         MainPage.updateMainPageComponents();
+    }
+
+    showUpload() {
+        this.setState({currentPage: 'upload'})
+    }
+
+    showTagImages() {
+        this.setState({currentPage: 'tag'})
+    }
+
+    showThanks() {
+        this.setState({currentPage: 'thanks'})
+    }
+
+    render() {
+        let component = '';
+        if (this.state.currentPage === 'upload')
+            component = <UploadButton loadTagsForm={this.showTagImages}/>;
+        else if (this.state.currentPage === 'tag')
+            component = <TagImages loadThanks={this.showThanks}/>;
+        else if (this.state.currentPage === 'thanks')
+            component = <FinalPage loadTagsForm={this.showTagImages}/>;
+        return (
+            <main id="home">
+                <Helmet>
+                    <title>Welcome to ClimateChange.AI</title>
+                </Helmet>
+                <Header/>
+                <div className="main-page">
+                    <div className="up-screen pb-5">
+                        {component}
+                    </div>
+                    <div className="section-about-wrapper" id="about">
+                        <div className="section-about">
+                            <div className="row">
+                                <div className="col-lg-3"/>
+                                <div className="col-lg-6">
+                                    <AboutUS/>
+                                </div>
+                                <div className="col-lg-3">
+                                    <TopLink/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        );
     }
 }

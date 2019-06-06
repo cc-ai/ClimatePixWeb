@@ -1,8 +1,7 @@
 import React from 'react';
 import "../styles/final_page.css";
 import {Helmet} from "react-helmet/es/Helmet";
-import {Link} from "react-router-dom";
-import Header from "../components/header";
+import PropTypes from 'prop-types';
 
 /** Renders the final page with a thank you message.
  * **/
@@ -15,7 +14,6 @@ export class FinalPage extends React.Component {
                 <Helmet>
                     <title>Thanks!</title>
                 </Helmet>
-                <Header/>
                 <div className="upload-container thank-you">
                     <h3 className="custom-header">Thank you for your contribution!<br/></h3>
                     <h4>
@@ -28,9 +26,9 @@ export class FinalPage extends React.Component {
                     </h4>
                     <div className="w-75 m-auto">
                         <p className="mt-5">
-                            <Link className="btn btn-success" to='/uploadwithtags'>
+                            <button className="btn btn-success" onClick={this.props.loadTagsForm}>
                                 <strong>Upload more</strong>
-                            </Link>
+                            </button>
                         </p>
                     </div>
                 </div>
@@ -38,3 +36,7 @@ export class FinalPage extends React.Component {
         );
     }
 }
+
+FinalPage.propTypes = {
+    loadTagsForm: PropTypes.func.isRequired
+};

@@ -1,9 +1,7 @@
 import React from 'react';
 import './App.css';
-import {Route, Router, Switch} from "react-router-dom";
-import {history} from "./utils/history";
-import indexRoutes from "./indexRoutes";
 import {AgreementContext} from "./components/agreementContext";
+import {MainPage} from "./layouts/mainPage";
 
 export class App extends React.Component {
     constructor(props) {
@@ -30,15 +28,9 @@ export class App extends React.Component {
         };
         return (
             <AgreementContext.Provider value={context}>
-                <Router history={history}>
-                    <div className="container-fluid">
-                        <Switch>
-                            {indexRoutes.map((prop, key) => {
-                                return <Route path={prop.path} key={key} component={prop.component}/>;
-                            })}
-                        </Switch>
-                    </div>
-                </Router>
+                <div className="container-fluid">
+                    <MainPage/>
+                </div>
             </AgreementContext.Provider>
         );
     }

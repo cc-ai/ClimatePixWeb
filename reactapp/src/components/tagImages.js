@@ -4,15 +4,13 @@ import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
-import {firebaseCollectionName, firebaseUser, firestore_collection, storage} from "../firebaseconfig";
-import {nav} from "../utils/nav";
-import uuid from 'uuid';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {Helmet} from "react-helmet/es/Helmet";
 import {FancyBox} from "./fancyBox";
 import axios from 'axios';
 import {AgreementContext} from "./agreementContext";
+import {FileMonitor} from "./fileMonitor";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -30,97 +28,6 @@ Geocode.enableDebug();
 /** Replace with your api key **/
 const geocode_api_key = process.env.REACT_APP_GOOGLE_API_KEY;
 Geocode.setApiKey(geocode_api_key);
-
-class FileMonitor {
-    constructor(files, metadata) {
-        this.files = files;
-        this.metadata = metadata;
-        this.progress = Array(metadata.length).fill(0);
-        this.uploadNames = Array(metadata.length).fill(null);
-        this.metadataSent = Array(metadata.length).fill(false);
-    }
-
-    setProgress(index, value) {
-        this.progress[index] = value;
-        this.sendMetadataIfPossible(index);
-    }
-
-    setFinished(index, uploadName) {
-        this.uploadNames[index] = uploadName;
-        this.sendMetadataIfPossible(index);
-    }
-
-    sendMetadataIfPossible(index) {
-        if (this.progress[index] === 100 && this.uploadNames[index] !== null) {
-            console.log(`[${index}] sending metadata.`);
-            const file_description = this.metadata[index].file_description;
-            const file_location = this.metadata[index].file_location;
-            const file_category = this.metadata[index].file_category;
-            const uploadName = this.uploadNames[index];
-            storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
-                return firestore_collection.add({
-                    url: url,
-                    description: file_description,
-                    location: file_location,
-                    category: file_category
-                })
-            }).then((docRef) => {
-                console.log(`[${index}] metadata uploaded: ${docRef.path}`);
-                this.metadataSent[index] = true;
-                this.terminateIfPossible();
-            }).catch(e => {
-                console.error(`[${index}] error when sending metadata.`);
-                console.error(e);
-            })
-        }
-    }
-
-    terminateIfPossible() {
-        for (let value of this.metadataSent) {
-            if (!value)
-                return;
-        }
-        console.log(`All files and metadata sent.`);
-        nav("/thankyou");
-    }
-
-    start() {
-        for (let i = 0; i < this.metadata.length; ++i)
-            this.uploadFile(i);
-    }
-
-    async uploadFile(index) {
-        try {
-            console.log(`[${index}] sending file.`);
-            const file = this.files[index];
-            // { firebase user } / { ID }.{ file extension }
-            const uploadName = `${firebaseUser}/${uuid.v4()}.${file.name.split('.').pop()}`;
-            let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
-            await uploadToFirebase.on('state_changed', (snapshot) => {
-                // Show progress of the image upload
-                const progressBar = document.getElementById(`progress-${index}`);
-                if (progressBar) {
-                    const progressWrapper = progressBar.parentNode;
-                    if (progressWrapper.style.display === 'none') {
-                        progressWrapper.style.display = 'flex';
-                    }
-                    const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    progressBar.style.width = `${step}%`;
-                    progressBar.setAttribute('aria-valuenow', parseInt(step));
-                    this.setProgress(index, parseInt(step));
-                }
-            }, (error) => {
-                console.error(`Error while uploading file ${index}.`);
-                console.error(error);
-            }, () => {
-                console.log(`File uploaded: ${firebaseCollectionName}/${uploadName}`);
-                this.setFinished(index, uploadName);
-            });
-        } catch (e) {
-            console.log("We are sorry something went wrong while uploading your file. Please try again later.");
-        }
-    };
-}
 
 /** Renders a Component that loads the images uploaded in the previous page/home page and displays a previous and
  * renders an input form for each image to enter description and geo tags
@@ -219,7 +126,7 @@ export class TagImages extends React.Component {
                 file_category: file_category
             };
         });
-        const fileMonitor = new FileMonitor(this.state.files, metadata);
+        const fileMonitor = new FileMonitor(this.state.files, metadata, this.props.loadThanks);
         fileMonitor.start();
     };
 
@@ -404,8 +311,7 @@ export class TagImages extends React.Component {
 
 TagImages.contextType = AgreementContext;
 TagImages.propTypes = {
-    /** List of image File objects. */
-    files: PropTypes.array
+    loadThanks: PropTypes.func.isRequired
 };
 TagImages.defaultProps = {
     files: []

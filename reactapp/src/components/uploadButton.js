@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/header.css";
+import PropTypes from 'prop-types';
 
 export class UploadButton extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export class UploadButton extends React.Component {
 
     render() {
         return (
-            <div className="upload-container flex-grow-1">
+            <div className="upload-container">
                 <h3 className="custom-header">
                     Contribute to this project by uploading and tagging pictures
                 </h3>
@@ -23,3 +24,7 @@ export class UploadButton extends React.Component {
 
     }
 }
+
+UploadButton.propTypes = {
+    loadTagsForm: PropTypes.func.isRequired
+};
