@@ -11,7 +11,7 @@ export class FinalPage extends React.Component {
     render() {
 
         return (
-            <div>
+            <main>
                 <Helmet>
                     <title>Thanks!</title>
                 </Helmet>
@@ -34,7 +34,7 @@ export class FinalPage extends React.Component {
                         </p>
                     </div>
                 </div>
-            </div>
+            </main>
         );
     }
 }

@@ -15,8 +15,8 @@ class Header extends React.Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark teal mb-4 pageNavHeader" id="home">
-                <span className="navbar-brand" href="#">
+            <nav className="navbar fixed-top navbar-expand-lg navbar-dark mb-4 pageNavHeader">
+                <span className="navbar-brand">
                     <Link to="/">
                         <img className="logoImg" alt="ClimateChange.AI" src={logo}/>
                     </Link>
@@ -24,13 +24,14 @@ class Header extends React.Component {
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">
-                            <Link className="nav-link" to="/">Home <span
-                                className="sr-only">(current)</span></Link>
+                            <HashLink smooth className="nav-link" to="/#home">
+                                Home <span className="sr-only">(current)</span>
+                            </HashLink>
                         </li>
                         <li className="nav-item">
                             <HashLink smooth className="nav-link" to="/#about">About us</HashLink>
@@ -39,7 +40,22 @@ class Header extends React.Component {
                 </div>
             </nav>
         )
+    }
 
+    static updateNavOnScroll() {
+        console.log('Header.updateNavOnScroll');
+        const nav = document.getElementsByTagName('nav')[0];
+        if (window.pageYOffset <= nav.clientHeight) {
+            nav.classList.remove('scrolled');
+        } else {
+            nav.classList.add('scrolled');
+        }
+    }
+
+    componentDidMount() {
+        console.log('Header.componentDidMount');
+        document.body.onscroll = Header.updateNavOnScroll;
+        Header.updateNavOnScroll();
     }
 }
 

@@ -319,7 +319,7 @@ export class TagImages extends React.Component {
             image_count = image_count + 1;
         }
         return (
-            <div>
+            <main>
                 <Helmet>
                     <title>Upload and describe your pictures</title>
                 </Helmet>
@@ -393,7 +393,7 @@ export class TagImages extends React.Component {
                         </FancyBox>
                     )}
                 </div>
-            </div>
+            </main>
         );
     }
 
@@ -403,7 +403,6 @@ export class TagImages extends React.Component {
 }
 
 TagImages.contextType = AgreementContext;
-TagImages.displayName = "Tag Images with Description And GeoTags";
 TagImages.propTypes = {
     /** List of image File objects. */
     files: PropTypes.array

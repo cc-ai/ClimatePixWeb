@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import {App} from "./App";
 
+var ElementQueries = require('css-element-queries/src/ElementQueries');
+ElementQueries.listen();
+
 /**
 
  TODO (later) add autocompletion to "location" field (use Google API calls)

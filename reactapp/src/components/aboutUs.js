@@ -6,7 +6,7 @@ import React from "react";
 export class AboutUS extends React.Component {
     render() {
         return (
-            <div className="about-us" id="about">
+            <div className="about-us">
                 <h2> Who are we ? </h2>
                 <p className="bigP">
                     The CCAI project is an interdisciplinary project aimed at creating images of accurate,

@@ -7,13 +7,16 @@
     color: white;
 }
 
-.section-about-wrapper {
+.up-screen {
     min-height: 100vh;
+}
+
+.section-about-wrapper {
     color: black;
 }
 
 .section-about {
-    background-color: whitesmoke;
+    background-color: rgba(245, 245, 245, 0.8);
 }
 
 .section-about > .row {
@@ -28,10 +31,6 @@
     margin-right: auto;
     text-align: center;
     color: white;
-}
-
-.main-page .up-screen {
-    min-height: 100vh;
 }
 
 .dropzone {
