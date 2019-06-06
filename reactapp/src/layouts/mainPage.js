@@ -2,7 +2,6 @@ import React from 'react';
 import "../styles/image_uploader.css";
 import {AboutUS} from "../components/aboutUs";
 import {TopLink} from "../components/TopLInk";
-import {Link} from "react-router-dom";
 import {Helmet} from "react-helmet/es/Helmet";
 import Header from "../components/header";
 import UploadButton from "../components/uploadButton";
