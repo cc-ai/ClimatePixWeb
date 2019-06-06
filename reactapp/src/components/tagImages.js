@@ -377,7 +377,7 @@ export class TagImages extends React.Component {
                                         </strong>
                                     </div>
                                 </form>
-                                <button className="finish-uploading btn btn-success btn-lg mt-2 mb-4"
+                                <button className="finish-uploading btn btn-success btn-lg mt-2"
                                         disabled={!agreement.get()}
                                         onClick={this.handleSubmit}>
                                     <strong>Finish Uploading</strong>
@@ -395,10 +395,6 @@ export class TagImages extends React.Component {
                 </div>
             </div>
         );
-    }
-
-    componentWillMount() {
-
     }
 
     componentDidMount() {

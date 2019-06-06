@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 const TIMES = '\u00D7';
 
 export class FancyBox extends React.Component {

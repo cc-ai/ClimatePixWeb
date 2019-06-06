@@ -4,7 +4,7 @@ import {AboutUS} from "../components/aboutUs";
 import {TopLink} from "../components/TopLInk";
 import {Helmet} from "react-helmet/es/Helmet";
 import Header from "../components/header";
-import UploadButton from "../components/uploadButton";
+import {UploadButton} from "../components/uploadButton";
 import {TagImages} from "../components/tagImages";
 
 /** Beginning of the React component MainPage Layout. Currently this page will load a header and called upload images. Once
@@ -14,14 +14,16 @@ export class MainPage extends React.Component {
         super(props);
         this.state = {
             files: [],
-            open_tag_images:false,
+            open_tag_images: false,
             images_uploaded: false
-        }
+        };
+        this.openTagImages = this.openTagImages.bind(this);
     }
 
-    openTagImages = () => {
-        this.setState({open_tag_images:true})
+    openTagImages() {
+        this.setState({open_tag_images: true})
     }
+
     render() {
         return (
             <div>
@@ -29,9 +31,9 @@ export class MainPage extends React.Component {
                     <title>Welcome to ClimateChange.AI</title>
                 </Helmet>
                 <div className="main-page">
-                    <div className="up-screen d-flex flex-column">
+                    <div className="up-screen pb-5 d-flex flex-column">
                         <Header/>
-                        {this.state.open_tag_images === true ? <TagImages/> : <UploadButton loadTagsForm={this.openTagImages}/> }
+                        {this.state.open_tag_images ? <TagImages/> : <UploadButton loadTagsForm={this.openTagImages}/>}
                     </div>
                     <div className="section-about-wrapper">
                         <div className="section-about">

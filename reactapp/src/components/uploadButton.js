@@ -1,8 +1,7 @@
 import React from "react";
 import "../styles/header.css";
-import {Link} from "react-router-dom";
 
-class UploadButton extends React.Component {
+export class UploadButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -15,14 +14,12 @@ class UploadButton extends React.Component {
                     Contribute to this project by uploading and tagging pictures
                 </h3>
                 <p>
-                    <Link className="btn btn-success btn-lg" onClick={this.props.loadTagsForm}>
-                                <strong>Upload</strong>
-                            </Link>
+                    <span className="button btn btn-success btn-lg" onClick={this.props.loadTagsForm}>
+                        <strong>Upload</strong>
+                    </span>
                 </p>
             </div>
         )
 
     }
 }
-
-export default UploadButton;
