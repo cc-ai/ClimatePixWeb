@@ -36,7 +36,7 @@ export class FileMonitor {
                     category: file_category
                 })
             }).then((docRef) => {
-                console.log(`[${index}] metadata uploaded: ${docRef.path}`);
+                console.log(`[${index}] metadata uploaded.`);
                 this.metadataSent[index] = true;
                 this.terminateIfPossible();
             }).catch(e => {
@@ -85,11 +85,11 @@ export class FileMonitor {
                 console.error(`Error while uploading file ${index}.`);
                 console.error(error);
             }, () => {
-                console.log(`File uploaded: ${firebaseCollectionName}/${uploadName}`);
+                console.log(`[${index}] File uploaded.`);
                 this.setFinished(index, uploadName);
             });
         } catch (e) {
-            console.log("We are sorry something went wrong while uploading your file. Please try again later.");
+            console.log(`[${index}] We are sorry something went wrong while uploading your file. Please try again later.`);
         }
     };
 }
