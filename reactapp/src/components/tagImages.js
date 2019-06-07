@@ -29,6 +29,14 @@ Geocode.enableDebug();
 const geocode_api_key = process.env.REACT_APP_GOOGLE_API_KEY;
 Geocode.setApiKey(geocode_api_key);
 
+function parseUrlFolder() {
+    const url = window.location.href;
+    const indexOfSeparator = url.lastIndexOf('/');
+    if (indexOfSeparator < 0)
+        return url;
+    return url.substr(0, indexOfSeparator);
+}
+
 /** Renders a Component that loads the images uploaded in the previous page/home page and displays a previous and
  * renders an input form for each image to enter description and geo tags
  * **/
@@ -58,7 +66,8 @@ export class TagImages extends React.Component {
     loadLicense() {
         if (this.state.license)
             return;
-        const url = `${process.env.PUBLIC_URL}/LICENSE`;
+        const url = `${parseUrlFolder()}/LICENSE.txt`;
+        console.log(`Loading license from ${url}`);
         axios({
             method: 'get',
             url: url,
