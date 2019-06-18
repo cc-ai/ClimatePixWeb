@@ -14,11 +14,13 @@
     "firebase": "^6.2.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.1.5",
     "react-geocode": "^0.1.2",
     "react-helmet": "^5.2.1",
+    "react-load-script": "0.0.6",
     "react-native-firebase": "^5.4.3",
     "react-scripts": "^3.0.1",
     "uuid": "^3.3.2"
