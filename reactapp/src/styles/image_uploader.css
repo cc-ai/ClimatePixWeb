@@ -34,15 +34,6 @@
     color: white;
 }
 
-.dropzone {
-    border: 3px dashed #bbb;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    padding: 55px;
-    text-align: center;
-    font: 21pt bold arial;
-}
-
 .custom-header {
     font-size: 36px;
     padding-bottom: 20px;

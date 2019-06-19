@@ -184,7 +184,7 @@ export class TagImages extends React.Component {
 			const locationId = `location_${image_count}`;
 			const fileIndex = image_count;
 
-			forms_html.push(<div className="col-md-3 form-col" key={image_count}>
+			forms_html.push(<div className="col-lg-3 form-col" key={image_count}>
 				<form className="image-form">
 					<div className="form-group">
 						<div className="image-wrapper" style={{backgroundImage: `url(${form})`}}>
@@ -267,11 +267,11 @@ export class TagImages extends React.Component {
 						<div className="row">
 							{/** Add forms and image previews to the DOM **/}
 							{forms_html}
-							<div className="col-md-3 form-col">
+							<div className="col-lg-3 form-col">
 								{/** Another dropzone component to allow users to add more images while adding the metadata **/}
 								{/** Show the upload section if the add images flag is set to true. This flag is toggled
 								 by the addMoreImages method **/}
-								<div className="container">
+								<div className="drop-zone-container">
 									<Dropzone ref={dropzoneRef} accept="image/png,image/jpeg"
 											  onDrop={this.getAttachedFiles} noClick noKeyboard>
 										{({getRootProps, getInputProps, acceptedFiles}) => {

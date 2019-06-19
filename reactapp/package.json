@@ -21,7 +21,7 @@
     "react-geocode": "^0.1.2",
     "react-helmet": "^5.2.1",
     "react-load-script": "0.0.6",
-    "react-native-firebase": "^5.4.3",
+    "react-native-firebase": "^5.5.2",
     "react-scripts": "^3.0.1",
     "uuid": "^3.3.2"
   },
@@ -47,6 +47,6 @@
     ]
   },
   "devDependencies": {
-    "react-styleguidist": "^9.1.6"
+    "react-styleguidist": "^9.1.7"
   }
 }
