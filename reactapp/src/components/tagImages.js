@@ -272,7 +272,7 @@ export class TagImages extends React.Component {
 								{/** Show the upload section if the add images flag is set to true. This flag is toggled
 								 by the addMoreImages method **/}
 								<div className="drop-zone-container">
-									<Dropzone ref={dropzoneRef} accept="image/png,image/jpeg"
+									<Dropzone ref={dropzoneRef} accept="image/*"
 											  onDrop={this.getAttachedFiles} noClick noKeyboard>
 										{({getRootProps, getInputProps, acceptedFiles}) => {
 											return (
