@@ -259,7 +259,7 @@ export class TagImages extends React.Component {
 					<div className="upload-container">
 						<h3 className="custom-header">Upload pictures and tell us more about them</h3>
 						<h4 className="mb-4">
-							You can upload multiple files at once (Only *.jpeg and *.png images will be accepted)
+							You can upload multiple files at once (only common image formats will be accepted)
 						</h4>
 						{/** If there is a message from the api request show this underneath the header **/}
 						{this.state.message ? <div className="row">
