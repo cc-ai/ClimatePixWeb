@@ -74,7 +74,7 @@ export class TagImages extends React.Component {
 		axios({
 			method: 'get',
 			url: url,
-			responseType: 'txt'
+			responseType: 'text'
 		})
 			.then(reponse => {
 				// Is this possible?
