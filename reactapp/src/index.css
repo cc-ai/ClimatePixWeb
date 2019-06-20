@@ -1,3 +1,23 @@
+/* Using web font Public Sans. Reference (2019/06/20): https://github.com/uswds/public-sans */
+
+@font-face {
+    font-family: 'PublicSans';
+    font-weight: normal;
+    font-style: normal;
+    src: url("./font/public-sans/PublicSans-Regular.ttf") format("truetype"),
+    url("./font/public-sans/PublicSans-Regular.woff") format("woff"),
+    url("./font/public-sans/PublicSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'PublicSans';
+    font-weight: 500;
+    font-style: normal;
+    src: url("./font/public-sans/PublicSans-Bold.ttf") format("truetype"),
+    url("./font/public-sans/PublicSans-Bold.woff") format("woff"),
+    url("./font/public-sans/PublicSans-Bold.woff2") format("woff2");
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -28,6 +48,9 @@ html, body {
     box-sizing: border-box;
 }
 
+main {
+    font-family: "PublicSans", sans-serif;
+}
 
 .container-fluid {
     padding: 0px !important;
