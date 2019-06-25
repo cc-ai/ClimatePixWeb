@@ -212,7 +212,7 @@ export class TagImages extends React.Component {
 							<div className="input-group-prepend">
 								<span className="input-group-text input-text">Description</span>
 							</div>
-							<input name={descriptionId} id={descriptionId} type="text" className="form-control"
+							<input name={descriptionId} id={descriptionId} type="text" className="form-control input"
 								   placeholder="Describe the image" onChange={this.onInputChange}/>
 						</div>
 					</div>
@@ -223,7 +223,7 @@ export class TagImages extends React.Component {
 								<span className="input-group-text input-text">Category</span>
 							</div>
 							<select name={categoryId} id={categoryId} onChange={this.onInputChange}
-									className="form-control custom-select">
+									className="form-control custom-select input">
 								{['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Earthquakes', 'Other']
 									.map((category, index) => (
 										<option key={index} value={category}>{category}</option>

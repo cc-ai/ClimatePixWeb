@@ -123,7 +123,7 @@ export class LocationInput extends React.Component {
 	render() {
 		const locationId = this.props.id;
 		const output = [
-			<input className="form-control"
+			<input className="form-control input"
 				   id={locationId}
 				   key={locationId}
 				   name={locationId}
