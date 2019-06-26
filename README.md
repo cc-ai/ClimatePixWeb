@@ -23,6 +23,7 @@ Once you have the `app.yaml` file in-place and the `gcloud` tool is installed, r
 
 1. `npm install --save`
 2. `npm run-script build`
-3. `gcloud app deploy`
+3. `gcloud config set project climatepixweb-244121`
+4. `gcloud app deploy`
 
 Verify the details and following the interactive instructions when running `gcloud app deploy`. Once the deploy is done, the app should be available at [https://climatepix.mila.quebec](https://climatepix.mila.quebec).
