@@ -1,3 +1,7 @@
+.image-form .input-group .input-text, .image-form .input-group .input {
+    font-size: 0.9rem;
+}
+
 .input-text {
     background: #5A3F37 !important;
     border-color: #5A3F37 !important;
