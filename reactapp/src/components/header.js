@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../images/earthlogo.png";
+import svgLogo from '../images/logo.svg';
 import "../styles/header.css";
 import {scrollToElement} from "../utils/scroll";
 
@@ -11,7 +11,7 @@ class Header extends React.Component {
 		super(props);
 		this.state = {
 			scrolled: false,
-			aboutVisible: false
+			whatVisible: 'home'
 		};
 		this.updateNavOnScroll = this.updateNavOnScroll.bind(this);
 	}
@@ -48,11 +48,17 @@ class Header extends React.Component {
 	updateNavOnScroll() {
 		const nav = document.getElementsByTagName('nav')[0];
 		const about = document.getElementsByClassName('section-about')[0];
+		const aboutApp = document.getElementsByClassName('section-about-app')[0];
 		const windowOffset = window.pageYOffset + window.innerHeight;
 		const aboutOffset = Header.localToGlobal(about).top + 50;
-		let aboutVisible = windowOffset > aboutOffset;
+		const aboutAppOffset = Header.localToGlobal(aboutApp).top + 50;
+		let whatVisible = 'home';
+		if (windowOffset > aboutOffset)
+			whatVisible = 'about';
+		else if (windowOffset > aboutAppOffset)
+			whatVisible = 'about-app';
 		let scrolled = window.pageYOffset > nav.clientHeight;
-		this.setState({scrolled, aboutVisible});
+		this.setState({scrolled, whatVisible});
 	}
 
 	componentDidMount() {
@@ -62,9 +68,10 @@ class Header extends React.Component {
 
 	render() {
 		return (
-			<nav className={`navbar fixed-top navbar-expand-lg navbar-dark mb-4 pageNavHeader ${this.state.scrolled ? 'scrolled' : ''}`}>
-                <span className="navbar-brand">
-                    <img className="logoImg" alt="ClimateChange.AI" src={logo} onClick={() => scrollToElement('home')}/>
+			<nav className={`navbar fixed-top navbar-expand-lg navbar-light mb-4 pageNavHeader ${this.state.scrolled ? 'scrolled' : ''}`}>
+                <span className="navbar-brand logo-wrapper">
+                    <img className="logoImg" alt="ClimateChange.AI" src={svgLogo}
+						 onClick={() => scrollToElement('home')}/>
                 </span>
 				<button className="navbar-toggler" type="button" data-toggle="collapse"
 						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -73,16 +80,23 @@ class Header extends React.Component {
 				</button>
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav ml-auto">
-						<li className={`nav-item ${this.state.aboutVisible ? '' : 'active'}`}>
+						<li className={`nav-item ${this.state.whatVisible === 'home' ? 'active' : ''}`}>
                             <span className="nav-link button" onClick={() => scrollToElement('home')}>
-                                Home
-								{this.state.aboutVisible ? '' : (<span className="sr-only">(current)</span>)}
+                                HOME
+								{this.state.whatVisible === 'home' ? (<span className="sr-only">(current)</span>) : ''}
                             </span>
 						</li>
-						<li className={`nav-item ${this.state.aboutVisible ? 'active' : ''}`}>
+						<li className={`nav-item ${this.state.whatVisible === 'about-app' ? 'active' : ''}`}>
+                            <span className="nav-link button" onClick={() => scrollToElement('about-app')}>
+                                THE APP
+								{this.state.whatVisible === 'about-app' ? (
+									<span className="sr-only">(current)</span>) : ''}
+                            </span>
+						</li>
+						<li className={`nav-item ${this.state.whatVisible === 'about' ? 'active' : ''}`}>
 							<span className="nav-link button" onClick={() => scrollToElement('about')}>
-								About us
-								{this.state.aboutVisible ? (<span className="sr-only">(current)</span>) : ''}
+								ABOUT
+								{this.state.whatVisible === 'about' ? (<span className="sr-only">(current)</span>) : ''}
 							</span>
 						</li>
 					</ul>

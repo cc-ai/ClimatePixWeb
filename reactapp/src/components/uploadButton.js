@@ -12,11 +12,12 @@ export class UploadButton extends React.Component {
 		return (
 			<div>
 				<h3>
-					Contribute to this project by uploading and tagging pictures
+					Depict accurate and personalized outcomes of climate change using AI.
+					Help us collect images of flooded houses and streets to train our climate model.
 				</h3>
 				<p>
-                    <span className="button btn btn-success btn-lg" onClick={this.props.loadTagsForm}>
-                        <strong>Upload</strong>
+                    <span className="button btn btn-danger btn-lg" onClick={this.props.loadTagsForm}>
+                        UPLOAD YOUR PHOTOS
                     </span>
 				</p>
 			</div>

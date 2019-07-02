@@ -1,6 +1,7 @@
 import React from 'react';
 import "../styles/mainPage.css";
 import {AboutUS} from "../components/aboutUs";
+import {AboutApp} from "../components/aboutApp";
 import {Helmet} from "react-helmet/es/Helmet";
 import Header from "../components/header";
 import {UploadButton} from "../components/uploadButton";
@@ -24,19 +25,14 @@ export class MainPage extends React.Component {
 
 	static updateMainPageComponents() {
 		const main = document.getElementsByTagName('main')[0];
-		if (!main)
-			return;
 		const nav = main.getElementsByTagName('nav')[0];
-		if (!nav)
-			return;
 		const aboutWrapper = main.getElementsByClassName('section-about-wrapper')[0];
-		if (!aboutWrapper)
-			return;
 		const about = main.getElementsByClassName('section-about')[0];
-		if (!about)
-			return;
+		const aboutAppWrapper = main.getElementsByClassName('section-about-app-wrapper')[0];
+		const aboutApp = main.getElementsByClassName('section-about-app')[0];
 		const remainingHeight = window.innerHeight - nav.clientHeight;
 		aboutWrapper.style.minHeight = `${remainingHeight}px`;
+		aboutAppWrapper.style.minHeight = `${nav.clientHeight + remainingHeight}px`;
 		if (remainingHeight >= about.clientHeight) {
 			aboutWrapper.style.paddingTop = 0;
 			aboutWrapper.style.marginTop = 0;
@@ -44,6 +40,17 @@ export class MainPage extends React.Component {
 			aboutWrapper.style.paddingTop = `${nav.clientHeight}px`;
 			aboutWrapper.style.marginTop = `-${nav.clientHeight}px`;
 		}
+		aboutAppWrapper.style.paddingTop = `${nav.clientHeight}px`;
+		aboutAppWrapper.style.marginTop = `-${nav.clientHeight}px`;
+		/*
+		if (remainingHeight >= aboutApp.clientHeight) {
+			aboutAppWrapper.style.paddingTop = 0;
+			aboutAppWrapper.style.marginTop = 0;
+		} else {
+			aboutAppWrapper.style.paddingTop = `${nav.clientHeight}px`;
+			aboutAppWrapper.style.marginTop = `-${nav.clientHeight}px`;
+		}
+		*/
 	}
 
 	componentDidMount() {
@@ -87,6 +94,7 @@ export class MainPage extends React.Component {
 							{component}
 						</div>
 					</div>
+					<AboutApp/>
 					<AboutUS/>
 				</div>
 			</main>

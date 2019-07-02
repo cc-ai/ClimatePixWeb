@@ -1,9 +1,9 @@
 .section-about-wrapper {
-	color: black;
 }
 
 .section-about {
-	background-color: rgba(245, 245, 245, 0.8);
+	background-color: black;
+	color: white;
 }
 
 .section-about > .row {
@@ -16,15 +16,29 @@
 }
 
 .about-us h2 {
-	text-align: center;
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
-	color: #5A3F37;
+}
 
+.about-us .more-info a {
+	color: #F13C3C;
+	text-decoration: underline;
+}
+
+.about-us .more-info a:hover {
+	text-decoration: none;
 }
 
 .about-us p {
 	padding-top: 1.25rem;
 	font-size: 1.25rem;
+}
+
+.about-us .social-links a {
+}
+
+.about-us .social-links a + a {
+	margin-left: 1rem;
+}
+
+.about-us .social-links img {
+	max-height: 2rem;
 }
