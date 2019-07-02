@@ -1,6 +1,5 @@
 import React, {createRef} from 'react';
 import Dropzone from 'react-dropzone';
-import "../styles/image_uploader.css";
 import "../styles/tag_images.css";
 import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
@@ -251,81 +250,78 @@ export class TagImages extends React.Component {
 			image_count = image_count + 1;
 		}
 		return (
-			<main>
+			<div className="upload-form">
 				<Helmet>
 					<title>Upload and describe your pictures</title>
 				</Helmet>
-				<div>
-					<div className="upload-container">
-						<h3 className="custom-header">Upload pictures and tell us more about them</h3>
-						<h4 className="mb-4">
-							You can upload multiple files at once (only common image formats will be accepted)
-						</h4>
-						{/** If there is a message from the api request show this underneath the header **/}
-						{this.state.message ? <div className="row">
-						</div> : <div/>}
-						<div className="row">
-							{/** Add forms and image previews to the DOM **/}
-							{forms_html}
-							<div className="col-lg-3 form-col">
-								{/** Another dropzone component to allow users to add more images while adding the metadata **/}
-								{/** Show the upload section if the add images flag is set to true. This flag is toggled
-								 by the addMoreImages method **/}
-								<div className="drop-zone-container">
-									<Dropzone ref={dropzoneRef} accept="image/*"
-											  onDrop={this.getAttachedFiles} noClick noKeyboard>
-										{({getRootProps, getInputProps, acceptedFiles}) => {
-											return (
-												<div {...getRootProps({className: 'dropzone'})}>
-													<input {...getInputProps()} />
-													Drag and Drop files here, or &nbsp;
-													<span className="href-link"
-														  onClick={openDialog}><span>Click to select files</span></span>
-												</div>
-											);
-										}}
-									</Dropzone>
-								</div>
-							</div>
+				<h3>Upload pictures and tell us more about them</h3>
+				<h4 className="mb-4">
+					You can upload multiple files at once (only common image formats will be accepted)
+				</h4>
+				{/** If there is a message from the api request show this underneath the header **/}
+				{this.state.message ? <div className="row">
+				</div> : <div/>}
+				<div className="row">
+					{/** Add forms and image previews to the DOM **/}
+					{forms_html}
+					<div className="col-lg-3 form-col">
+						{/** Another dropzone component to allow users to add more images while adding the metadata **/}
+						{/** Show the upload section if the add images flag is set to true. This flag is toggled
+						 by the addMoreImages method **/}
+						<div className="drop-zone-container">
+							<Dropzone ref={dropzoneRef} accept="image/*"
+									  onDrop={this.getAttachedFiles} noClick noKeyboard>
+								{({getRootProps, getInputProps, acceptedFiles}) => {
+									return (
+										<div {...getRootProps({className: 'dropzone'})}>
+											<input {...getInputProps()} />
+											Drag and Drop files here, or &nbsp;
+											<span className="href-link" onClick={openDialog}>
+														Click to select files
+													</span>
+										</div>
+									);
+								}}
+							</Dropzone>
 						</div>
-						{/** On click on finish uploading start submitting images to the server **/}
-						{this.state.files.length && !this.state.sending ? (
-							<div className="upload-form-wrapper">
-								<form>
-									<div className="form-check">
-										<input type="checkbox"
-											   className="form-check-input"
-											   id="agree-license"
-											   checked={agreement.getAgreement()}
-											   onChange={(event) => agreement.setAgreement(event.target.checked)}/>
-										<strong>
-											<label className="form-check-label" htmlFor="agree-license">
-												I agree with the&nbsp;
-											</label>
-											<span className="link-license"
-												  onClick={() => this.onChangeShowAgreement(true)}>
+					</div>
+				</div>
+				{/** On click on finish uploading start submitting images to the server **/}
+				{this.state.files.length && !this.state.sending ? (
+					<div className="upload-form-wrapper">
+						<form>
+							<div className="form-check">
+								<input type="checkbox"
+									   className="form-check-input"
+									   id="agree-license"
+									   checked={agreement.getAgreement()}
+									   onChange={(event) => agreement.setAgreement(event.target.checked)}/>
+								<strong>
+									<label className="form-check-label" htmlFor="agree-license">
+										I agree with the&nbsp;
+									</label>
+									<span className="link-license"
+										  onClick={() => this.onChangeShowAgreement(true)}>
                                             license
                                         </span>.
-										</strong>
-									</div>
-								</form>
-								<button className="finish-uploading btn btn-success btn-lg mt-2"
-										disabled={!agreement.getAgreement()}
-										onClick={this.handleSubmit}>
-									<strong>Finish Uploading</strong>
-								</button>
+								</strong>
 							</div>
-						) : ''}
+						</form>
+						<button className="finish-uploading btn btn-success btn-lg mt-2"
+								disabled={!agreement.getAgreement()}
+								onClick={this.handleSubmit}>
+							<strong>Finish Uploading</strong>
+						</button>
 					</div>
-					{this.state.showAgreement && (
-						<FancyBox title={'LICENSE'} onClose={() => this.onChangeShowAgreement(false)}>
+				) : ''}
+				{this.state.showAgreement && (
+					<FancyBox title={'LICENSE'} onClose={() => this.onChangeShowAgreement(false)}>
                         <pre className="license">
                             {this.state.license ? this.state.license : `Loading agreement ...`}
                         </pre>
-						</FancyBox>
-					)}
-				</div>
-			</main>
+					</FancyBox>
+				)}
+			</div>
 		);
 	}
 

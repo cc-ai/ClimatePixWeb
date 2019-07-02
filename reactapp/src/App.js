@@ -42,7 +42,7 @@ export class App extends React.Component {
 		};
 		return (
 			<AppContext.Provider value={context}>
-				<div className="container-fluid">
+				<div className="app container-fluid">
 					<MainPage/>
 					<Script async defer
 							url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places`}

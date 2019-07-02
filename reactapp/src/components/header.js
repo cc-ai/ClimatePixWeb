@@ -16,7 +16,7 @@ class Header extends React.Component {
 		this.updateNavOnScroll = this.updateNavOnScroll.bind(this);
 	}
 
-	static localToGlobal( _el ) {
+	static localToGlobal(_el) {
 		/**
 		 * Reference (2019/06/25): https://stackoverflow.com/a/1350681
 		 * */
@@ -27,11 +27,11 @@ class Header extends React.Component {
 			gtop = 0,
 			rect = {};
 
-		const moonwalk = function( _parent ) {
+		const moonwalk = function (_parent) {
 			if (!!_parent) {
 				gleft += _parent.offsetLeft;
 				gtop += _parent.offsetTop;
-				moonwalk( _parent.offsetParent );
+				moonwalk(_parent.offsetParent);
 			} else {
 				return rect = {
 					top: target.offsetTop + gtop,
@@ -41,7 +41,7 @@ class Header extends React.Component {
 				};
 			}
 		};
-		moonwalk( target.offsetParent );
+		moonwalk(target.offsetParent);
 		return rect;
 	}
 

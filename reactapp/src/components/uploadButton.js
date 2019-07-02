@@ -10,8 +10,8 @@ export class UploadButton extends React.Component {
 
 	render() {
 		return (
-			<div className="upload-container">
-				<h3 className="custom-header">
+			<div>
+				<h3>
 					Contribute to this project by uploading and tagging pictures
 				</h3>
 				<p>

@@ -1,0 +1,30 @@
+.section-about-wrapper {
+	color: black;
+}
+
+.section-about {
+	background-color: rgba(245, 245, 245, 0.8);
+}
+
+.section-about > .row {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+.about-us {
+	padding: 20px;
+}
+
+.about-us h2 {
+	text-align: center;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	color: #5A3F37;
+
+}
+
+.about-us p {
+	padding-top: 1.25rem;
+	font-size: 1.25rem;
+}

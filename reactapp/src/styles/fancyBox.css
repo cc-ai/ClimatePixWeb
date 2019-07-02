@@ -1,0 +1,39 @@
+.fancy-wrapper {
+	z-index: 1;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	padding-top: 6%;
+	padding-bottom: 6%;
+	background-color: rgba(100, 100, 110, 0.5);
+	text-align: left;
+}
+
+.fancy-box {
+	border: 1px solid silver;
+	position: relative;
+	margin: auto;
+	color: black;
+	width: 100%;
+	height: 100%;
+}
+
+.fancy-box .fancy-bar {
+	background-color: rgb(240, 240, 240);
+	border-bottom: 1px solid silver;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.fancy-box .fancy-button {
+	text-align: right;
+}
+
+.fancy-box .fancy-content {
+	background-color: white;
+	margin-left: -15px;
+	margin-right: -15px;
+	position: relative;
+}

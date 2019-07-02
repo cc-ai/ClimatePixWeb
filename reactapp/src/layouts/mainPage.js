@@ -1,7 +1,6 @@
 import React from 'react';
-import "../styles/image_uploader.css";
+import "../styles/mainPage.css";
 import {AboutUS} from "../components/aboutUs";
-import {TopLink} from "../components/TopLInk";
 import {Helmet} from "react-helmet/es/Helmet";
 import Header from "../components/header";
 import {UploadButton} from "../components/uploadButton";
@@ -84,21 +83,11 @@ export class MainPage extends React.Component {
 				<Header/>
 				<div className="main-page">
 					<div className="up-screen pb-5">
-						{component}
-					</div>
-					<div className="section-about-wrapper" id="about">
-						<div className="section-about">
-							<div className="row">
-								<div className="col-lg-3"/>
-								<div className="col-lg-6">
-									<AboutUS/>
-								</div>
-								<div className="col-lg-3">
-									<TopLink/>
-								</div>
-							</div>
+						<div className="upload-container">
+							{component}
 						</div>
 					</div>
+					<AboutUS/>
 				</div>
 			</main>
 		);
