@@ -73,11 +73,15 @@ h3 {
 	font-size: inherit;
 }
 
-a.href-link {
+.href-link {
 	color: #F13C3C;
 	text-decoration: underline;
 }
 
-a.href-link:hover {
+.href-link:hover {
 	text-decoration: none;
+}
+
+span.href-link {
+	cursor: pointer;
 }

@@ -14,7 +14,8 @@ export class UploadButton extends React.Component {
 			<div>
 				<h3>
 					Depict accurate and personalized outcomes of climate change using AI.<br/>
-					Help us collect images of flooded houses and streets to train our climate model.
+					<span className="href-link" onClick={this.props.loadTagsForm}>Help us collect images</span> of flooded
+					houses and streets to train our climate model.
 				</h3>
 				<div className="pb-5">
 					<div className="pb-4">

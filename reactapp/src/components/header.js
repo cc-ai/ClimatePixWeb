@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import svgLogo from '../images/logo.svg';
 import "../styles/header.css";
 import {scrollToElement} from "../utils/scroll";
@@ -6,7 +7,7 @@ import {scrollToElement} from "../utils/scroll";
 /**
  * Renders a NavBar Header. To be displayed across all layouts.
  */
-class Header extends React.Component {
+export class Header extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -71,7 +72,7 @@ class Header extends React.Component {
 			<nav className={`navbar fixed-top navbar-expand-lg navbar-light mb-4 pageNavHeader ${this.state.scrolled ? 'scrolled' : ''}`}>
                 <span className="navbar-brand logo-wrapper">
                     <img className="logoImg" alt="ClimateChange.AI" src={svgLogo}
-						 onClick={() => scrollToElement('home')}/>
+						 onClick={this.props.loadHome}/>
                 </span>
 				<button className="navbar-toggler" type="button" data-toggle="collapse"
 						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -81,7 +82,7 @@ class Header extends React.Component {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav ml-auto">
 						<li className={`nav-item ${this.state.whatVisible === 'home' ? 'active' : ''}`}>
-                            <span className="nav-link button" onClick={() => scrollToElement('home')}>
+                            <span className="nav-link button" onClick={this.props.loadHome}>
                                 HOME
 								{this.state.whatVisible === 'home' ? (<span className="sr-only">(current)</span>) : ''}
                             </span>
@@ -105,6 +106,6 @@ class Header extends React.Component {
 		)
 	}
 }
-
-Header.displayName = "Navigation bar at the top";
-export default Header;
+Header.propTypes = {
+	loadHome: PropTypes.func.isRequired
+};

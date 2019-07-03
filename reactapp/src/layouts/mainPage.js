@@ -3,10 +3,11 @@ import "../styles/mainPage.css";
 import {AboutUS} from "../components/aboutUs";
 import {AboutApp} from "../components/aboutApp";
 import {Helmet} from "react-helmet/es/Helmet";
-import Header from "../components/header";
+import {Header} from "../components/header";
 import {UploadButton} from "../components/uploadButton";
 import {TagImages} from "../components/tagImages";
 import {FinalPage} from "./finalPage";
+import {scrollToElement} from "../utils/scroll";
 
 var ResizeSensor = require('css-element-queries/src/ResizeSensor');
 
@@ -63,7 +64,10 @@ export class MainPage extends React.Component {
 	}
 
 	showUpload() {
-		this.setState({currentPage: 'upload'})
+		if (this.state.currentPage === 'upload')
+			scrollToElement('home');
+		else
+			this.setState({currentPage: 'upload'})
 	}
 
 	showTagImages() {
@@ -72,6 +76,11 @@ export class MainPage extends React.Component {
 
 	showThanks() {
 		this.setState({currentPage: 'thanks'})
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevState.currentPage !== this.state.currentPage)
+			scrollToElement('home');
 	}
 
 	render() {
@@ -87,7 +96,7 @@ export class MainPage extends React.Component {
 				<Helmet>
 					<title>Welcome to ClimateChange.AI</title>
 				</Helmet>
-				<Header/>
+				<Header loadHome={this.showUpload}/>
 				<div className="main-page">
 					<div className="up-screen d-flex flex-column">
 						{component}
