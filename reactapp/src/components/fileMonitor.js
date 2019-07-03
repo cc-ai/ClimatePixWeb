@@ -24,14 +24,12 @@ export class FileMonitor {
 	sendMetadataIfPossible(index) {
 		if (this.progress[index] === 100 && this.uploadNames[index] !== null) {
 			console.log(`[${index}] sending metadata.`);
-			const file_description = this.metadata[index].file_description;
 			const file_location = this.metadata[index].file_location;
 			const file_category = this.metadata[index].file_category;
 			const uploadName = this.uploadNames[index];
 			storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
 				return firestore_collection.add({
 					url: url,
-					description: file_description,
 					location: file_location,
 					category: file_category
 				})

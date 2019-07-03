@@ -13,6 +13,15 @@
 	font-family: 'PublicSans';
 	font-weight: 500;
 	font-style: normal;
+	src: url("./font/public-sans/PublicSans-SemiBold.ttf") format("truetype"),
+	url("./font/public-sans/PublicSans-SemiBold.woff") format("woff"),
+	url("./font/public-sans/PublicSans-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: 'PublicSans';
+	font-weight: bold;
+	font-style: normal;
 	src: url("./font/public-sans/PublicSans-Bold.ttf") format("truetype"),
 	url("./font/public-sans/PublicSans-Bold.woff") format("woff"),
 	url("./font/public-sans/PublicSans-Bold.woff2") format("woff2");
@@ -46,18 +55,29 @@ span.button {
 	cursor: pointer;
 }
 
+span.button.btn-danger {
+	background-color: #F13C3C;
+	border-radius: 0;
+	font-size: 0.9rem;
+	font-weight: inherit;
+	padding: 0.75rem 0.75rem;
+}
+
+span.button.btn-danger:hover {
+	background-color: #d93636;
+}
+
 h3 {
-	font-size: 36px;
-	padding-bottom: 20px;
+	padding-bottom: 2rem;
+	font-weight: inherit;
+	font-size: inherit;
 }
 
-.href-link {
-	color: white;
+a.href-link {
+	color: #F13C3C;
 	text-decoration: underline;
-	cursor: pointer;
 }
 
-.href-link:hover {
-	color: white;
+a.href-link:hover {
 	text-decoration: none;
 }

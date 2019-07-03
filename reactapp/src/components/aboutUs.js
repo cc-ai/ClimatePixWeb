@@ -31,6 +31,7 @@ export class AboutUS extends React.Component {
 									Our project aims to raise awareness and conceptual understanding
 									of climate change by bringing the future closer. More info&nbsp;
 									<a target="_blank" rel="noopener noreferrer"
+									   className="href-link"
 									   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
 										here
 									</a>.

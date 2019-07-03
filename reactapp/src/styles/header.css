@@ -1,4 +1,5 @@
 .pageNavHeader {
+	font-size: 0.9rem;
 	font-weight: bold;
 }
 
@@ -9,10 +10,6 @@
 .logoImg {
 	height: 54px;
 	cursor: pointer;
-}
-
-.nav-link a {
-	font-size: 22px !important;
 }
 
 nav {

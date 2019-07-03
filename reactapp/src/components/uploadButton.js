@@ -1,4 +1,5 @@
 import React from "react";
+import {Carousel} from "./carousel";
 import "../styles/header.css";
 import PropTypes from 'prop-types';
 
@@ -12,14 +13,17 @@ export class UploadButton extends React.Component {
 		return (
 			<div>
 				<h3>
-					Depict accurate and personalized outcomes of climate change using AI.
+					Depict accurate and personalized outcomes of climate change using AI.<br/>
 					Help us collect images of flooded houses and streets to train our climate model.
 				</h3>
-				<p>
+				<div className="pb-5">
+					<div className="pb-4">
                     <span className="button btn btn-danger btn-lg" onClick={this.props.loadTagsForm}>
                         UPLOAD YOUR PHOTOS
                     </span>
-				</p>
+					</div>
+				</div>
+				<Carousel/>
 			</div>
 		)
 

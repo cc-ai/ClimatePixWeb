@@ -15,21 +15,8 @@
 	padding: 20px;
 }
 
-.about-us h2 {
-}
-
-.about-us .more-info a {
-	color: #F13C3C;
-	text-decoration: underline;
-}
-
-.about-us .more-info a:hover {
-	text-decoration: none;
-}
-
 .about-us p {
 	padding-top: 1.25rem;
-	font-size: 1.25rem;
 }
 
 .about-us .social-links a {

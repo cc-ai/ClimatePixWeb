@@ -89,10 +89,8 @@ export class MainPage extends React.Component {
 				</Helmet>
 				<Header/>
 				<div className="main-page">
-					<div className="up-screen pb-5">
-						<div className="upload-container">
-							{component}
-						</div>
+					<div className="up-screen d-flex flex-column">
+						{component}
 					</div>
 					<AboutApp/>
 					<AboutUS/>

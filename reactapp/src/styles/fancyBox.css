@@ -31,6 +31,15 @@
 	text-align: right;
 }
 
+.fancy-box .fancy-button button {
+	border-radius: 0;
+	background-color: #F13C3C;
+}
+
+.fancy-box .fancy-button button:hover {
+	background-color: #d93636;
+}
+
 .fancy-box .fancy-content {
 	background-color: white;
 	margin-left: -15px;

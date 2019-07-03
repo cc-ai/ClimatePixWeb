@@ -15,19 +15,19 @@ export class FinalPage extends React.Component {
 					<title>Thanks!</title>
 				</Helmet>
 				<h3>Thank you for your contribution!<br/></h3>
-				<h4>
+				<p>
 					For more information about the project,&nbsp;
 					<a target="_blank" rel="noopener noreferrer"
 					   className="href-link"
 					   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
 						<strong>click here</strong>
 					</a>.
-				</h4>
+				</p>
 				<div className="w-75 m-auto">
 					<p className="mt-5">
-						<button className="btn btn-success" onClick={this.props.loadTagsForm}>
-							<strong>Upload more</strong>
-						</button>
+						<span className="button btn btn-danger" onClick={this.props.loadTagsForm}>
+							UPLOAD MORE
+						</span>
 					</p>
 				</div>
 			</div>
