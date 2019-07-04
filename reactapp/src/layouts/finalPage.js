@@ -15,24 +15,6 @@ export class FinalPage extends React.Component {
 					<title>Thanks!</title>
 				</Helmet>
 				<h3>Thank you for your contribution!<br/></h3>
-				<div>
-					<div>
-						If you want to make any updates regarding images you just uploaded,
-						please contact us with following information (keep it preciously!):
-					</div>
-					<div className="upload-info">
-						<div className="row">
-							<div className="col-md text-md-right">Session ID:</div>
-							<div className="col-md text-md-left"><strong><code>{this.props.sessionID}</code></strong>
-							</div>
-						</div>
-						<div className="row">
-							<div className="col-md text-md-right">Upload ID:</div>
-							<div className="col-md text-md-left"><strong><code>{this.props.uploadID}</code></strong>
-							</div>
-						</div>
-					</div>
-				</div>
 				<p>
 					For more information about the project,&nbsp;
 					<a target="_blank" rel="noopener noreferrer"
@@ -41,12 +23,14 @@ export class FinalPage extends React.Component {
 						<strong>click here</strong>
 					</a>.
 				</p>
-				<div className="w-75 m-auto">
-					<p className="mt-5">
+				<p className="mt-5">
 						<span className="button btn btn-danger" onClick={this.props.loadTagsForm}>
 							UPLOAD MORE
 						</span>
-					</p>
+				</p>
+				<div className="upload-info mt-5">
+					<div>(*) If you want to contact us about pictures you just uploaded, please save this upload ID:</div>
+					<div><code>{this.props.uploadID}</code></div>
 				</div>
 			</div>
 		);
@@ -55,6 +39,5 @@ export class FinalPage extends React.Component {
 
 FinalPage.propTypes = {
 	loadTagsForm: PropTypes.func.isRequired,
-	sessionID: PropTypes.string.isRequired,
-	uploadID: PropTypes.string.isRequired,
+	uploadID: PropTypes.string.isRequired
 };

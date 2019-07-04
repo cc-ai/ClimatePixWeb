@@ -161,8 +161,7 @@ export class TagImages extends React.Component {
 				file_category: file_category
 			};
 		});
-		const fileMonitor = new FileMonitor(
-			this.context.sessionID, this.state.files.map(file => file.file), metadata, this.props.loadThanks, this.errorMessage);
+		const fileMonitor = new FileMonitor(this.state.files.map(file => file.file), metadata, this.props.loadThanks, this.errorMessage);
 		fileMonitor.start();
 	};
 
@@ -399,7 +398,7 @@ export class TagImages extends React.Component {
 
 TagImages.contextType = AppContext;
 TagImages.propTypes = {
-	loadThanks: PropTypes.func.isRequired // loadThanks(sessionID, uploadID)
+	loadThanks: PropTypes.func.isRequired // loadThanks(uploadID)
 };
 TagImages.defaultProps = {
 	files: []

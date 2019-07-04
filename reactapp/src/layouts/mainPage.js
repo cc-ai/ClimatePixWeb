@@ -18,8 +18,7 @@ export class MainPage extends React.Component {
 		super(props);
 		this.state = {
 			currentPage: 'upload',
-			sessionID: null,
-			uploadID: null,
+			uploadID: null
 		};
 		this.showUpload = this.showUpload.bind(this);
 		this.showTagImages = this.showTagImages.bind(this);
@@ -66,8 +65,8 @@ export class MainPage extends React.Component {
 		this.setState({currentPage: 'tag'})
 	}
 
-	showThanks(sessionID, uploadID) {
-		this.setState({currentPage: 'thanks', sessionID: sessionID, uploadID: uploadID})
+	showThanks(uploadID) {
+		this.setState({currentPage: 'thanks', uploadID: uploadID})
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -83,7 +82,6 @@ export class MainPage extends React.Component {
 			component = <TagImages loadThanks={this.showThanks}/>;
 		else if (this.state.currentPage === 'thanks')
 			component = <FinalPage loadTagsForm={this.showTagImages}
-								   sessionID={this.state.sessionID}
 								   uploadID={this.state.uploadID}/>;
 		return (
 			<main id="home">
