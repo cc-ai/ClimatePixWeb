@@ -19,7 +19,7 @@ export class AboutUS extends React.Component {
 							<div className="about-us py-5">
 								<h2>ABOUT</h2>
 								<p>
-									The CCAI project is an interdisciplinary project aimed at creating images of
+									The VICC project is an interdisciplinary project aimed at creating images of
 									accurate, vivid, and personalized outcomes of climate change. Our goal is to use
 									cutting-edge machine learning techniques to produce images of how neighborhoods and
 									houses will look like following the effects of global warming. By creating a more

@@ -209,7 +209,7 @@ export class TagImages extends React.Component {
 							</div>
 							<select name={categoryId} id={categoryId} onChange={this.onInputChange}
 									className="form-control custom-select input">
-								{['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Earthquakes', 'Other']
+								{['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Other']
 									.map((category, index) => (
 										<option key={index} value={category}>{category}</option>
 									))}
@@ -217,18 +217,14 @@ export class TagImages extends React.Component {
 						</div>
 					</div>
 					<div className="form-group">
-						<label className="sr-only" htmlFor={locationId}>Location</label>
+						<label className="sr-only" htmlFor={locationId}>City</label>
 						<div className="input-group autocomplete">
 							<div className="input-group-prepend">
-								<span className="input-group-text input-text">Location</span>
+								<span className="input-group-text input-text">City</span>
 							</div>
 							<LocationInput id={locationId}
 										   setAddress={this.onInputValueChange}
 										   getAddress={this.getInputValue}/>
-							{/*
-                            <input name={locationId} id={locationId} type="text" className="form-control"
-                                   placeholder="Location of the image" onChange={this.onInputChange}/>
-                            */}
 						</div>
 					</div>
 				</form>

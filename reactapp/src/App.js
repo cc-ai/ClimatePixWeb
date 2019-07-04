@@ -11,7 +11,8 @@ export class App extends React.Component {
 			agree: false,
 			google: null,
 			geocoder: null,
-			autocomplete: null
+			autocomplete: null,
+			sessionToken: null
 		};
 		this.getAgreement = this.getAgreement.bind(this);
 		this.setAgreement = this.setAgreement.bind(this);
@@ -21,7 +22,8 @@ export class App extends React.Component {
 		const google = window.google;
 		const geocoder = new google.maps.Geocoder();
 		const autocomplete = new google.maps.places.AutocompleteService();
-		this.setState({google, geocoder, autocomplete});
+		const sessionToken = new google.maps.places.AutocompleteSessionToken();
+		this.setState({google, geocoder, autocomplete, sessionToken});
 	}
 
 	getAgreement() {
@@ -38,7 +40,8 @@ export class App extends React.Component {
 			setAgreement: this.setAgreement,
 			google: this.state.google,
 			geocoder: this.state.geocoder,
-			autocomplete: this.state.autocomplete
+			autocomplete: this.state.autocomplete,
+			sessionToken: this.state.session
 		};
 		return (
 			<AppContext.Provider value={context}>
