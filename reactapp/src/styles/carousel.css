@@ -1,19 +1,34 @@
-.carousel .custom-slide img {
-	display: none;
+.carousel {
+	height: 100%;
+	min-height: 300px;
+	margin: auto;
+}
+
+.carousel .carousel-inner {
+	width: 100%;
+	height: 100%;
+}
+
+.carousel .carousel-inner .carousel-item {
+	width: 100%;
+	height: 100%;
 }
 
 .carousel .custom-slide {
 	width: 100%;
+	height: 100%;
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: 100% auto;
 }
 
+/*
 .carousel .custom-slide:after {
 	content: '';
 	display: block;
 	padding-top: 56.25%;
 }
+*/
 
 .carousel .carousel-indicators li {
 	width: 1rem;
