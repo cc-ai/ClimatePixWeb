@@ -37,19 +37,10 @@ export class AboutUS extends React.Component {
 										here
 									</a>.
 								</p>
-								<p>Follow us on</p>
 								<p className="social-links">
-									<a target="_blank" rel="noopener noreferrer"
+									Follow us on Facebook! <a target="_blank" rel="noopener noreferrer"
 									   href="https://fb.me/visualizingclimatechange">
 										<img alt="Follow us on Facebook" src={facebookIcon}/>
-									</a>
-									<a target="_blank" rel="noopener noreferrer"
-									   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
-										<img alt="Follow us on Twitter" src={twitterIcon}/>
-									</a>
-									<a target="_blank" rel="noopener noreferrer"
-									   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
-										<img alt="Follow us on Instagram" src={instagramIcon}/>
 									</a>
 								</p>
 							</div>
