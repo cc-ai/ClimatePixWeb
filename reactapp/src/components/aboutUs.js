@@ -40,7 +40,7 @@ export class AboutUS extends React.Component {
 								<p>Follow us on</p>
 								<p className="social-links">
 									<a target="_blank" rel="noopener noreferrer"
-									   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
+									   href="https://fb.me/visualizingclimatechange">
 										<img alt="Follow us on Facebook" src={facebookIcon}/>
 									</a>
 									<a target="_blank" rel="noopener noreferrer"

@@ -19,7 +19,7 @@ const dropzoneRef = createRef();
 const openDialog = () => {
 	/** Note that the ref is set async so it might be null at some point **/
 	if (dropzoneRef.current) {
-		dropzoneRef.current.open()
+		dropzoneRef.current.open();
 	}
 };
 
@@ -48,7 +48,7 @@ export class TagImages extends React.Component {
 		this.state = {
 			files: [],
 			images_src: [],
-			error_code: null,
+			messageType: null,
 			message: null,
 			add_images_flag: false,
 			showAgreement: false,
@@ -64,6 +64,12 @@ export class TagImages extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.getAttachedFiles = this.getAttachedFiles.bind(this);
 		this.removeFile = this.removeFile.bind(this);
+		this.errorMessage = this.errorMessage.bind(this);
+		this.onCloseMessage = this.onCloseMessage.bind(this);
+	}
+
+	errorMessage(message) {
+		this.setState({messageType: 'error', message: message});
 	}
 
 	loadLicense() {
@@ -91,6 +97,14 @@ export class TagImages extends React.Component {
 		this.setState({showAgreement: value});
 	}
 
+	onCloseMessage() {
+		this.setState({
+			messageType: null,
+			message: null,
+			sending: false
+		})
+	}
+
 	/** When we are routed to this page after uploading images earlier, we receive a list of HTML file objects. To display
 	 * the images for preview we need to create a URL object that can be passed to the src of img html element
 	 * This method iterates through all the files and generates a list of img URLs to display
@@ -100,9 +114,6 @@ export class TagImages extends React.Component {
 		for (let file of files) {
 			images_src.push(URL.createObjectURL(file))
 		}
-		this.setState({
-			files: files
-		});
 		this.setState({
 			images_src: images_src
 		});
@@ -142,7 +153,8 @@ export class TagImages extends React.Component {
 				file_category: file_category
 			};
 		});
-		const fileMonitor = new FileMonitor(this.context.sessionID, this.state.files, metadata, this.props.loadThanks);
+		const fileMonitor = new FileMonitor(
+			this.context.sessionID, this.state.files, metadata, this.props.loadThanks, this.errorMessage);
 		fileMonitor.start();
 	};
 
@@ -239,7 +251,6 @@ export class TagImages extends React.Component {
 				<h3>Upload pictures and tell us more about them.</h3>
 				<div className="upload-form-content px-4 py-5 flex-grow-1 d-flex flex-column justify-content-center">
 					{/** If there is a message from the api request show this underneath the header **/}
-					{this.state.message ? <div className="messages"/> : ''}
 					<div className={`d-flex flex-row flex-wrap ${forms_html.length ? '' : 'justify-content-center'}`}>
 						{/** Add forms and image previews to the DOM **/}
 						{forms_html}
@@ -318,6 +329,14 @@ export class TagImages extends React.Component {
                         <pre className="license">
                             {this.state.license ? this.state.license : `Loading agreement ...`}
                         </pre>
+						</FancyBox>
+					)}
+					{this.state.message && (
+						<FancyBox title={`${this.state.messageType.charAt(0).toUpperCase()}${this.state.messageType.substr(1)}`}
+								  onClose={this.onCloseMessage}>
+							<div className={`message ${this.state.messageType}`}>
+								{this.state.message}
+							</div>
 						</FancyBox>
 					)}
 				</div>

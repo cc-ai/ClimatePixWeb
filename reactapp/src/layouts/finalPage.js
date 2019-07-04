@@ -15,20 +15,24 @@ export class FinalPage extends React.Component {
 					<title>Thanks!</title>
 				</Helmet>
 				<h3>Thank you for your contribution!<br/></h3>
-				<p>
+				<div>
 					<div>
-					If you want to make any updates regarding images you just uploaded,
-					please contact us with following information (keep it preciously!):
+						If you want to make any updates regarding images you just uploaded,
+						please contact us with following information (keep it preciously!):
 					</div>
-					<div className="row">
-						<div className="col-md text-md-right">Session ID:</div>
-						<div className="col-md text-md-left"><strong><code>{this.props.sessionID}</code></strong></div>
+					<div className="upload-info">
+						<div className="row">
+							<div className="col-md text-md-right">Session ID:</div>
+							<div className="col-md text-md-left"><strong><code>{this.props.sessionID}</code></strong>
+							</div>
+						</div>
+						<div className="row">
+							<div className="col-md text-md-right">Upload ID:</div>
+							<div className="col-md text-md-left"><strong><code>{this.props.uploadID}</code></strong>
+							</div>
+						</div>
 					</div>
-					<div className="row">
-						<div className="col-md text-md-right">Upload ID:</div>
-						<div className="col-md text-md-left"><strong><code>{this.props.uploadID}</code></strong></div>
-					</div>
-				</p>
+				</div>
 				<p>
 					For more information about the project,&nbsp;
 					<a target="_blank" rel="noopener noreferrer"

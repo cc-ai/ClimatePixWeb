@@ -12,7 +12,7 @@ function padInt(value, length) {
 }
 
 export class FileMonitor {
-	constructor(sessionID, files, metadata, onEnd) {
+	constructor(sessionID, files, metadata, onEnd, onError) {
 		const currentTime = new Date();
 		const y = currentTime.getFullYear();
 		const m = currentTime.getMonth();
@@ -29,6 +29,7 @@ export class FileMonitor {
 		this.uploadNames = Array(metadata.length).fill(null);
 		this.metadataSent = Array(metadata.length).fill(false);
 		this.onEnd = onEnd;
+		this.onError = onError;
 		this.sessionID = sessionID;
 		this.dateFormat = `${datePieces.join('-')}-at-${timePieces.join('-')}`;
 	}
@@ -117,7 +118,10 @@ export class FileMonitor {
 				this.setFinished(index, uploadName);
 			});
 		} catch (e) {
-			console.log(`[${index}] We are sorry something went wrong while uploading your file. Please try again later.`);
+			const errorMessage = `Something went wrong while uploading your file. Please try again later.`;
+			console.log(`[${index}] ${errorMessage}`);
+			if (this.onError)
+				this.onError(errorMessage);
 		}
 	};
 }
