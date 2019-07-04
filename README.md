@@ -29,3 +29,4 @@ Once you have the `app.yaml` and `.env` files in-place and the `gcloud` tool is 
 4. `gcloud app deploy`
 
 Verify the details and following the interactive instructions when running `gcloud app deploy`. Once the deploy is done, the app should be available at [https://climatepix.mila.quebec](https://climatepix.mila.quebec).
+
