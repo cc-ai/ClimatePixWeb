@@ -30,7 +30,6 @@ export class MainPage extends React.Component {
 		const aboutWrapper = main.getElementsByClassName('section-about-wrapper')[0];
 		const about = main.getElementsByClassName('section-about')[0];
 		const aboutAppWrapper = main.getElementsByClassName('section-about-app-wrapper')[0];
-		const aboutApp = main.getElementsByClassName('section-about-app')[0];
 		const remainingHeight = window.innerHeight - nav.clientHeight;
 		aboutWrapper.style.minHeight = `${remainingHeight}px`;
 		aboutAppWrapper.style.minHeight = `${nav.clientHeight + remainingHeight}px`;
@@ -43,15 +42,6 @@ export class MainPage extends React.Component {
 		}
 		aboutAppWrapper.style.paddingTop = `${nav.clientHeight}px`;
 		aboutAppWrapper.style.marginTop = `-${nav.clientHeight}px`;
-		/*
-		if (remainingHeight >= aboutApp.clientHeight) {
-			aboutAppWrapper.style.paddingTop = 0;
-			aboutAppWrapper.style.marginTop = 0;
-		} else {
-			aboutAppWrapper.style.paddingTop = `${nav.clientHeight}px`;
-			aboutAppWrapper.style.marginTop = `-${nav.clientHeight}px`;
-		}
-		*/
 	}
 
 	componentDidMount() {

@@ -4,6 +4,7 @@ import imageFlood1 from '../images/carousel/desmond-simon-e72_wF3daBE-unsplash.j
 import imageWildFire1 from '../images/carousel/joanne-francis-S9NQnIV4zOI-unsplash.jpg';
 import imageFlood2 from '../images/carousel/chris-gallagher-4zxp5vlmvnI-unsplash.jpg';
 import imageWildFire2 from '../images/carousel/marcus-kauffman--iretlQZEU4-unsplash.jpg';
+import $ from 'jquery';
 import '../styles/carousel.css';
 
 class CarouselSlide extends React.Component {
@@ -47,5 +48,10 @@ export class Carousel extends React.Component {
 				</a>
 			</div>
 		);
+	}
+
+	componentDidMount() {
+		// Make sure carousel start cycle as soon as it is mounted.
+		$('.carousel').carousel('cycle');
 	}
 }

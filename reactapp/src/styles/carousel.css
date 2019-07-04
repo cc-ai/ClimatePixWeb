@@ -4,10 +4,15 @@
 
 .carousel .custom-slide {
 	width: 100%;
-	height: 100vh;
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: 100% auto;
+}
+
+.carousel .custom-slide:after {
+	content: '';
+	display: block;
+	padding-top: 56.25%;
 }
 
 .carousel .carousel-indicators li {

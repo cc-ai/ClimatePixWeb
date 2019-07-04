@@ -28,7 +28,7 @@ export class AboutApp extends React.Component {
 									</div>
 								</div>
 								<div className="about-app-image col-lg text-left pl-4 pl-lg-0 text-lg-right">
-									<img className="img-fluid w-50" src={figure}/>
+									<img className="img-fluid w-50" alt="Mobile app screenshot!" src={figure}/>
 								</div>
 							</div>
 						</div>
