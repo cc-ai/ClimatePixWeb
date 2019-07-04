@@ -71,24 +71,20 @@ export class LocationInput extends React.Component {
 		let autocompleteHasFocus = this.state.autocompleteHasFocus;
 		if (event.keyCode === 13) { // enter
 			/*If the ENTER key is pressed, prevent the form from being submitted,*/
-			console.log('ENTER');
 			if (autocomplete && currentFocus !== -1) {
 				address = this.state.places[currentFocus];
 				autocomplete = autocompleteHasFocus = false;
 				addressChanged = preventDefault = true;
 			}
 		} else if (event.keyCode === 27) { // escape
-			console.log('ESCAPE');
 			autocomplete = autocompleteHasFocus = false;
 		} else if (event.keyCode === 40) { // down
-			console.log('DOWN');
 			/*If the arrow DOWN key is pressed, increase the currentFocus variable:*/
 			++currentFocus;
 			if (currentFocus >= nbPlaces)
 				currentFocus = 0;
 			autocomplete = preventDefault = true;
 		} else if (event.keyCode === 38) { //up
-			console.log('UP');
 			/*If the arrow UP key is pressed, decrease the currentFocus variable:*/
 			--currentFocus;
 			if (currentFocus < 0)

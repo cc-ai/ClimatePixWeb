@@ -8,5 +8,6 @@ export const AppContext = React.createContext({
 	google: null,
 	geocoder: null,
 	autocomplete: null,
-	sessionToken: null
+	autocompleteSessionToken: null,
+	sessionID: null
 });

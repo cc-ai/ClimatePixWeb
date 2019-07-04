@@ -1,14 +1,44 @@
 import {firebaseCollectionName, firebaseUser, firestore_collection, storage} from "../firebaseconfig";
 import uuid from "uuid";
 
+function padInt(value, length) {
+	let representation = `${value}`;
+	let padding = '';
+	if (length > representation.length) {
+		for (let i = 0; i < (length - representation.length); ++i)
+			padding += '0';
+	}
+	return `${padding}${representation}`;
+}
+
 export class FileMonitor {
-	constructor(files, metadata, onEnd) {
+	constructor(sessionID, files, metadata, onEnd) {
+		const currentTime = new Date();
+		const y = currentTime.getFullYear();
+		const m = currentTime.getMonth();
+		const d = currentTime.getDate();
+		const h = currentTime.getHours();
+		const min = currentTime.getMinutes();
+		const s = currentTime.getSeconds();
+		const millis = currentTime.getMilliseconds();
+		const datePieces = [padInt(y, 4), padInt(m, 2), padInt(d, 2)];
+		const timePieces = [padInt(h, 2), padInt(min, 2), padInt(s, 2), padInt(millis, 3)];
 		this.files = files;
 		this.metadata = metadata;
 		this.progress = Array(metadata.length).fill(0);
 		this.uploadNames = Array(metadata.length).fill(null);
 		this.metadataSent = Array(metadata.length).fill(false);
 		this.onEnd = onEnd;
+		this.sessionID = sessionID;
+		this.dateFormat = `${datePieces.join('-')}-at-${timePieces.join('-')}`;
+	}
+
+	getFullSessionID() {
+		return `${firebaseUser}/${this.sessionID}`;
+	}
+
+	getUploadID() {
+		return `${this.getFullSessionID()}/${this.dateFormat}`;
 	}
 
 	setProgress(index, value) {
@@ -51,7 +81,7 @@ export class FileMonitor {
 		}
 		console.log(`All files and metadata sent.`);
 		if (this.onEnd)
-			this.onEnd();
+			this.onEnd(this.getFullSessionID(), this.dateFormat);
 	}
 
 	start() {
@@ -64,7 +94,7 @@ export class FileMonitor {
 			console.log(`[${index}] sending file.`);
 			const file = this.files[index];
 			// { firebase user } / { ID }.{ file extension }
-			const uploadName = `${firebaseUser}/${uuid.v4()}.${file.name.split('.').pop()}`;
+			const uploadName = `${this.getUploadID()}/${uuid.v4()}.${file.name.split('.').pop()}`;
 			let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
 			await uploadToFirebase.on('state_changed', (snapshot) => {
 				// Show progress of the image upload

@@ -16,6 +16,20 @@ export class FinalPage extends React.Component {
 				</Helmet>
 				<h3>Thank you for your contribution!<br/></h3>
 				<p>
+					<div>
+					If you want to make any updates regarding images you just uploaded,
+					please contact us with following information (keep it preciously!):
+					</div>
+					<div className="row">
+						<div className="col-md text-md-right">Session ID:</div>
+						<div className="col-md text-md-left"><strong><code>{this.props.sessionID}</code></strong></div>
+					</div>
+					<div className="row">
+						<div className="col-md text-md-right">Upload ID:</div>
+						<div className="col-md text-md-left"><strong><code>{this.props.uploadID}</code></strong></div>
+					</div>
+				</p>
+				<p>
 					For more information about the project,&nbsp;
 					<a target="_blank" rel="noopener noreferrer"
 					   className="href-link"
@@ -36,5 +50,7 @@ export class FinalPage extends React.Component {
 }
 
 FinalPage.propTypes = {
-	loadTagsForm: PropTypes.func.isRequired
+	loadTagsForm: PropTypes.func.isRequired,
+	sessionID: PropTypes.string.isRequired,
+	uploadID: PropTypes.string.isRequired,
 };

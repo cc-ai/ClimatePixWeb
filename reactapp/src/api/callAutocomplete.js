@@ -2,7 +2,7 @@ export function callAutocomplete(address, googleContext, onresult, onerror) {
 	const addressForUrl = address;
 	// Add a random string at the end to prevent browser for using the cache.
 	googleContext.autocomplete.getPlacePredictions(
-		{input: addressForUrl, types: ['(cities)'], sessionToken: googleContext.sessionToken},
+		{input: addressForUrl, types: ['(cities)'], sessionToken: googleContext.autocompleteSessionToken},
 		(predictions, status) => {
 		if (status !== googleContext.google.maps.places.PlacesServiceStatus.OK) {
 			if (onerror)

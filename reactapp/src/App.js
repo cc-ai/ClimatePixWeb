@@ -3,6 +3,7 @@ import './App.css';
 import {AppContext} from "./components/appContext";
 import {MainPage} from "./layouts/mainPage";
 import Script from 'react-load-script';
+import uuid from "uuid";
 
 export class App extends React.Component {
 	constructor(props) {
@@ -12,7 +13,8 @@ export class App extends React.Component {
 			google: null,
 			geocoder: null,
 			autocomplete: null,
-			sessionToken: null
+			autocompleteSessionToken: null,
+			sessionID: uuid.v4()
 		};
 		this.getAgreement = this.getAgreement.bind(this);
 		this.setAgreement = this.setAgreement.bind(this);
@@ -22,8 +24,8 @@ export class App extends React.Component {
 		const google = window.google;
 		const geocoder = new google.maps.Geocoder();
 		const autocomplete = new google.maps.places.AutocompleteService();
-		const sessionToken = new google.maps.places.AutocompleteSessionToken();
-		this.setState({google, geocoder, autocomplete, sessionToken});
+		const autocompleteSessionToken = new google.maps.places.AutocompleteSessionToken();
+		this.setState({google, geocoder, autocomplete, autocompleteSessionToken});
 	}
 
 	getAgreement() {
@@ -41,7 +43,8 @@ export class App extends React.Component {
 			google: this.state.google,
 			geocoder: this.state.geocoder,
 			autocomplete: this.state.autocomplete,
-			sessionToken: this.state.session
+			autocompleteSessionToken: this.state.autocompleteSessionToken,
+			sessionID: this.state.sessionID
 		};
 		return (
 			<AppContext.Provider value={context}>

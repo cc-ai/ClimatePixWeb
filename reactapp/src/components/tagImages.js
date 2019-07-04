@@ -142,7 +142,7 @@ export class TagImages extends React.Component {
 				file_category: file_category
 			};
 		});
-		const fileMonitor = new FileMonitor(this.state.files, metadata, this.props.loadThanks);
+		const fileMonitor = new FileMonitor(this.context.sessionID, this.state.files, metadata, this.props.loadThanks);
 		fileMonitor.start();
 	};
 
@@ -332,7 +332,7 @@ export class TagImages extends React.Component {
 
 TagImages.contextType = AppContext;
 TagImages.propTypes = {
-	loadThanks: PropTypes.func.isRequired
+	loadThanks: PropTypes.func.isRequired // loadThanks(sessionID, uploadID)
 };
 TagImages.defaultProps = {
 	files: []
