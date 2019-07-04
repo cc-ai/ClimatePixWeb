@@ -1,2 +1,2 @@
-Desktop.png
-- Which page should be opened when clicking on the link "Help us collect images" ?
+Location
+    Add a checkbox "apply for all" to the first image

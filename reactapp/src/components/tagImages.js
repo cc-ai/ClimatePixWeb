@@ -1,7 +1,6 @@
 import React, {createRef} from 'react';
 import Dropzone from 'react-dropzone';
 import "../styles/tag_images.css";
-import Geocode from "react-geocode";
 import PropTypes from 'prop-types';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
@@ -23,19 +22,21 @@ const openDialog = () => {
 	}
 };
 
-/** Enable or disable logs. Its optional **/
-Geocode.enableDebug();
-
-/** Replace with your api key **/
-const geocode_api_key = process.env.REACT_APP_GOOGLE_API_KEY;
-Geocode.setApiKey(geocode_api_key);
-
 function parseUrlFolder() {
 	const url = window.location.href;
 	const indexOfSeparator = url.lastIndexOf('/');
 	if (indexOfSeparator < 0)
 		return url;
 	return url.substr(0, indexOfSeparator);
+}
+
+var NEXT_FILE_ID = 1;
+class FileWithID {
+	constructor(file) {
+		this.file = file;
+		this.id = NEXT_FILE_ID;
+		++NEXT_FILE_ID;
+	}
 }
 
 /** Renders a Component that loads the images uploaded in the previous page/home page and displays a previous and
@@ -53,7 +54,8 @@ export class TagImages extends React.Component {
 			add_images_flag: false,
 			showAgreement: false,
 			license: null,
-			sending: false
+			sending: false,
+			defaultID: null
 		};
 		this.loadLicense = this.loadLicense.bind(this);
 		this.onChangeShowAgreement = this.onChangeShowAgreement.bind(this);
@@ -66,6 +68,11 @@ export class TagImages extends React.Component {
 		this.removeFile = this.removeFile.bind(this);
 		this.errorMessage = this.errorMessage.bind(this);
 		this.onCloseMessage = this.onCloseMessage.bind(this);
+		this.setDefaultID = this.setDefaultID.bind(this);
+	}
+
+	setDefaultID(defaultID) {
+		this.setState({defaultID});
 	}
 
 	errorMessage(message) {
@@ -112,7 +119,7 @@ export class TagImages extends React.Component {
 	loadImages(files) {
 		let images_src = [];
 		for (let file of files) {
-			images_src.push(URL.createObjectURL(file))
+			images_src.push(URL.createObjectURL(file.file))
 		}
 		this.setState({
 			images_src: images_src
@@ -141,11 +148,12 @@ export class TagImages extends React.Component {
 		e.preventDefault();
 		//Upload Files One by One
 		this.setState({sending: true});
-		const metadata = this.state.files.map((file, fileIndex) => {
-			let file_location = this.state["location_" + fileIndex];
-			let file_category = this.state["category_" + fileIndex];
+		let defaultCity = this.getDefaultCity();
+		const metadata = this.state.files.map((file) => {
+			let file_location = this.state["location_" + file.id];
+			let file_category = this.state["category_" + file.id];
 			if (file_location === undefined)
-				file_location = '';
+				file_location = defaultCity;
 			if (file_category === undefined)
 				file_category = '';
 			return {
@@ -154,12 +162,12 @@ export class TagImages extends React.Component {
 			};
 		});
 		const fileMonitor = new FileMonitor(
-			this.context.sessionID, this.state.files, metadata, this.props.loadThanks, this.errorMessage);
+			this.context.sessionID, this.state.files.map(file => file.file), metadata, this.props.loadThanks, this.errorMessage);
 		fileMonitor.start();
 	};
 
 	getAttachedFiles(files) {
-		let all_files = this.state.files.concat(files);
+		let all_files = this.state.files.concat(files.map(file => new FileWithID(file)));
 		this.setState({
 			files: all_files
 		}, () => {
@@ -179,22 +187,49 @@ export class TagImages extends React.Component {
 		}
 	}
 
+	getDefaultCity() {
+		let city = '';
+		if (this.state.defaultID !== null) {
+			const defaultCity = this.state[`location_${this.state.defaultID}`];
+			if (defaultCity)
+				city = defaultCity;
+		}
+		return city;
+	}
+
+	getDefaultCityPlaceholder() {
+		let cityPlaceholder = '';
+		if (this.state.defaultID !== null) {
+			const city = this.getDefaultCity();
+			if (city)
+				cityPlaceholder = `(${city})`;
+			else
+				cityPlaceholder = `(first one as default)`;
+		}
+		return cityPlaceholder;
+	}
+
 	render() {
 		/**
 		 * Each image section behvaes like a form of it's own. Currently we upload
 		 * one image with each request. **/
 		const agreement = this.context;
 		let forms_html = [];
-		let image_count = 0;
-		for (let form of this.state.images_src) {
-			const categoryId = `category_${image_count}`;
-			const locationId = `location_${image_count}`;
-			const fileIndex = image_count;
 
-			forms_html.push(<div className="form-col" key={image_count}>
+		const cityPlaceholder = this.getDefaultCityPlaceholder();
+		console.log(`Placeholder: ${cityPlaceholder}`);
+
+		for (let i = 0; i < this.state.files.length; ++i) {
+			const imageSrc = this.state.images_src[i];
+			const id = this.state.files[i].id;
+			const categoryId = `category_${id}`;
+			const locationId = `location_${id}`;
+			const fileIndex = i;
+
+			forms_html.push(<div className="form-col" key={i}>
 				<form className="image-form">
 					<div className="form-group">
-						<div className="image-wrapper" style={{backgroundImage: `url(${form})`}}>
+						<div className="image-wrapper" style={{backgroundImage: `url(${imageSrc})`}}>
 							<div className="progress" style={{display: 'none'}}>
 								<div className="progress-bar bg-info"
 									 id={`progress-${fileIndex}`}
@@ -220,6 +255,7 @@ export class TagImages extends React.Component {
 								<span className="input-group-text input-text">Category</span>
 							</div>
 							<select name={categoryId} id={categoryId} onChange={this.onInputChange}
+									value={this.getInputValue(categoryId)}
 									className="form-control custom-select input">
 								{['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Other']
 									.map((category, index) => (
@@ -235,13 +271,25 @@ export class TagImages extends React.Component {
 								<span className="input-group-text input-text">City</span>
 							</div>
 							<LocationInput id={locationId}
+										   placeholder={i > 0 ? cityPlaceholder : ''}
 										   setAddress={this.onInputValueChange}
 										   getAddress={this.getInputValue}/>
 						</div>
 					</div>
+					{i === 0 ? (
+						<div className="custom-control custom-checkbox apply-city-all">
+						<input type="checkbox"
+							   className="custom-control-input"
+							   id="use-default-id"
+							   checked={this.state.defaultID === id}
+							   onChange={(event) => this.setDefaultID(event.target.checked ? id : null)}/>
+						<label className="custom-control-label" htmlFor="use-default-id">
+							&nbsp;&nbsp;Use this city for all next images
+						</label>
+						</div>
+					) : ''}
 				</form>
 			</div>);
-			image_count = image_count + 1;
 		}
 		return (
 			<div className="upload-form flex-grow-1 d-flex flex-column">

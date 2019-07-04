@@ -61,4 +61,8 @@ export class Carousel extends React.Component {
 		document.body.onresize = Carousel.updateWidth;
 		Carousel.updateWidth();
 	}
+
+	componentWillUnmount() {
+		document.body.onresize = null;
+	}
 }

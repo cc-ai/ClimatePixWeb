@@ -185,10 +185,15 @@ pre.license {
 	color: white;
 }
 
-.upload-form-wrapper .custom-checkbox .custom-control-input ~ .custom-control-label::before {
+.custom-checkbox .custom-control-input ~ .custom-control-label::before {
 	border-radius: 0;
 }
 
-.upload-form-wrapper .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
 	background-color: #008996 !important;
+}
+
+.apply-city-all {
+	text-align: left;
+	font-size: 1rem;
 }
