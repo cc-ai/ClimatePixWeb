@@ -13,9 +13,3 @@ main {
 	padding-top: 7rem;
 	text-align: center;
 }
-
-@media (max-width: 400px) {
-	.up-screen {
-		padding-top: 10rem;
-	}
-}

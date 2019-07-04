@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import svgLogo from '../images/logo.svg';
+import newLogo from '../images/ClimatePix_Logo.png';
 import "../styles/header.css";
 import {scrollToElement} from "../utils/scroll";
 
@@ -71,7 +71,7 @@ export class Header extends React.Component {
 		return (
 			<nav className={`navbar fixed-top navbar-expand-lg navbar-light mb-4 pageNavHeader ${this.state.scrolled ? 'scrolled' : ''}`}>
                 <span className="navbar-brand logo-wrapper">
-                    <img className="logoImg" alt="ClimateChange.AI" src={svgLogo}
+                    <img className="logoImg" alt="ClimateChange.AI" src={newLogo}
 						 onClick={this.props.loadHome}/>
                 </span>
 				<button className="navbar-toggler" type="button" data-toggle="collapse"
