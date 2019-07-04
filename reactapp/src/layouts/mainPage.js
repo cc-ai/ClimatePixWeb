@@ -32,8 +32,6 @@ export class MainPage extends React.Component {
 		const aboutWrapper = main.getElementsByClassName('section-about-wrapper')[0];
 		const about = main.getElementsByClassName('section-about')[0];
 		const aboutAppWrapper = main.getElementsByClassName('section-about-app-wrapper')[0];
-		const carousel = main.getElementsByClassName('carousel')[0];
-		carousel.style.maxWidth = `${carousel.clientHeight * 16 / 9}px`;
 		const remainingHeight = window.innerHeight - nav.clientHeight;
 		aboutWrapper.style.minHeight = `${remainingHeight}px`;
 		aboutAppWrapper.style.minHeight = `${nav.clientHeight + remainingHeight}px`;

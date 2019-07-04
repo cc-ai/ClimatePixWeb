@@ -50,8 +50,15 @@ export class Carousel extends React.Component {
 		);
 	}
 
+	static updateWidth() {
+		const carousel = document.getElementsByClassName('carousel')[0];
+		carousel.style.maxWidth = `${carousel.clientHeight * 16 / 9}px`;
+	}
+
 	componentDidMount() {
 		// Make sure carousel start cycle as soon as it is mounted.
 		$('.carousel').carousel('cycle');
+		document.body.onresize = Carousel.updateWidth;
+		Carousel.updateWidth();
 	}
 }
