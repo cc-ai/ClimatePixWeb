@@ -29,3 +29,10 @@ Once you have the `app.yaml` and `.env` files in-place and the `gcloud` tool is 
 4. `gcloud app deploy`
 
 Verify the details and following the interactive instructions when running `gcloud app deploy`. Once the deploy is done, the app should be available at [https://climatepix.mila.quebec](https://climatepix.mila.quebec).
+
+## Viewing PR Previews
+
+Whenever you create a PR to this repository, a version of your PR will be deployed via [Netlify Deploy Previews](https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/). For example, if your PR number is 20, the code in your PR will be deployed to https://deploy-preview-20--climatepix.netlify.com/.
+
+The build status will be posted on your PR. When the PR integration says that the site has been built, click the "Details" link next to "Deploy preview ready!" to be taken to the deployed PR automatically.
+
