@@ -1,2 +1,0 @@
-Location
-    Add a checkbox "apply for all" to the first image
