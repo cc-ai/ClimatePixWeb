@@ -11,6 +11,7 @@ import {AppContext} from "./appContext";
 import {FileMonitor} from "./fileMonitor";
 import {LocationInput} from "./locationInput";
 import uploadIcon from '../images/upload.png';
+import {scrollToElement} from "../utils/scroll";
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
@@ -149,6 +150,7 @@ export class TagImages extends React.Component {
 		e.preventDefault();
 		//Upload Files One by One
 		this.setState({sending: true});
+		scrollToElement('home');
 		let defaultCity = this.getDefaultCity();
 		const metadata = this.state.files.map((file) => {
 			let file_location = this.state["location_" + file.id];
@@ -302,7 +304,7 @@ export class TagImages extends React.Component {
 					<div className={`d-flex flex-row flex-wrap ${forms_html.length ? '' : 'justify-content-center'}`}>
 						{/** Add forms and image previews to the DOM **/}
 						{forms_html}
-						<div className={`form-col ${forms_html.length ? '' : 'no-files'}`}>
+						<div className={`form-col ${forms_html.length ? 'with-files' : 'no-files'}`}>
 							{/** Another dropzone component to allow users to add more images while adding the metadata **/}
 							{/** Show the upload section if the add images flag is set to true. This flag is toggled
 							 by the addMoreImages method **/}

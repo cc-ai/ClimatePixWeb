@@ -15,7 +15,7 @@ export class FinalPage extends React.Component {
 					<title>Thanks!</title>
 				</Helmet>
 				<h3>Thank you for your contribution!<br/></h3>
-				<p>
+				<p className="more-info">
 					For more information about the project,&nbsp;
 					<a target="_blank" rel="noopener noreferrer"
 					   className="href-link"

@@ -25,7 +25,15 @@ CarouselSlide.propTypes = {
 export class Carousel extends React.Component {
 	static updateWidth() {
 		const carousel = document.getElementsByClassName('carousel')[0];
-		carousel.style.maxWidth = `${carousel.clientHeight * 16 / 9}px`;
+		const availableWidth = carousel.parentNode.clientWidth;
+		const availableHeight = carousel.parentNode.clientHeight;
+		const widthFromHeight = availableHeight * 16 / 9;
+		const heightFromWidth = availableWidth * 9 / 16;
+		if (widthFromHeight <= availableWidth) {
+			carousel.style.maxWidth = `${widthFromHeight}px`;
+		} else {
+			carousel.style.maxHeight = `${heightFromWidth}px`;
+		}
 	}
 
 	render() {
@@ -58,11 +66,11 @@ export class Carousel extends React.Component {
 	componentDidMount() {
 		// Make sure carousel start cycle as soon as it is mounted.
 		$('.carousel').carousel('cycle');
-		document.body.onresize = Carousel.updateWidth;
+		window.addEventListener('resize', Carousel.updateWidth);
 		Carousel.updateWidth();
 	}
 
 	componentWillUnmount() {
-		document.body.onresize = null;
+		window.removeEventListener('resize', Carousel.updateWidth);
 	}
 }
