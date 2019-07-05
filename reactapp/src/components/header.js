@@ -58,7 +58,7 @@ export class Header extends React.Component {
 			whatVisible = 'about';
 		else if (windowOffset > aboutAppOffset)
 			whatVisible = 'about-app';
-		let scrolled = window.pageYOffset > nav.clientHeight;
+		let scrolled = window.pageYOffset > nav.clientHeight / 2;
 		this.setState({scrolled, whatVisible});
 	}
 
@@ -69,7 +69,8 @@ export class Header extends React.Component {
 
 	render() {
 		return (
-			<nav className={`navbar fixed-top navbar-expand-lg navbar-light mb-4 pageNavHeader ${this.state.scrolled ? 'scrolled' : ''}`}>
+			<nav
+				className={`navbar fixed-top navbar-expand-lg navbar-light mb-4 pageNavHeader ${this.state.scrolled ? 'scrolled' : ''}`}>
                 <span className="navbar-brand logo-wrapper">
                     <img className="logoImg" alt="ClimateChange.AI" src={newLogo}
 						 onClick={this.props.loadHome}/>
@@ -106,6 +107,7 @@ export class Header extends React.Component {
 		)
 	}
 }
+
 Header.propTypes = {
 	loadHome: PropTypes.func.isRequired
 };

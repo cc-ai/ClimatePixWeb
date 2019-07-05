@@ -31,6 +31,7 @@ function parseUrlFolder() {
 }
 
 var NEXT_FILE_ID = 1;
+
 class FileWithID {
 	constructor(file) {
 		this.file = file;
@@ -277,14 +278,14 @@ export class TagImages extends React.Component {
 					</div>
 					{i === 0 ? (
 						<div className="custom-control custom-checkbox apply-city-all">
-						<input type="checkbox"
-							   className="custom-control-input"
-							   id="use-default-id"
-							   checked={this.state.defaultID === id}
-							   onChange={(event) => this.setDefaultID(event.target.checked ? id : null)}/>
-						<label className="custom-control-label" htmlFor="use-default-id">
-							&nbsp;&nbsp;Use this city for all next images
-						</label>
+							<input type="checkbox"
+								   className="custom-control-input"
+								   id="use-default-id"
+								   checked={this.state.defaultID === id}
+								   onChange={(event) => this.setDefaultID(event.target.checked ? id : null)}/>
+							<label className="custom-control-label" htmlFor="use-default-id">
+								&nbsp;&nbsp;Use this city for all next images
+							</label>
 						</div>
 					) : ''}
 				</form>
@@ -379,8 +380,9 @@ export class TagImages extends React.Component {
 						</FancyBox>
 					)}
 					{this.state.message && (
-						<FancyBox title={`${this.state.messageType.charAt(0).toUpperCase()}${this.state.messageType.substr(1)}`}
-								  onClose={this.onCloseMessage}>
+						<FancyBox
+							title={`${this.state.messageType.charAt(0).toUpperCase()}${this.state.messageType.substr(1)}`}
+							onClose={this.onCloseMessage}>
 							<div className={`message ${this.state.messageType}`}>
 								{this.state.message}
 							</div>

@@ -23,6 +23,11 @@ CarouselSlide.propTypes = {
 };
 
 export class Carousel extends React.Component {
+	static updateWidth() {
+		const carousel = document.getElementsByClassName('carousel')[0];
+		carousel.style.maxWidth = `${carousel.clientHeight * 16 / 9}px`;
+	}
+
 	render() {
 		return (
 			<div id="carouselExampleControls" className="carousel slide" data-ride="carousel" data-interval="3000">
@@ -48,11 +53,6 @@ export class Carousel extends React.Component {
 				</a>
 			</div>
 		);
-	}
-
-	static updateWidth() {
-		const carousel = document.getElementsByClassName('carousel')[0];
-		carousel.style.maxWidth = `${carousel.clientHeight * 16 / 9}px`;
 	}
 
 	componentDidMount() {

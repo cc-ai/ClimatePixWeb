@@ -124,7 +124,7 @@ export class LocationInput extends React.Component {
 				   key={locationId}
 				   name={locationId}
 				   type="text"
-				   placeholder={this.props.placeholder ? this.props.placeholder: "City of the image"}
+				   placeholder={this.props.placeholder ? this.props.placeholder : "City of the image"}
 				   value={this.props.getAddress(locationId)}
 				   onFocus={this.onInputFocus}
 				   onBlur={this.onInputBlur}

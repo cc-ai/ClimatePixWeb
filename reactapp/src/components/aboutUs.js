@@ -2,8 +2,6 @@ import React from "react";
 import {TopLink} from "./TopLInk";
 import '../styles/aboutUs.css';
 import facebookIcon from '../images/facebook-icon.png';
-import instagramIcon from '../images/instagram-icon.png';
-import twitterIcon from '../images/twitter-icon.png';
 
 /**
  * Content for About Us Section on the landing/home page.
@@ -39,9 +37,8 @@ export class AboutUS extends React.Component {
 								</p>
 								<p className="social-links">
 									Follow us on Facebook! <a target="_blank" rel="noopener noreferrer"
-									   href="https://fb.me/visualizingclimatechange">
-										<img alt="Follow us on Facebook" src={facebookIcon}/>
-									</a>
+															  href="https://fb.me/visualizingclimatechange">
+									<img alt="Follow us on Facebook" src={facebookIcon}/></a>
 								</p>
 							</div>
 						</div>

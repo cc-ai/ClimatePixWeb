@@ -3,7 +3,6 @@ import './App.css';
 import {AppContext} from "./components/appContext";
 import {MainPage} from "./layouts/mainPage";
 import Script from 'react-load-script';
-import uuid from "uuid";
 
 export class App extends React.Component {
 	constructor(props) {
