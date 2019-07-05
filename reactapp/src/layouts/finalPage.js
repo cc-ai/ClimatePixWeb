@@ -28,9 +28,9 @@ export class FinalPage extends React.Component {
 							UPLOAD MORE
 						</span>
 				</p>
-				<div className="upload-info mt-5">
-					<div>
-						(*) If you want to contact us about pictures you just uploaded, please save this upload ID:
+				<div className="upload-info mt-5 pt-5">
+					<div className="pt-5">
+						If you want to contact us about pictures you just uploaded, please save this upload ID:
 					</div>
 					<div><code>{this.props.uploadID}</code></div>
 				</div>

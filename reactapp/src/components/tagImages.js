@@ -273,7 +273,7 @@ export class TagImages extends React.Component {
 								   checked={this.state.defaultID === id}
 								   onChange={(event) => this.setDefaultID(event.target.checked ? id : null)}/>
 							<label className="custom-control-label" htmlFor="use-default-id">
-								&nbsp;&nbsp;Use this city for all next images
+								&nbsp;&nbsp;Use this city for all images
 							</label>
 						</div>
 					) : ''}
