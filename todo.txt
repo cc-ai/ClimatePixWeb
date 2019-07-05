@@ -1,3 +1,1 @@
 How to easily retrieve data (image AND associated metadata) from Firebase ?
-
-How to separe uploaded test/dev images and production/public images into Firebase ?
