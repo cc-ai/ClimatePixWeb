@@ -36,3 +36,14 @@ Whenever you create a PR to this repository, a version of your PR will be deploy
 
 The build status will be posted on your PR. When the PR integration says that the site has been built, click the "Details" link next to "Deploy preview ready!" to be taken to the deployed PR automatically.
 
+## Testing the app in dev mode
+
+For testing purposes, we should better avoid uploading pictures in the same place as final users. To do that, 
+you can add the React environment variable `REACT_APP_DEV=1` to your `.env` file.
+
+If `REACT_APP_DEV` is set and contains a value evaluated to `true`, 
+then your pictures will be uploaded in a folder called `dev` on Firebase.
+
+Otherwise, if `REACT_APP_DEV` is not set or is evaluate to `false`, 
+then the app will be in production mode, 
+and pictures will be uploaded in a folder called `public` on Firebase.

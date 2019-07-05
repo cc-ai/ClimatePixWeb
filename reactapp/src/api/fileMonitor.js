@@ -70,7 +70,8 @@ export class FileMonitor {
 			console.log(`[${index}] sending file.`);
 			const file = this.files[index];
 			// { firebase user } / { ID }.{ file extension }
-			const uploadName = `${this.getFullUploadID()}/${uuid.v4()}.${file.name.split('.').pop()}`;
+			const upperFolder = process.env.REACT_APP_DEV ? 'dev' : 'public';
+			const uploadName = `${upperFolder}/${this.getFullUploadID()}/${uuid.v4()}.${file.name.split('.').pop()}`;
 			let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
 			await uploadToFirebase.on('state_changed', (snapshot) => {
 				// Show progress of the image upload

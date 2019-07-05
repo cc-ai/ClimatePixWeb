@@ -8,7 +8,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 import {FancyBox} from "./fancyBox";
 import axios from 'axios';
 import {AppContext} from "./appContext";
-import {FileMonitor} from "./fileMonitor";
+import {FileMonitor} from "../api/fileMonitor";
 import {LocationInput} from "./locationInput";
 import uploadIcon from '../images/upload.png';
 import {scrollToElement} from "../utils/scroll";
