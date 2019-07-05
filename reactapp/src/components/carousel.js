@@ -7,11 +7,15 @@ import imageWildFire2 from '../images/carousel/marcus-kauffman--iretlQZEU4-unspl
 import $ from 'jquery';
 import '../styles/carousel.css';
 
+const COPYRIGHT = '\u00A9';
+
 class CarouselSlide extends React.Component {
 	render() {
 		return (
 			<div className={`carousel-item ${this.props.active ? 'active' : ''}`}>
-				<div className="custom-slide" style={{backgroundImage: `url('${this.props.src}')`}}/>
+				<div className="custom-slide" style={{backgroundImage: `url('${this.props.src}')`}}>
+					{this.props.caption ? (<div className="caption">{this.props.caption}</div>) : ''}
+				</div>
 			</div>
 		);
 	}
@@ -19,7 +23,8 @@ class CarouselSlide extends React.Component {
 
 CarouselSlide.propTypes = {
 	src: PropTypes.string.isRequired,
-	active: PropTypes.bool
+	active: PropTypes.bool,
+	caption: PropTypes.string,
 };
 
 export class Carousel extends React.Component {
@@ -46,10 +51,10 @@ export class Carousel extends React.Component {
 					<li data-target="#carouselExampleControls" data-slide-to="3"/>
 				</ol>
 				<div className="carousel-inner">
-					<CarouselSlide src={imageFlood1} active={true}/>
-					<CarouselSlide src={imageWildFire1}/>
-					<CarouselSlide src={imageFlood2}/>
-					<CarouselSlide src={imageWildFire2}/>
+					<CarouselSlide src={imageFlood1} active={true} caption={`${COPYRIGHT} Desmond Simon`}/>
+					<CarouselSlide src={imageWildFire1} caption={`${COPYRIGHT} Joanne Francis`}/>
+					<CarouselSlide src={imageFlood2} caption={`${COPYRIGHT} Chris Gallagher`}/>
+					<CarouselSlide src={imageWildFire2} caption={`${COPYRIGHT} Marcus Kauffman`}/>
 				</div>
 				<a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
 					<span className="carousel-control-prev-icon" aria-hidden="true"/>
