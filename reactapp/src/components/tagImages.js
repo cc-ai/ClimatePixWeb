@@ -53,7 +53,6 @@ export class TagImages extends React.Component {
 			images_src: [],
 			messageType: null,
 			message: null,
-			add_images_flag: false,
 			showAgreement: false,
 			license: null,
 			sending: false,
@@ -61,7 +60,6 @@ export class TagImages extends React.Component {
 		};
 		this.loadLicense = this.loadLicense.bind(this);
 		this.onChangeShowAgreement = this.onChangeShowAgreement.bind(this);
-		this.loadImages = this.loadImages.bind(this);
 		this.onInputChange = this.onInputChange.bind(this);
 		this.onInputValueChange = this.onInputValueChange.bind(this);
 		this.getInputValue = this.getInputValue.bind(this);
@@ -71,10 +69,26 @@ export class TagImages extends React.Component {
 		this.errorMessage = this.errorMessage.bind(this);
 		this.onCloseMessage = this.onCloseMessage.bind(this);
 		this.setDefaultID = this.setDefaultID.bind(this);
+		this.launchFileMonitor = this.launchFileMonitor.bind(this);
+		this.onLocationChange = this.onLocationChange.bind(this);
+		this.setDefaultCities = this.setDefaultCities.bind(this);
+	}
+
+	setDefaultCities() {
+		if (this.state.defaultID !== null) {
+			const defaultCity = this.state[`location_${this.state.defaultID}`];
+			if (defaultCity) {
+				const cities = {};
+				for (let i = 0; i < this.state.files.length; ++i) {
+					cities[`location_${this.state.files[i].id}`] = defaultCity;
+				}
+				this.setState(cities);
+			}
+		}
 	}
 
 	setDefaultID(defaultID) {
-		this.setState({defaultID});
+		this.setState({defaultID}, this.setDefaultCities);
 	}
 
 	errorMessage(message) {
@@ -114,20 +128,6 @@ export class TagImages extends React.Component {
 		})
 	}
 
-	/** When we are routed to this page after uploading images earlier, we receive a list of HTML file objects. To display
-	 * the images for preview we need to create a URL object that can be passed to the src of img html element
-	 * This method iterates through all the files and generates a list of img URLs to display
-	 * **/
-	loadImages(files) {
-		let images_src = [];
-		for (let file of files) {
-			images_src.push(URL.createObjectURL(file.file))
-		}
-		this.setState({
-			images_src: images_src
-		});
-	};
-
 	/** When there is a change in the input attached to an images, see the event and attach the data entered to the state object
 	 * **/
 	onInputChange(event) {
@@ -138,8 +138,38 @@ export class TagImages extends React.Component {
 		this.setState({[name]: value});
 	}
 
+	onLocationChange(name, value) {
+		this.setState({
+			[name]: value,
+			defaultID: null
+		})
+	}
+
 	getInputValue(name) {
 		return this.state[name] || '';
+	}
+
+	launchFileMonitor() {
+		scrollToElement('home');
+		const metadata = this.state.files.map((file) => {
+			let file_location = this.state["location_" + file.id];
+			let file_category = this.state["category_" + file.id];
+			if (file_location === undefined)
+				file_location = '';
+			if (file_category === undefined)
+				file_category = '';
+			return {
+				file_location: file_location,
+				file_category: file_category
+			};
+		});
+		const fileMonitor = new FileMonitor(
+			this.state.files.map(file => file.file),
+			metadata,
+			this.props.loadThanks,
+			this.errorMessage
+		);
+		fileMonitor.start();
 	}
 
 	handleSubmit(e) {
@@ -149,78 +179,36 @@ export class TagImages extends React.Component {
 		 **/
 		e.preventDefault();
 		//Upload Files One by One
-		this.setState({sending: true});
-		scrollToElement('home');
-		let defaultCity = this.getDefaultCity();
-		const metadata = this.state.files.map((file) => {
-			let file_location = this.state["location_" + file.id];
-			let file_category = this.state["category_" + file.id];
-			if (file_location === undefined)
-				file_location = defaultCity;
-			if (file_category === undefined)
-				file_category = '';
-			return {
-				file_location: file_location,
-				file_category: file_category
-			};
-		});
-		const fileMonitor = new FileMonitor(this.state.files.map(file => file.file), metadata, this.props.loadThanks, this.errorMessage);
-		fileMonitor.start();
+		this.setState({sending: true}, this.launchFileMonitor);
 	};
 
 	getAttachedFiles(files) {
-		let all_files = this.state.files.concat(files.map(file => new FileWithID(file)));
+		const all_files = this.state.files.concat(files.map(file => new FileWithID(file)));
+		// To display image files we need to create a URL object that can be passed to the src of img html element.
+		const images_src = all_files.map(file => URL.createObjectURL(file.file));
 		this.setState({
-			files: all_files
-		}, () => {
-			this.loadImages(all_files);
-		});
-		this.setState({add_images_flag: false})
-
+			files: all_files,
+			images_src: images_src
+		}, this.setDefaultCities);
 	};
 
 	removeFile(fileIndex) {
 		if (fileIndex >= 0 && fileIndex < this.state.files.length) {
 			const files = this.state.files.slice();
 			const images_src = this.state.images_src.slice();
+			const removedID = files[fileIndex].id;
 			files.splice(fileIndex, 1);
 			images_src.splice(fileIndex, 1);
-			this.setState({files: files, images_src: images_src});
+			this.setState({
+				files: files,
+				images_src: images_src,
+				defaultID: this.state.defaultID === removedID ? null : this.state.defaultID
+			});
 		}
 	}
 
-	getDefaultCity() {
-		let city = '';
-		if (this.state.defaultID !== null) {
-			const defaultCity = this.state[`location_${this.state.defaultID}`];
-			if (defaultCity)
-				city = defaultCity;
-		}
-		return city;
-	}
-
-	getDefaultCityPlaceholder() {
-		let cityPlaceholder = '';
-		if (this.state.defaultID !== null) {
-			const city = this.getDefaultCity();
-			if (city)
-				cityPlaceholder = `(${city})`;
-			else
-				cityPlaceholder = `(first one as default)`;
-		}
-		return cityPlaceholder;
-	}
-
-	render() {
-		/**
-		 * Each image section behvaes like a form of it's own. Currently we upload
-		 * one image with each request. **/
-		const agreement = this.context;
+	renderImageForms() {
 		let forms_html = [];
-
-		const cityPlaceholder = this.getDefaultCityPlaceholder();
-		console.log(`Placeholder: ${cityPlaceholder}`);
-
 		for (let i = 0; i < this.state.files.length; ++i) {
 			const imageSrc = this.state.images_src[i];
 			const id = this.state.files[i].id;
@@ -273,8 +261,7 @@ export class TagImages extends React.Component {
 								<span className="input-group-text input-text">City</span>
 							</div>
 							<LocationInput id={locationId}
-										   placeholder={i > 0 ? cityPlaceholder : ''}
-										   setAddress={this.onInputValueChange}
+										   setAddress={this.onLocationChange}
 										   getAddress={this.getInputValue}/>
 						</div>
 					</div>
@@ -293,6 +280,16 @@ export class TagImages extends React.Component {
 				</form>
 			</div>);
 		}
+		return forms_html;
+	}
+
+	render() {
+		/**
+		 * Each image section behvaes like a form of it's own. Currently we upload
+		 * one image with each request. **/
+		const agreement = this.context;
+		const forms_html = this.renderImageForms();
+
 		return (
 			<div className="upload-form flex-grow-1 d-flex flex-column">
 				<Helmet>
