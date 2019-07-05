@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/final_page.css";
+import "../styles/finalPage.css";
 import {Helmet} from "react-helmet/es/Helmet";
 import PropTypes from 'prop-types';
 

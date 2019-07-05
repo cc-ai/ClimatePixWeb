@@ -3,7 +3,7 @@ import {AppContext} from "./appContext";
 import {callAutocomplete} from "../api/callAutocomplete";
 import {AutoCompletionItem} from "./AutoCompletionItem";
 import PropTypes from 'prop-types';
-import '../styles/location_input.css';
+import '../styles/locationInput.css';
 
 export class LocationInput extends React.Component {
 	constructor(props) {

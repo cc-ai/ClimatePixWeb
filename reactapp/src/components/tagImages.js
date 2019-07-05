@@ -1,6 +1,6 @@
 import React, {createRef} from 'react';
 import Dropzone from 'react-dropzone';
-import "../styles/tag_images.css";
+import "../styles/tagImages.css";
 import PropTypes from 'prop-types';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
