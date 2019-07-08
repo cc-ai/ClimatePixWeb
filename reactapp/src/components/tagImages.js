@@ -13,6 +13,8 @@ import {LocationInput} from "./locationInput";
 import uploadIcon from '../images/upload.png';
 import {scrollToElement} from "../utils/scroll";
 
+const CATEGORIES = ['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Other'];
+
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
 /** Define a function openDialog, that can open the file picker when you click the button to select files from a folder to upload **/
@@ -156,8 +158,8 @@ export class TagImages extends React.Component {
 			let file_category = this.state["category_" + file.id];
 			if (file_location === undefined)
 				file_location = '';
-			if (file_category === undefined)
-				file_category = '';
+			if (file_category === undefined || file_category === '')
+				file_category = CATEGORIES[0];
 			return {
 				file_location: file_location,
 				file_category: file_category
@@ -247,8 +249,7 @@ export class TagImages extends React.Component {
 							<select name={categoryId} id={categoryId} onChange={this.onInputChange}
 									value={this.getInputValue(categoryId)}
 									className="form-control custom-select input">
-								{['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Other']
-									.map((category, index) => (
+								{CATEGORIES.map((category, index) => (
 										<option key={index} value={category}>{category}</option>
 									))}
 							</select>

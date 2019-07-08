@@ -1,5 +1,6 @@
-import {firebaseCollectionName, firebaseUser, firestore_collection, storage} from "../firebaseconfig";
-import uuid from "uuid";
+import firebase from 'firebase/app';
+import {firebaseUploadCollection, firebaseUploadCollectionName, storage} from "../firebaseconfig";
+var mime = require('mime-types');
 
 export class FileMonitor {
 	constructor(files, metadata, onEnd, onError) {
@@ -7,14 +8,18 @@ export class FileMonitor {
 		this.metadata = metadata;
 		this.progress = Array(metadata.length).fill(0);
 		this.uploadNames = Array(metadata.length).fill(null);
-		this.metadataSent = Array(metadata.length).fill(false);
 		this.onEnd = onEnd;
 		this.onError = onError;
-		this.uploadID = uuid.v4();
+		this.uploadID = null;
+		this.imageInfo = [];
 	}
 
-	getFullUploadID() {
-		return `${firebaseUser}/${this.uploadID}`;
+	error(exception, info) {
+		const errorMessage = `Something went wrong while uploading your files (${info}). Please try again later!`;
+		console.error(errorMessage);
+		console.exception(exception);
+		if (this.onError)
+			this.onError(errorMessage);
 	}
 
 	setProgress(index, value) {
@@ -29,51 +34,60 @@ export class FileMonitor {
 
 	sendMetadataIfPossible(index) {
 		if (this.progress[index] === 100 && this.uploadNames[index] !== null) {
-			console.log(`[${index}] sending metadata.`);
 			const file_location = this.metadata[index].file_location;
 			const file_category = this.metadata[index].file_category;
 			const uploadName = this.uploadNames[index];
-			storage.ref(firebaseCollectionName).child(uploadName).getDownloadURL().then(url => {
-				return firestore_collection.add({
+			storage.ref(uploadName).getDownloadURL().then(url => {
+				this.imageInfo.push({
+					path: uploadName,
 					url: url,
 					location: file_location,
 					category: file_category
-				})
-			}).then((docRef) => {
-				console.log(`[${index}] metadata uploaded.`);
-				this.metadataSent[index] = true;
+				});
+				console.log(`[${index}] metadata registered for upload.`);
 				this.terminateIfPossible();
 			}).catch(e => {
-				console.error(`[${index}] error when sending metadata.`);
-				console.error(e);
+				this.error(e, `unable to register metadata for file no. ${index}`);
 			})
 		}
 	}
 
 	terminateIfPossible() {
-		for (let value of this.metadataSent) {
-			if (!value)
-				return;
-		}
-		console.log(`All files and metadata sent.`);
-		if (this.onEnd)
-			this.onEnd(this.getFullUploadID());
+		if (this.imageInfo.length !== this.files.length)
+			return;
+		console.log(`Sending metadata.`);
+		firebaseUploadCollection.doc(this.uploadID).update({
+			images: this.imageInfo
+		}).then((docRef) => {
+			console.log(`Metadata sent, upload terminated.`);
+			if (this.onEnd)
+				this.onEnd(this.uploadID);
+		}).catch(e => {
+			this.error(e, 'unable to save metadata');
+		});
 	}
 
 	start() {
-		for (let i = 0; i < this.metadata.length; ++i)
-			this.uploadFile(i);
+		console.log(`Generating upload ID.`);
+		firebaseUploadCollection.add({
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+			images: null
+		}).then(ref => {
+			this.uploadID = ref.id;
+			console.log(`Generated upload ID: ${this.uploadID}`);
+			for (let i = 0; i < this.metadata.length; ++i)
+				this.uploadFile(i);
+		}).catch(e => {
+			this.error(e, 'unable to generate upload ID');
+		});
 	}
 
 	async uploadFile(index) {
 		try {
 			console.log(`[${index}] sending file.`);
 			const file = this.files[index];
-			// { firebase user } / { ID }.{ file extension }
-			const upperFolder = process.env.REACT_APP_DEV ? 'dev' : 'public';
-			const uploadName = `${upperFolder}/${this.getFullUploadID()}/${uuid.v4()}.${file.name.split('.').pop()}`;
-			let uploadToFirebase = storage.ref(`${firebaseCollectionName}/${uploadName}`).put(file);
-			await uploadToFirebase.on('state_changed', (snapshot) => {
+			const uploadName = `${firebaseUploadCollectionName}/${this.uploadID}/${index}.${mime.extension(file.type)}`;
+			await storage.ref(uploadName).put(file).on('state_changed', (snapshot) => {
 				// Show progress of the image upload
 				const progressBar = document.getElementById(`progress-${index}`);
 				if (progressBar) {
@@ -83,21 +97,17 @@ export class FileMonitor {
 					}
 					const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					progressBar.style.width = `${step}%`;
-					progressBar.setAttribute('aria-valuenow', parseInt(step));
-					this.setProgress(index, parseInt(step));
+					progressBar.setAttribute('aria-valuenow', Math.round(step));
+					this.setProgress(index, Math.round(step));
 				}
 			}, (error) => {
-				console.error(`Error while uploading file ${index}.`);
-				console.error(error);
+				this.error(error, `file no. ${index}`);
 			}, () => {
 				console.log(`[${index}] File uploaded.`);
 				this.setFinished(index, uploadName);
 			});
 		} catch (e) {
-			const errorMessage = `Something went wrong while uploading your file. Please try again later.`;
-			console.log(`[${index}] ${errorMessage}`);
-			if (this.onError)
-				this.onError(errorMessage);
+			this.error(e, `file no. ${index}`);
 		}
 	};
 }

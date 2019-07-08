@@ -4,8 +4,6 @@ import 'firebase/auth';
 import 'firebase/storage';
 import 'firebase/database';
 
-const firebaseCollectionName = process.env.REACT_APP_COLLECTION_NAME;
-
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_API_KEY,
 	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -32,7 +30,6 @@ firebase.auth().signInAnonymously().catch((error) => {
 
 
 const storage = firebase.storage();
-const firestore_collection = firebase.firestore().collection(firebaseCollectionName);
-export {
-	storage, firestore_collection, firebaseCollectionName, firebaseUser
-}
+const firebaseUploadCollectionName = process.env.REACT_APP_DEV ? 'dev' : 'public';
+const firebaseUploadCollection = firebase.firestore().collection(firebaseUploadCollectionName);
+export {storage, firebaseUser, firebaseUploadCollection, firebaseUploadCollectionName}
