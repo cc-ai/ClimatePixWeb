@@ -76,6 +76,7 @@ h3 {
 }
 
 .href-link:hover {
+	color: #F13C3C;
 	text-decoration: none;
 }
 
