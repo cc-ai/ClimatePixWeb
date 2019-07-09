@@ -1,8 +1,6 @@
 Into Firebase:
-- How to retrieve (or save) images with associated metadata ?
 - How to get new uploaded images (for e.g. since a timestamp) ?
 - How to move folders into sub-folders (either programmatically or from web interface) ?
-- (ultimately) How to generate a shorter upload ID ?
 
 V2:
 - we should give users the option to enter their email address when they upload the pictures.
