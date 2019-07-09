@@ -34,7 +34,6 @@ export class Carousel extends React.Component {
 		const availableHeight = carousel.parentNode.clientHeight;
 		const widthFromHeight = availableHeight * 16 / 9;
 		const heightFromWidth = availableWidth * 9 / 16;
-		console.log(`Updating (${widthFromHeight} x ${availableHeight}) or (${availableWidth} x ${heightFromWidth}) in (${availableWidth} x ${availableHeight})`);
 		if (widthFromHeight <= availableWidth) {
 			carousel.style.width = `${widthFromHeight}px`;
 			carousel.style.height = `${availableHeight}px`;

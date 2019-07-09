@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import newLogo from '../images/ClimatePix_Logo.png';
 import "../styles/header.css";
 import {scrollToElement} from "../utils/scroll";
+import $ from 'jquery';
 
 /**
  * Renders a NavBar Header. To be displayed across all layouts.
@@ -12,9 +13,11 @@ export class Header extends React.Component {
 		super(props);
 		this.state = {
 			scrolled: false,
-			whatVisible: 'home'
+			whatVisible: 'home',
+			link: null
 		};
 		this.updateNavOnScroll = this.updateNavOnScroll.bind(this);
+		this.goToLink = this.goToLink.bind(this);
 	}
 
 	static localToGlobal(_el) {
@@ -62,7 +65,37 @@ export class Header extends React.Component {
 		this.setState({scrolled, whatVisible});
 	}
 
+	goToLink() {
+		if (this.state.link) {
+			const link = this.state.link;
+			this.setState({link: null}, () => {
+				if (link === 'home')
+					this.props.loadHome();
+				else
+					scrollToElement(link);
+			});
+		}
+	}
+
+	setLink(link) {
+		this.setState({link}, () => {
+			const togglerButtons = document.getElementsByClassName('navbar-toggler');
+			let togglerIsVisible = false;
+			if (togglerButtons) {
+				togglerIsVisible = window.getComputedStyle(togglerButtons[0]).display !== 'none';
+			}
+			if (togglerIsVisible) {
+				$('#navbarSupportedContent').collapse('toggle');
+			} else {
+				this.goToLink();
+			}
+		});
+	}
+
 	componentDidMount() {
+		const collapsible = $('#navbarSupportedContent');
+		collapsible.on('shown.bs.collapse', this.goToLink);
+		collapsible.on('hidden.bs.collapse', this.goToLink);
 		document.body.onscroll = this.updateNavOnScroll;
 		this.updateNavOnScroll();
 	}
@@ -83,20 +116,20 @@ export class Header extends React.Component {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav ml-auto">
 						<li className={`nav-item ${this.state.whatVisible === 'home' ? 'active' : ''}`}>
-                            <span className="nav-link button" onClick={this.props.loadHome}>
+                            <span className="nav-link button" onClick={() => this.setLink('home')}>
                                 HOME
 								{this.state.whatVisible === 'home' ? (<span className="sr-only">(current)</span>) : ''}
                             </span>
 						</li>
 						<li className={`nav-item ${this.state.whatVisible === 'about-app' ? 'active' : ''}`}>
-                            <span className="nav-link button" onClick={() => scrollToElement('about-app')}>
+                            <span className="nav-link button" onClick={() => this.setLink('about-app')}>
                                 THE APP
 								{this.state.whatVisible === 'about-app' ? (
 									<span className="sr-only">(current)</span>) : ''}
                             </span>
 						</li>
 						<li className={`nav-item ${this.state.whatVisible === 'about' ? 'active' : ''}`}>
-							<span className="nav-link button" onClick={() => scrollToElement('about')}>
+							<span className="nav-link button" onClick={() => this.setLink('about')}>
 								ABOUT
 								{this.state.whatVisible === 'about' ? (<span className="sr-only">(current)</span>) : ''}
 							</span>
