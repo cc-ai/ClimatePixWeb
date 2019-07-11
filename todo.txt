@@ -1,5 +1,4 @@
 Into Firebase:
-- How to get new uploaded images (for e.g. since a timestamp) ?
 - How to move folders into sub-folders (either programmatically or from web interface) ?
 
 V2:
