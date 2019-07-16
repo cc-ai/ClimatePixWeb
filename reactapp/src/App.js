@@ -11,7 +11,8 @@ export class App extends React.Component {
 			agree: false,
 			google: null,
 			geocoder: null,
-			autocomplete: null
+			autocomplete: null,
+			autocompleteSessionToken: null
 		};
 		this.getAgreement = this.getAgreement.bind(this);
 		this.setAgreement = this.setAgreement.bind(this);
@@ -21,7 +22,8 @@ export class App extends React.Component {
 		const google = window.google;
 		const geocoder = new google.maps.Geocoder();
 		const autocomplete = new google.maps.places.AutocompleteService();
-		this.setState({google, geocoder, autocomplete});
+		const autocompleteSessionToken = new google.maps.places.AutocompleteSessionToken();
+		this.setState({google, geocoder, autocomplete, autocompleteSessionToken});
 	}
 
 	getAgreement() {
@@ -38,11 +40,12 @@ export class App extends React.Component {
 			setAgreement: this.setAgreement,
 			google: this.state.google,
 			geocoder: this.state.geocoder,
-			autocomplete: this.state.autocomplete
+			autocomplete: this.state.autocomplete,
+			autocompleteSessionToken: this.state.autocompleteSessionToken
 		};
 		return (
 			<AppContext.Provider value={context}>
-				<div className="container-fluid">
+				<div className="app container-fluid">
 					<MainPage/>
 					<Script async defer
 							url={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places`}

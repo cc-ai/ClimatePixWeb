@@ -1,0 +1,9 @@
+.final-page .upload-info {
+	font-size: 1rem;
+}
+
+.final-page .more-info,
+.final-page .upload-info {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}

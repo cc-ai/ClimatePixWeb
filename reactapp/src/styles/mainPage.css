@@ -1,0 +1,17 @@
+.main-page {
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
+.up-screen {
+	min-height: 100vh;
+	background-color: white;
+	padding-top: 8rem;
+	text-align: center;
+}
+
+@media (max-width: 992px) {
+	.up-screen {
+		padding-top: 9rem;
+	}
+}

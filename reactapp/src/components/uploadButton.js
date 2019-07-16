@@ -1,5 +1,6 @@
 import React from "react";
-import "../styles/header.css";
+import {Carousel} from "./carousel";
+import "../styles/uploadButton.css";
 import PropTypes from 'prop-types';
 
 export class UploadButton extends React.Component {
@@ -10,15 +11,21 @@ export class UploadButton extends React.Component {
 
 	render() {
 		return (
-			<div className="upload-container">
-				<h3 className="custom-header">
-					Contribute to this project by uploading and tagging pictures
+			<div className="welcome flex-grow-1 d-flex flex-column">
+				<h3>
+					Depict accurate and personalized outcomes of climate change using AI.<br/>
+					<span className="href-link" onClick={this.props.loadTagsForm}>
+						Help us collect images
+					</span> of flooded houses and streets to train our climate model.
 				</h3>
-				<p>
-                    <span className="button btn btn-success btn-lg" onClick={this.props.loadTagsForm}>
-                        <strong>Upload</strong>
+				<div className="pb-5">
+                    <span className="button btn btn-danger btn-lg" onClick={this.props.loadTagsForm}>
+                        UPLOAD YOUR PHOTOS
                     </span>
-				</p>
+				</div>
+				<div className="carousel-wrapper flex-grow-1">
+					<Carousel/>
+				</div>
 			</div>
 		)
 

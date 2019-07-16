@@ -1,103 +1,85 @@
 /* Using web font Public Sans. Reference (2019/06/20): https://github.com/uswds/public-sans */
 
 @font-face {
-    font-family: 'PublicSans';
-    font-weight: normal;
-    font-style: normal;
-    src: url("./font/public-sans/PublicSans-Regular.ttf") format("truetype"),
-    url("./font/public-sans/PublicSans-Regular.woff") format("woff"),
-    url("./font/public-sans/PublicSans-Regular.woff2") format("woff2");
+	font-family: 'PublicSans';
+	font-weight: normal;
+	font-style: normal;
+	src: url("./font/public-sans/PublicSans-Regular.ttf") format("truetype"),
+	url("./font/public-sans/PublicSans-Regular.woff") format("woff"),
+	url("./font/public-sans/PublicSans-Regular.woff2") format("woff2");
 }
 
 @font-face {
-    font-family: 'PublicSans';
-    font-weight: 500;
-    font-style: normal;
-    src: url("./font/public-sans/PublicSans-Bold.ttf") format("truetype"),
-    url("./font/public-sans/PublicSans-Bold.woff") format("woff"),
-    url("./font/public-sans/PublicSans-Bold.woff2") format("woff2");
+	font-family: 'PublicSans';
+	font-weight: 500;
+	font-style: normal;
+	src: url("./font/public-sans/PublicSans-SemiBold.ttf") format("truetype"),
+	url("./font/public-sans/PublicSans-SemiBold.woff") format("woff"),
+	url("./font/public-sans/PublicSans-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: 'PublicSans';
+	font-weight: bold;
+	font-style: normal;
+	src: url("./font/public-sans/PublicSans-Bold.ttf") format("truetype"),
+	url("./font/public-sans/PublicSans-Bold.woff") format("woff"),
+	url("./font/public-sans/PublicSans-Bold.woff2") format("woff2");
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family: "PublicSans", sans-serif;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-html, body {
-    background: url("images/ccai-bg.png") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+	monospace;
 }
 
 *, *:after, *:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-main {
-    font-family: "PublicSans", sans-serif;
-}
-
-.container-fluid {
-    padding: 0px !important;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 span.button {
-    cursor: pointer;
+	cursor: pointer;
 }
 
-
-/** Fancy box. **/
-
-.fancy-wrapper {
-    z-index: 1;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    padding-top: 6%;
-    padding-bottom: 6%;
-    background-color: rgba(100, 100, 110, 0.5);
+span.button.btn-danger {
+	background-color: #F13C3C;
+	border-radius: 0;
+	font-size: 0.9rem;
+	font-weight: inherit;
+	padding: 0.75rem 0.75rem;
 }
 
-.fancy-box {
-    border: 1px solid silver;
-    position: relative;
-    margin: auto;
-    color: black;
-    width: 100%;
-    height: 100%;
+span.button.btn-danger:hover {
+	background-color: #d93636;
 }
 
-.fancy-box .fancy-bar {
-    background-color: rgb(240, 240, 240);
-    border-bottom: 1px solid silver;
-    padding-top: 10px;
-    padding-bottom: 10px;
+h3 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 2rem;
+	font-weight: inherit;
+	font-size: inherit;
 }
 
-.fancy-box .fancy-button {
-    text-align: right;
+.href-link {
+	color: #F13C3C;
+	text-decoration: underline;
 }
 
-.fancy-box .fancy-content {
-    background-color: white;
-    margin-left: -15px;
-    margin-right: -15px;
-    position: relative;
+.href-link:hover {
+	color: #F13C3C;
+	text-decoration: none;
+}
+
+span.href-link {
+	cursor: pointer;
 }

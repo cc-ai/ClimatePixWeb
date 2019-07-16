@@ -1,0 +1,8 @@
+Into Firebase:
+- How to move folders into sub-folders (either programmatically or from web interface) ?
+
+V2:
+- we should give users the option to enter their email address when they upload the pictures.
+  That way, we can send them a confirmation email with the Upload IDs.
+  - It is a better way for them to save the upload IDs
+  - With the current design, they have take a screenshot or manually write it down.

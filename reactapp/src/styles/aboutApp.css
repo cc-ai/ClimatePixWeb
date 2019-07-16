@@ -1,0 +1,12 @@
+.section-about-app {
+	background-color: white;
+}
+
+.section-about-app > .row {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+.about-app-text-header {
+	color: #008996;
+}

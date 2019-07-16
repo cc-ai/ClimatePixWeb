@@ -1,0 +1,28 @@
+.section-about-wrapper {
+}
+
+.section-about {
+	background-color: black;
+	color: white;
+}
+
+.section-about > .row {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+.about-us {
+	padding: 20px;
+}
+
+.about-us p {
+	padding-top: 1.25rem;
+}
+
+.about-us .social-links a {
+	margin-left: 1rem;
+}
+
+.about-us .social-links img {
+	max-height: 2rem;
+}

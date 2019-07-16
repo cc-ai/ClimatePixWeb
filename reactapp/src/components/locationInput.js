@@ -3,7 +3,7 @@ import {AppContext} from "./appContext";
 import {callAutocomplete} from "../api/callAutocomplete";
 import {AutoCompletionItem} from "./AutoCompletionItem";
 import PropTypes from 'prop-types';
-import '../styles/location_input.css';
+import '../styles/locationInput.css';
 
 export class LocationInput extends React.Component {
 	constructor(props) {
@@ -71,24 +71,20 @@ export class LocationInput extends React.Component {
 		let autocompleteHasFocus = this.state.autocompleteHasFocus;
 		if (event.keyCode === 13) { // enter
 			/*If the ENTER key is pressed, prevent the form from being submitted,*/
-			console.log('ENTER');
 			if (autocomplete && currentFocus !== -1) {
 				address = this.state.places[currentFocus];
 				autocomplete = autocompleteHasFocus = false;
 				addressChanged = preventDefault = true;
 			}
 		} else if (event.keyCode === 27) { // escape
-			console.log('ESCAPE');
 			autocomplete = autocompleteHasFocus = false;
 		} else if (event.keyCode === 40) { // down
-			console.log('DOWN');
 			/*If the arrow DOWN key is pressed, increase the currentFocus variable:*/
 			++currentFocus;
 			if (currentFocus >= nbPlaces)
 				currentFocus = 0;
 			autocomplete = preventDefault = true;
 		} else if (event.keyCode === 38) { //up
-			console.log('UP');
 			/*If the arrow UP key is pressed, decrease the currentFocus variable:*/
 			--currentFocus;
 			if (currentFocus < 0)
@@ -128,7 +124,7 @@ export class LocationInput extends React.Component {
 				   key={locationId}
 				   name={locationId}
 				   type="text"
-				   placeholder="Location of the image"
+				   placeholder={this.props.placeholder ? this.props.placeholder : "City of the image"}
 				   value={this.props.getAddress(locationId)}
 				   onFocus={this.onInputFocus}
 				   onBlur={this.onInputBlur}
@@ -157,5 +153,6 @@ LocationInput.contextType = AppContext;
 LocationInput.propTypes = {
 	id: PropTypes.string.isRequired,
 	setAddress: PropTypes.func.isRequired,
-	getAddress: PropTypes.func.isRequired
+	getAddress: PropTypes.func.isRequired,
+	placeholder: PropTypes.string
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/final_page.css";
+import "../styles/finalPage.css";
 import {Helmet} from "react-helmet/es/Helmet";
 import PropTypes from 'prop-types';
 
@@ -10,33 +10,36 @@ export class FinalPage extends React.Component {
 	render() {
 
 		return (
-			<main>
+			<div className="final-page">
 				<Helmet>
 					<title>Thanks!</title>
 				</Helmet>
-				<div className="upload-container thank-you">
-					<h3 className="custom-header">Thank you for your contribution!<br/></h3>
-					<h4>
-						For more information about the project,&nbsp;
-						<a target="_blank" rel="noopener noreferrer"
-						   className="learn-more"
-						   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
-							<strong>click here</strong>
-						</a>.
-					</h4>
-					<div className="w-75 m-auto">
-						<p className="mt-5">
-							<button className="btn btn-success" onClick={this.props.loadTagsForm}>
-								<strong>Upload more</strong>
-							</button>
-						</p>
+				<h3>Thank you for your contribution!<br/></h3>
+				<p className="more-info">
+					For more information about the project,&nbsp;
+					<a target="_blank" rel="noopener noreferrer"
+					   className="href-link"
+					   href="https://mila.quebec/en/ai-society/visualizing-climate-change/">
+						<strong>click here</strong>
+					</a>.
+				</p>
+				<p className="mt-5">
+						<span className="button btn btn-danger" onClick={this.props.loadTagsForm}>
+							UPLOAD MORE
+						</span>
+				</p>
+				<div className="upload-info mt-5 pt-5">
+					<div className="pt-5">
+						If you want to contact us about pictures you just uploaded, please save this upload ID:
 					</div>
+					<div><code>{this.props.uploadID}</code></div>
 				</div>
-			</main>
+			</div>
 		);
 	}
 }
 
 FinalPage.propTypes = {
-	loadTagsForm: PropTypes.func.isRequired
+	loadTagsForm: PropTypes.func.isRequired,
+	uploadID: PropTypes.string.isRequired
 };
