@@ -13,7 +13,7 @@ import {LocationInput} from "./locationInput";
 import uploadIcon from '../images/upload.png';
 import {scrollToElement} from "../utils/scroll";
 
-const CATEGORIES = ['Flood', 'Wild Fire', 'Hurricane', 'Tornado', 'Other'];
+const CATEGORIES = ['Flood', 'Drought', 'Wildfire', 'Hurricane', 'Tornado', 'Other'];
 
 /** Setup for dropzone component. createRef is for creating access/reference to the HTML page's DOM **/
 const dropzoneRef = createRef();
