@@ -3,13 +3,14 @@ import {firebaseUploadCollection, firebaseUploadCollectionName, storage} from ".
 var mime = require('mime-types');
 
 export class FileMonitor {
-	constructor(files, metadata, onEnd, onError) {
+	constructor(files, metadata, onEnd, onError, onProgress) {
 		this.files = files;
 		this.metadata = metadata;
 		this.progress = Array(metadata.length).fill(0);
 		this.uploadNames = Array(metadata.length).fill(null);
 		this.onEnd = onEnd;
 		this.onError = onError;
+		this.onProgress = onProgress;
 		this.uploadID = null;
 		this.imageInfo = [];
 	}
@@ -23,6 +24,8 @@ export class FileMonitor {
 	}
 
 	setProgress(index, value) {
+		if (this.onProgress)
+			this.onProgress(index, value);
 		this.progress[index] = value;
 		this.sendMetadataIfPossible(index);
 	}
@@ -88,18 +91,8 @@ export class FileMonitor {
 			const file = this.files[index];
 			const uploadName = `${firebaseUploadCollectionName}/${this.uploadID}/${index}.${mime.extension(file.type)}`;
 			await storage.ref(uploadName).put(file).on('state_changed', (snapshot) => {
-				// Show progress of the image upload
-				const progressBar = document.getElementById(`progress-${index}`);
-				if (progressBar) {
-					const progressWrapper = progressBar.parentNode;
-					if (progressWrapper.style.display === 'none') {
-						progressWrapper.style.display = 'flex';
-					}
-					const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					progressBar.style.width = `${step}%`;
-					progressBar.setAttribute('aria-valuenow', Math.round(step));
-					this.setProgress(index, Math.round(step));
-				}
+				const step = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				this.setProgress(index, Math.round(step));
 			}, (error) => {
 				this.error(error, `file no. ${index}`);
 			}, () => {

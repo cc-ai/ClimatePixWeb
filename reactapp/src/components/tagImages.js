@@ -74,6 +74,8 @@ export class TagImages extends React.Component {
 		this.launchFileMonitor = this.launchFileMonitor.bind(this);
 		this.onLocationChange = this.onLocationChange.bind(this);
 		this.setDefaultCities = this.setDefaultCities.bind(this);
+		this.onProgress = this.onProgress.bind(this);
+		this.onFileMonitorError = this.onFileMonitorError.bind(this);
 	}
 
 	setDefaultCities() {
@@ -125,8 +127,7 @@ export class TagImages extends React.Component {
 	onCloseMessage() {
 		this.setState({
 			messageType: null,
-			message: null,
-			sending: false
+			message: null
 		})
 	}
 
@@ -151,6 +152,21 @@ export class TagImages extends React.Component {
 		return this.state[name] || '';
 	}
 
+	onProgress(index, step) {
+		this.setState({
+			[`progress-${index}`]: step
+		})
+	}
+
+	onFileMonitorError(message) {
+		const state = {messageType: 'error', message: message, sending: false};
+		for (let key of Object.keys(this.state)) {
+			if (key.startsWith('progress-'))
+				state[key] = 0;
+		}
+		this.setState(state);
+	}
+
 	launchFileMonitor() {
 		scrollToElement('home');
 		const metadata = this.state.files.map((file) => {
@@ -169,16 +185,13 @@ export class TagImages extends React.Component {
 			this.state.files.map(file => file.file),
 			metadata,
 			this.props.loadThanks,
-			this.errorMessage
+			this.onFileMonitorError,
+			this.onProgress
 		);
 		fileMonitor.start();
 	}
 
 	handleSubmit(e) {
-		/** Method called after hitting finish uploading. Using
-		 * current files in this.state.files and the input name tags send image and their meta data to the
-		 * uploadDropfile method Note, we are currently uploading one image at a time to avoid large data uploads.
-		 **/
 		e.preventDefault();
 		//Upload Files One by One
 		this.setState({sending: true}, this.launchFileMonitor);
@@ -217,16 +230,19 @@ export class TagImages extends React.Component {
 			const categoryId = `category_${id}`;
 			const locationId = `location_${id}`;
 			const fileIndex = i;
+			const progressId = `progress-${fileIndex}`;
+			const step = this.state.hasOwnProperty(progressId) ? this.state[progressId] : 0;
 
 			forms_html.push(<div className="form-col" key={i}>
 				<form className="image-form">
 					<div className="form-group">
 						<div className="image-wrapper" style={{backgroundImage: `url(${imageSrc})`}}>
-							<div className="progress" style={{display: 'none'}}>
+							<div className="progress" style={{display: this.state.sending ? 'flex' : 'none'}}>
 								<div className="progress-bar bg-info"
 									 id={`progress-${fileIndex}`}
+									 style={{width: `${step}%`}}
 									 role="progressbar"
-									 aria-valuenow="0"
+									 aria-valuenow={Math.round(step)}
 									 aria-valuemin="0"
 									 aria-valuemax="100"/>
 							</div>
@@ -395,6 +411,24 @@ export class TagImages extends React.Component {
 
 	componentDidMount() {
 		this.loadLicense();
+	}
+
+	static warnWindowClose(event) {
+		event.returnValue = 'We are uploading your file. Are you sure you want to close now?';
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevState.sending !== this.state.sending) {
+			if (this.state.sending) {
+				window.addEventListener('beforeunload', TagImages.warnWindowClose);
+			} else {
+				window.removeEventListener('beforeunload', TagImages.warnWindowClose);
+			}
+		}
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('beforeunload', TagImages.warnWindowClose);
 	}
 }
 
